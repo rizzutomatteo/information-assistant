@@ -1,0 +1,74 @@
+\documentclass[11pt,a4paper]{report}
+
+% --- Language and encoding ---
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{csquotes}
+
+% --- Useful packages ---
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{pgfgantt}
+
+% Diagrams (e.g. the component architecture in Chapter 2)
+\usepackage{tikz}
+\usetikzlibrary{positioning, arrows.meta, fit}
+\usepackage[backend=biber, style=numeric]{biblatex}
+% Index: mark terms in the text with \index{term}
+\usepackage{makeidx}
+\usepackage[nottoc,notlot,notlof,notbib]{tocbibind}
+\makeindex
+
+\usepackage[hidelinks]{hyperref}
+
+\addbibresource{references.bib}
+
+\begin{document}
+
+% --- Front matter (pages numbered i, ii, iii, ...) ---
+\pagenumbering{roman}
+
+\input{frontpage}
+
+\input{chapters/abstract}
+\input{chapters/gantt}
+\input{chapters/governance}
+
+% --- Main matter (pages numbered 1, 2, 3, ...) ---
+\cleardoublepage
+\pagenumbering{arabic}
+
+\input{chapters/introduction}
+\input{chapters/methodology}
+\input{chapters/architecture}
+\input{chapters/chapter3}
+\input{chapters/conclusions}
+
+% --- Back matter ---
+% Lists every entry in references.bib, even the ones not cited with \cite
+% (remove this line to list only the cited ones)
+\nocite{*}
+\printbibliography[heading=bibintoc]
+
+% --- Appendix ---
+% For several appendices numbered A, B, C, ... create one file for each,
+% using \chapter{Title} (instead of \chapter*{Appendix}), and put them after \appendix
+\appendix
+\input{chapters/appendix}
+
+% --- Index ---
+% While the text has no \index{...} yet, the index file is empty:
+% in that case show the (empty) "Index" page anyway
+\ifnum\pdffilesize{\jobname.ind}0>0
+  \printindex
+\else
+  \chapter*{\indexname}
+  \addcontentsline{toc}{chapter}{\indexname}
+\fi
+
+\end{document}

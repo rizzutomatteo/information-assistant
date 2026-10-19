@@ -1,0 +1,41 @@
+{
+  // Save .tex files automatically half a second after you stop typing
+  "[latex]": {
+    "files.autoSave": "afterDelay"
+  },
+  "files.autoSaveDelay": 500,
+
+  // Rebuild on every save
+  "latex-workshop.latex.autoBuild.run": "onFileChange",
+
+  // If a build fails (e.g. a half-typed command), don't rebuild everything from scratch
+  "latex-workshop.latex.autoBuild.cleanAndRetry.enabled": false,
+
+  // PDF preview in a VS Code tab (side by side, on the right)
+  "latex-workshop.view.pdf.viewer": "tab",
+  "latex-workshop.view.pdf.tab.editorGroup": "right",
+
+  // After each build the PDF scrolls to where you are typing
+  "latex-workshop.synctex.afterBuild.enabled": true,
+
+  // Hide build-generated files from the sidebar, only when a .tex file with the same
+  // name sits next to them (e.g. main.log next to main.tex). They stay on disk.
+  "files.exclude": {
+    "**/*.aux": { "when": "$(basename).tex" },
+    "**/*.bbl": { "when": "$(basename).tex" },
+    "**/*.bcf": { "when": "$(basename).tex" },
+    "**/*.blg": { "when": "$(basename).tex" },
+    "**/*.fdb_latexmk": { "when": "$(basename).tex" },
+    "**/*.fls": { "when": "$(basename).tex" },
+    "**/*.idx": { "when": "$(basename).tex" },
+    "**/*.ilg": { "when": "$(basename).tex" },
+    "**/*.ind": { "when": "$(basename).tex" },
+    "**/*.lof": { "when": "$(basename).tex" },
+    "**/*.log": { "when": "$(basename).tex" },
+    "**/*.lot": { "when": "$(basename).tex" },
+    "**/*.out": { "when": "$(basename).tex" },
+    "**/*.toc": { "when": "$(basename).tex" },
+    "**/*.run.xml": true,
+    "**/*.synctex.gz": true
+  }
+}
