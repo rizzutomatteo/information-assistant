@@ -3,33 +3,52 @@
 
 \begin{figure}[htbp]
   \centering
+  {\Large\bfseries P24 -- Insurance Information Assistant\par}
+  \medskip
+  Preliminary 12-Week Project Plan\par
+  \vspace{0.5cm}
   \begin{ganttchart}[
       hgrid,
-      vgrid={*1{dotted}},
-      x unit=0.85cm,
+      vgrid,
+      x unit=0.65cm,
+      y unit title=0.6cm,
       y unit chart=0.65cm,
-      title height=1,
-      bar height=0.6,
-      group height=0.3,
-      bar/.append style={fill=blue!30},
-      group/.append style={fill=black!70},
-      milestone/.append style={fill=red!70},
+      title label font=\small\bfseries,
+      bar label font=\small,
+      bar/.append style={fill=blue!35},
+      bar height=0.5,
+      milestone label font=\small\bfseries,
+      milestone/.append style={fill=blue!70!black},
     ]{1}{12}
-    \gantttitle{Week}{12} \\
+    \gantttitle{Weeks}{12} \\
     \gantttitlelist{1,...,12}{1} \\
-    \ganttgroup{Analysis}{1}{3} \\
-    \ganttbar{Application domain study}{1}{2} \\
-    \ganttbar{Requirements}{2}{3} \\
-    \ganttgroup{Design}{4}{6} \\
-    \ganttbar{Architecture}{4}{5} \\
-    \ganttbar{Detailed design}{5}{6} \\
-    \ganttgroup{Development}{7}{10} \\
-    \ganttbar{Implementation}{7}{9} \\
-    \ganttbar{Testing}{9}{10} \\
-    \ganttgroup{Documentation}{10}{12} \\
-    \ganttbar{Report}{10}{12} \\
-    \ganttmilestone{Delivery}{12}
+    % Output: a review of existing approaches and identified research gaps.
+    \ganttbar{State-of-the-Art Review}{1}{2} \\
+    % Output: project scope, use cases and measurable success criteria.
+    \ganttbar{Problem and Objectives Definition}{1}{2} \\
+    % Output: a curated insurance corpus with sources and document versions.
+    \ganttbar{Insurance Knowledge Base Construction}{2}{4} \\
+    % Output: architecture, interfaces and human oversight procedures.
+    \ganttbar{System Architecture Design}{3}{5} \\
+    % Output: test questions, reference answers, evidence and scoring rules.
+    \ganttbar{Evaluation Benchmark Development}{4}{6} \\
+    % Output: a working assistant with citations, escalation and logging.
+    \ganttbar{Experimental Prototype Development}{5}{9} \\
+    % Output: an evaluation report covering accuracy, evidence and escalation.
+    \ganttbar{Experimental Evaluation}{9}{11} \\
+    % Output: an improved prototype with verified corrections.
+    \ganttbar{Prototype Refinement}{11}{12} \\
+    % Output: final report, reproducibility instructions and demonstration.
+    \ganttbar{Documentation and Final Demonstration}{10}{12} \\
+    \ganttmilestone{Project Delivery}{12}
   \end{ganttchart}
+  \par\medskip
+  \begin{minipage}{\textwidth}
+    \small
+    Each activity is a self-contained work package with a defined output.
+    The schedule is an initial estimate; overlapping bars indicate activities
+    that can be carried out partly in parallel.
+  \end{minipage}
   \caption{Project schedule.}
   \label{fig:gantt}
 \end{figure}
