@@ -7,11 +7,17 @@
 \end{center}
 \vspace{0.5em}
 
+\begingroup
+\setlength{\parskip}{0.8em}
+
 Customers of an insurance company often ask the same questions about coverage, exclusions,
 deductibles and claims. The answers are in the company's public documents, but these are long
 and written in contractual language. The project builds a RAG (Retrieval-Augmented Generation)
 assistant that answers at any time of day using only these approved sources, always citing the
 one it used.
+
+The goal is to provide consistent information even outside business hours and to reduce the
+repetitive requests handled manually.
 
 Starting from the company's official, publicly accessible documentation (FAQs, forms, customer
 support pages, anonymized past requests, etc.), the system removes duplicates and extracts the
@@ -25,3 +31,10 @@ every request, estimates its confidence and proposes a handover to a human opera
 judgment is needed: complaints, disputes, the assessment of a claim. Every answer is logged with
 its sources, confidence level and model version, and the questions that are not covered end up
 in an anonymized log.
+
+The assistant does not decide whether a claim is covered or reimbursable: it provides
+information and leaves the decision to the operator. The operator receives the request already
+summarized, with the cited clauses and the reason for the handover. The operator's corrections
+are used to improve the answers and the content.
+\par
+\endgroup
