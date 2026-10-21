@@ -1,3 +1,27 @@
 \chapter*{Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
 
+\begin{center}
+  {\Large\bfseries Intelligent Information Assistant}\\[0.3em]
+  {\large\itshape for Users of an Insurance Company}
+\end{center}
+\vspace{0.5em}
+
+Customers of an insurance company often ask the same questions about coverage, exclusions,
+deductibles and claims. The answers are in the company's public documents, but these are long
+and written in contractual language. The project builds a RAG (Retrieval-Augmented Generation)
+assistant that answers at any time of day using only these approved sources, always citing the
+one it used.
+
+Starting from the company's official, publicly accessible documentation (FAQs, forms, customer
+support pages, anonymized past requests, etc.), the system removes duplicates and extracts the
+text.
+
+For each request it produces an answer together with references to the sources used,
+a classification of the question and an indication of the confidence level.
+
+If the sources are not sufficient, the assistant does not answer and says so. It classifies
+every request, estimates its confidence and proposes a handover to a human operator when human
+judgment is needed: complaints, disputes, the assessment of a claim. Every answer is logged with
+its sources, confidence level and model version, and the questions that are not covered end up
+in an anonymized log.
