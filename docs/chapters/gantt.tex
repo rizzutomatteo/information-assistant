@@ -1,54 +1,156 @@
+\documentclass[a4paper,10pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=2cm]{geometry}
+\usepackage{graphicx}
+\usepackage{tikz}
+\begin{document}
+
 \chapter*{Gantt Diagram}
 \addcontentsline{toc}{chapter}{Gantt Diagram}
 
 \begin{figure}[htbp]
   \centering
-  {\Large\bfseries P24 -- Insurance Information Assistant\par}
+  {\large\bfseries P24 -- Insurance Information Assistant\par}
+  \smallskip
+  {\small October--January: 16 planning weeks\par}
   \medskip
-  Preliminary 12-Week Project Plan\par
-  \vspace{0.5cm}
-  \begin{ganttchart}[
-      hgrid,
-      vgrid,
-      x unit=0.65cm,
-      y unit title=0.6cm,
-      y unit chart=0.65cm,
-      title label font=\small\bfseries,
-      bar label font=\small,
-      bar/.append style={fill=blue!35},
-      bar height=0.5,
-      milestone label font=\small\bfseries,
-      milestone/.append style={fill=blue!70!black},
-    ]{1}{12}
-    \gantttitle{Weeks}{12} \\
-    \gantttitlelist{1,...,12}{1} \\
-    % Output: a review of existing approaches and identified research gaps.
-    \ganttbar{State-of-the-Art Review}{1}{2} \\
-    % Output: project scope, use cases and measurable success criteria.
-    \ganttbar{Problem and Objectives Definition}{1}{2} \\
-    % Output: a curated insurance corpus with sources and document versions.
-    \ganttbar{Insurance Knowledge Base Construction}{2}{4} \\
-    % Output: architecture, interfaces and human oversight procedures.
-    \ganttbar{System Architecture Design}{3}{5} \\
-    % Output: test questions, reference answers, evidence and scoring rules.
-    \ganttbar{Evaluation Benchmark Development}{4}{6} \\
-    % Output: a working assistant with citations, escalation and logging.
-    \ganttbar{Experimental Prototype Development}{5}{9} \\
-    % Output: an evaluation report covering accuracy, evidence and escalation.
-    \ganttbar{Experimental Evaluation}{9}{11} \\
-    % Output: an improved prototype with verified corrections.
-    \ganttbar{Prototype Refinement}{11}{12} \\
-    % Output: final report, reproducibility instructions and demonstration.
-    \ganttbar{Documentation and Final Demonstration}{10}{12} \\
-    \ganttmilestone{Project Delivery}{12}
-  \end{ganttchart}
-  \par\medskip
-  \begin{minipage}{\textwidth}
-    \small
-    Each activity is a self-contained work package with a defined output.
-    The schedule is an initial estimate; overlapping bars indicate activities
-    that can be carried out partly in parallel.
-  \end{minipage}
-  \caption{Project schedule.}
+
+  \begingroup
+  % g = main activity; s = subactivity; m = milestone.
+  % The final two numbers are the start and end planning weeks (1--16).
+  \def\GanttRows{
+    g/{State-of-the-Art Review}/1/2,
+    g/{Problem and Objectives Definition}/1/3,
+    g/{Insurance Knowledge Base Construction}/3/6,
+    s/{Collect official insurance documents}/3/4,
+    s/{Extract, clean and segment content}/4/5,
+    s/{Index sources and document versions}/5/6,
+    g/{System Architecture Design}/4/7,
+    s/{Design components, APIs and data flows}/4/6,
+    s/{Define access, escalation and traceability}/6/7,
+    g/{Evaluation Benchmark Development}/5/8,
+    s/{Create development and test question sets}/5/7,
+    s/{Annotate reference answers and evidence}/7/8,
+    g/{Experimental Prototype Development}/7/12,
+    s/{Build retrieval and version filtering}/7/9,
+    s/{Develop dialogue and source citations}/9/11,
+    s/{Integrate UI, APIs, escalation and logging}/11/12,
+    g/{Experimental Evaluation}/11/14,
+    g/{Prototype Refinement}/13/15,
+    g/{Documentation and Final Demonstration}/7/16,
+    s/{Draft project report}/7/12,
+    s/{Prepare reproducibility guide}/12/15,
+    s/{Prepare presentation and final demo}/14/16,
+    m/{Project Delivery}/16/16
+  }
+  \def\MainType{g}
+  \def\MilestoneType{m}
+
+  % Count activity rows and add the two header rows.
+  \def\GanttRowCount{0}
+  \foreach \kind/\task/\start/\finish [count=\n] in \GanttRows {
+    \xdef\GanttRowCount{\n}
+  }
+  \pgfmathtruncatemacro{\GanttBottom}{\GanttRowCount+2}
+
+  \resizebox{\textwidth}{!}{%
+    \begin{tikzpicture}[
+        x=0.5cm,
+        y=-0.44cm,
+        font=\footnotesize,
+        tasklabel/.style={
+          anchor=west,
+          inner sep=0pt,
+          text height=1.6ex,
+          text depth=0.3ex
+        }
+      ]
+
+      % One grid contains both labels and the timeline.
+      % Its bottom is calculated automatically from GanttRows.
+      \fill[gray!8] (0,0) rectangle (30,2);
+
+      \foreach \kind/\task/\start/\finish [count=\r from 0] in \GanttRows {
+        \ifx\kind\MainType
+          \fill[blue!6] (0,{2+\r}) rectangle (30,{3+\r});
+        \fi
+      }
+
+      % Horizontal row guides.
+      \foreach \r in {2,...,\GanttBottom} {
+        \draw[gray!22, line width=0.2pt] (0,\r) -- (30,\r);
+      }
+
+      % Weekly grid lines begin below the month names.
+      \foreach \w in {14,...,30} {
+        \draw[gray!22, line width=0.2pt]
+          (\w,1) -- (\w,\GanttBottom);
+      }
+
+      % Month boundaries and outer frame.
+      \foreach \x in {14,18,22,26,30} {
+        \draw[gray!65, line width=0.45pt]
+          (\x,0) -- (\x,\GanttBottom);
+      }
+      \draw[gray!65, line width=0.45pt]
+        (0,0) rectangle (30,\GanttBottom);
+      \draw[gray!65, line width=0.45pt] (14,1) -- (30,1);
+      \draw[gray!65, line width=0.45pt] (0,2) -- (30,2);
+
+      % Column headers.
+      \node[tasklabel, font=\footnotesize\bfseries]
+        at (0.35,1) {Activity};
+
+      \foreach \month/\x in {
+          October/16, November/20, December/24, January/28
+        } {
+        \node[font=\footnotesize\bfseries] at (\x,0.5) {\month};
+      }
+
+      \foreach \w in {1,...,16} {
+        \pgfmathtruncatemacro{\WeekNumber}{mod(\w-1,4)+1}
+        \node at ({13.5+\w},1.5) {\WeekNumber};
+      }
+
+      % Labels and bars use the same row centre.
+      \foreach \kind/\task/\start/\finish [count=\r from 0] in \GanttRows {
+        \pgfmathsetmacro{\RowCentre}{2.5+\r}
+
+        \ifx\kind\MainType
+          \node[tasklabel, font=\footnotesize\bfseries]
+            at (0.35,\RowCentre) {\task};
+          \fill[blue!60!black]
+            ({13+\start+0.12},{\RowCentre-0.18})
+            rectangle
+            ({14+\finish-0.12},{\RowCentre+0.18});
+        \else
+          \ifx\kind\MilestoneType
+            \node[tasklabel, font=\footnotesize\bfseries]
+              at (0.35,\RowCentre) {\task};
+            \pgfmathsetmacro{\MilestoneX}{13.5+\start}
+            \fill[blue!60!black]
+              ({\MilestoneX-0.22},\RowCentre) --
+              (\MilestoneX,{\RowCentre-0.27}) --
+              ({\MilestoneX+0.22},\RowCentre) --
+              (\MilestoneX,{\RowCentre+0.27}) -- cycle;
+          \else
+            \node[tasklabel] at (0.95,\RowCentre) {\task};
+            \fill[blue!35]
+              ({13+\start+0.12},{\RowCentre-0.25})
+              rectangle
+              ({14+\finish-0.12},{\RowCentre+0.25});
+          \fi
+        \fi
+      }
+
+    \end{tikzpicture}%
+  }
+  \endgroup
+
+  \caption{Main activities and subactivities across four planning weeks
+    per month, from October to January.}
   \label{fig:gantt}
 \end{figure}
+
+\end{document}
