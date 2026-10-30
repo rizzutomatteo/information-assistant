@@ -24,17 +24,13 @@
     % Approved changes
     \node[fbout] (u1) at (13.45,-2.25) {\faQuestionCircle\ \textbf{FAQ entries} $\to$ the index
       (Figure~\ref{fig:ingestion})};
-    \node[fbout] (u2) at (9.5,-2.25) {\faIcon{exchange-alt}\ \textbf{Synonyms} $\to$ the glossary of
-      \code{rewrite_query}};
-    \node[fbout] (u3) at (5.55,-2.25) {\faDatabase\ \textbf{Test cases} $\to$ the golden set};
-    \node[fbout] (u4) at (1.6,-2.25) {\faEdit\ \textbf{Prompt fixes}, tested in \acs{ci} first};
     \begin{scope}[on background layer]
-      \node[fit=(u1)(u2)(u3)(u4), rounded corners=5pt, draw=good!50, fill=good!3,
+      \node[fit=(u1), rounded corners=5pt, draw=good!50, fill=good!3,
             inner sep=5pt] (box) {};
     \end{scope}
     \draw[flow] (r) -- node[right, text=black!70] {approved} (u1);
-    \draw[flow] (box.west) -- ++(-0.15,0) |- node[pos=0.25, right, text=black!70, align=left]
-      {better\\answers} (a.west);
+    \draw[flow] (box.west) -| node[pos=0.25, above, text=black!70] {better answers}
+      ([xshift=-0.15cm]a.west) -- (a.west);
   \end{tikzpicture}
   \caption{The operators' corrections, and the questions left without an answer, become better
     answers after a human review.}

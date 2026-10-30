@@ -125,34 +125,35 @@
 \input{chapters/introduction}
 \input{chapters/methodology}
 \input{chapters/architecture}
-\input{chapters/chapter3}
-\input{chapters/conclusions}
+% --- Detached for now: chapter 3 onwards (files kept, uncomment to restore) ---
+% \input{chapters/chapter3}
+% \input{chapters/conclusions}
 
-% --- Back matter ---
-% Acronyms used in the text (only the ones actually used appear)
-\clearpage
-\addcontentsline{toc}{chapter}{Acronyms}
-\printacronyms[heading=chapter*, name=Acronyms]
+% % --- Back matter ---
+% % Acronyms used in the text (only the ones actually used appear)
+% \clearpage
+% \addcontentsline{toc}{chapter}{Acronyms}
+% \printacronyms[heading=chapter*, name=Acronyms]
 
-% Lists every entry in references.bib, even the ones not cited with \cite
-% (remove this line to list only the cited ones)
-\nocite{*}
-\printbibliography[heading=bibintoc]
+% % Lists every entry in references.bib, even the ones not cited with \cite
+% % (remove this line to list only the cited ones)
+% \nocite{*}
+% \printbibliography[heading=bibintoc]
 
-% --- Appendix ---
-% For several appendices numbered A, B, C, ... create one file for each,
-% using \chapter{Title} (instead of \chapter*{Appendix}), and put them after \appendix
-\appendix
-\input{chapters/appendix}
+% % --- Appendix ---
+% % For several appendices numbered A, B, C, ... create one file for each,
+% % using \chapter{Title} (instead of \chapter*{Appendix}), and put them after \appendix
+% \appendix
+% \input{chapters/appendix}
 
-% --- Index ---
-% While the text has no \index{...} yet, the index file is empty:
-% in that case show the (empty) "Index" page anyway
-\ifnum\pdffilesize{\jobname.ind}0>0
-  \printindex
-\else
-  \chapter*{\indexname}
-  \addcontentsline{toc}{chapter}{\indexname}
-\fi
+% % --- Index ---
+% % While the text has no \index{...} yet, the index file is empty:
+% % in that case show the (empty) "Index" page anyway
+% \ifnum\pdffilesize{\jobname.ind}0>0
+%   \printindex
+% \else
+%   \chapter*{\indexname}
+%   \addcontentsline{toc}{chapter}{\indexname}
+% \fi
 
 \end{document}

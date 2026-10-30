@@ -1,52 +1,40 @@
-% Figure 1.2: the models, their role, where they run, their size and an alternative.
-% Bars: 0.042 cm per billion parameters; light = total, dark = active for each token.
+% Figure 1.2: the models, their role, where they run and their size.
+% Bars: 0.085 cm per billion parameters; light = total, dark = active for each token.
 \begin{figure}[H]
   \centering
   \begin{tikzpicture}[font=\footnotesize]
-    \newcommand\scale{0.042}
-    % \model{y}{logo}{name}{role, where it runs}{total B}{active B}{specifications}{alternative}
-    \newcommand\model[8]{%
+    \newcommand\scale{0.085}
+    % \model{y}{logo}{name}{role, where it runs}{total B}{active B}{specifications}
+    \newcommand\model[7]{%
       \node at (0.35,#1) {\includegraphics[height=0.55cm, width=0.7cm, keepaspectratio]{logos/#2}};
       \node[anchor=west, font=\footnotesize\bfseries] at (0.8,#1+0.17) {#3};
       \node[anchor=west, font=\scriptsize, text=black!60] at (0.8,#1-0.2) {#4};
       \fill[catmodel!22] (5.3,#1+0.05) rectangle ({5.3+#5*\scale},#1+0.3);
       \fill[catmodel] (5.3,#1+0.05) rectangle ({5.3+#6*\scale},#1+0.3);
-      \node[anchor=west, font=\scriptsize, text=black!75] at (5.25,#1-0.2) {#7};
-      \node[anchor=west, text width=4.4cm, align=left, font=\scriptsize, text=black!65]
-        at (11.3,#1) {#8};}
+      \node[anchor=west, font=\scriptsize, text=black!75] at (5.25,#1-0.2) {#7};}
     \node[anchor=west, font=\scriptsize\bfseries, text=black!60] at (0.8,0.75) {Model, role, where};
     \node[anchor=west, font=\scriptsize\bfseries, text=black!60] at (5.25,0.75)
       {Parameters, in billions};
-    \node[anchor=west, font=\scriptsize\bfseries, text=black!60] at (11.3,0.75)
-      {Alternative};
     \draw[black!30] (0,0.5) -- (15.75,0.5);
 
     \model{0}{openai}{gpt-oss-120b}{answer \textbullet\ Groq~\cite{openai2025gptoss}}{117}{5.1}
       {117B total \textbullet\ 5.1B active}
-      {gpt-oss-20b, then Qwen3-4B on the server}
     \model{-1}{openai}{gpt-oss-20b}{intent, check \textbullet\ Groq}{21}{3.6}
       {21B total \textbullet\ 3.6B active}
-      {Qwen3-4B on the server}
-    \model{-2}{qwen}{Qwen3-4B}{fallback \textbullet\ Ollama~\cite{yang2025qwen3}}{4}{4}
-      {4B \textbullet\ quantised, on CPU}
-      {Qwen3-1.7B if memory is short}
-    \model{-3}{qwen}{Qwen3-Embedding-0.6B}{embedding \textbullet\ server~\cite{qwen2025embedding}}
+    \model{-2}{qwen}{Qwen3-Embedding-0.6B}{embedding \textbullet\ server~\cite{qwen2025embedding}}
       {0.6}{0.6}{0.6B \textbullet\ 32K context \textbullet\ $\leq$1024 dims}
-      {bge-m3 (MIT)}
-    \model{-4}{qwen}{Qwen3-Reranker-0.6B}{reranking \textbullet\ server~\cite{qwen2025embedding}}
-      {0.6}{0.6}{0.6B \textbullet\ 32K context}{bge-reranker-v2-m3}
-    \model{-5}{qwen}{Qwen3Guard-Gen-0.6B}{input guardrail \textbullet\ server~\cite{zhao2025qwen3guard}}
-      {0.6}{0.6}{0.6B \textbullet\ 119 languages}{Qwen3Guard-Gen-4B, if the CPU allows}
-    \model{-6}{gemini}{Gemini Flash}{test judge \textbullet\ Google}{0}{0}
-      {closed, size not published}{gpt-oss-120b as judge}
-    \model{-7}{docling}{Docling + EasyOCR}{reading the PDFs \textbullet\ server~\cite{docling2026catalog}}
-      {0}{0}{Heron and TableFormer, on CPU}{Granite-Docling-258M}
-    \draw[black!30] (0,-7.5) -- (15.75,-7.5);
+    \model{-3}{qwen}{Qwen3-Reranker-0.6B}{reranking \textbullet\ server~\cite{qwen2025embedding}}
+      {0.6}{0.6}{0.6B \textbullet\ 32K context}
+    \model{-4}{qwen}{Qwen3Guard-Gen-0.6B}{input guardrail \textbullet\ server~\cite{zhao2025qwen3guard}}
+      {0.6}{0.6}{0.6B \textbullet\ 119 languages}
+    \model{-5}{docling}{Docling + EasyOCR}{reading the PDFs \textbullet\ server~\cite{docling2026catalog}}
+      {0}{0}{Heron and TableFormer, on CPU}
+    \draw[black!30] (0,-5.5) -- (15.75,-5.5);
     % Legend
-    \fill[catmodel] (5.3,-7.85) rectangle (5.6,-7.65);
-    \node[anchor=west, font=\scriptsize] at (5.65,-7.75) {active for each token};
-    \fill[catmodel!22] (8.6,-7.85) rectangle (8.9,-7.65);
-    \node[anchor=west, font=\scriptsize] at (8.95,-7.75) {total, for mixture-of-experts models};
+    \fill[catmodel] (5.3,-5.85) rectangle (5.6,-5.65);
+    \node[anchor=west, font=\scriptsize] at (5.65,-5.75) {active for each token};
+    \fill[catmodel!22] (8.6,-5.85) rectangle (8.9,-5.65);
+    \node[anchor=west, font=\scriptsize] at (8.95,-5.75) {total, for mixture-of-experts models};
   \end{tikzpicture}
   \caption{The models, drawn at the same scale: the large ones run through Groq's free API, the
     small ones on the server. Every model in the answer path is open-weight (Apache~2.0).}

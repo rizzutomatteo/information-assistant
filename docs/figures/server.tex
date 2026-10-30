@@ -1,4 +1,4 @@
-% Figure 2.8: the free server (estimated memory of each service) and the free external APIs
+% Figure 2.8: the free server (estimated memory of each service) and Groq's free API
 \begin{figure}[H]
   \centering
   \begin{tikzpicture}[font=\scriptsize]
@@ -38,14 +38,10 @@
       {\footnotesize\bfseries \lgx{groq}\enspace Groq, free plan}\\[3pt]
       \lgx{openai}\ gpt-oss-120b \textbullet\ gpt-oss-20b\\[2pt]
       each: 30 requests/min, 1{,}000/day,\\ 8K tokens/min, 200K tokens/day};
-    \node[anchor=north west, rounded corners=4pt, draw=catmodel, fill=catmodel!6, text width=5.6cm,
-          inner sep=5pt, align=left] at (9.9,-1.75) {%
-      {\footnotesize\bfseries \lgx{gemini}\enspace Google AI Studio, free}\\[3pt]
-      Gemini Flash, only as the judge of the tests};
-    \node[anchor=north west, text width=5.6cm, align=left, text=black!60] at (9.9,-3.3)
+    \node[anchor=north west, text width=5.6cm, align=left, text=black!60] at (9.9,-1.25)
       {Only what the answer needs is sent, with the identifiers masked.};
   \end{tikzpicture}
-  \caption{Where everything runs: one free server, plus two free \acsp{api}~\cite{groq2026limits}.
+  \caption{Where everything runs: one free server, plus Groq's free \acs{api}~\cite{groq2026limits}.
     Hatched: memory used only when needed.}
   \label{fig:server}
 \end{figure}

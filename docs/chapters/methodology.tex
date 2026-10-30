@@ -11,7 +11,7 @@ Chapter~\ref{chap:architecture} shows how.
 \section{Design Principles}
 \label{sec:principles}\index{design principles}
 
-Six principles drive every choice (Figure~\ref{fig:principles}).
+Three principles drive every choice (Figure~\ref{fig:principles}).
 
 \input{figures/principles}
 
@@ -37,11 +37,9 @@ Six principles drive every choice (Figure~\ref{fig:principles}).
   \end{tcolorbox}
 \end{tcbraster}
 
-The models are compared in Figure~\ref{fig:models}; three facts explain the main choices
-(Figure~\ref{fig:model-facts}).
+The models are compared in Figure~\ref{fig:models}.
 
 \input{figures/models}
-\input{figures/model-facts}
 
 \section{Knowledge Base Construction}
 \label{sec:knowledge-base}\index{knowledge base}\index{FAQ}\index{forms}\index{DIP}\index{CGA}\index{support pages}\index{edition of the conditions}\index{Docling}\index{OpenSearch}
@@ -53,7 +51,8 @@ The assistant draws on five kinds of public documents and, for customers only, o
 \input{figures/sources}
 \input{figures/ingestion}
 
-
+\section{Regulatory Constraints}
+\label{sec:constraints}\index{regulatory constraints}\index{AI Act}\index{personal data}\index{audit}
 
 \begin{tcbraster}[raster columns=3, cardgrid]
   \begin{tcolorbox}[card]
@@ -64,26 +63,10 @@ The assistant draws on five kinds of public documents and, for customers only, o
     To be confirmed by the legal office.
   \end{tcolorbox}
   \begin{tcolorbox}[card]
-    \cardtitle{\faFileContract}{Claims}
-    Never decides a payment: blocked by the prompt, by the output check and by a notice
-    (Appendix~\ref{app:prompts}).
-  \end{tcolorbox}
-  \begin{tcolorbox}[card]
-    \cardtitle{\faHeadset}{Complaints}
-    To the complaints office, as the \acs{ivass} procedure requires: handover with high priority.
-  \end{tcolorbox}
-  \begin{tcolorbox}[card]
     \cardtitle{\faUserShield}{Personal data}
     Guests: none. Customers: only their own, after login.
     \tcblower
     Identifiers masked by Presidio, \acs{aes}-encrypted checkpoints, expired chats deleted.
-  \end{tcolorbox}
-  \begin{tcolorbox}[card]
-    \cardtitle{\faCloud}{Free services}
-    Groq gets only what the answer needs, masked.
-    \tcblower
-    Gemini's free tier may not serve \ac{eu} users~\cite{google2026geminiterms}: it only judges
-    the tests, offline.
   \end{tcolorbox}
   \begin{tcolorbox}[card]
     \cardtitle{\faLink}{Audit}

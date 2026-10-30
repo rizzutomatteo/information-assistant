@@ -1,4 +1,4 @@
-% Figure 1.1: the six design principles (problem, rule, where it is enforced)
+% Figure 1.1: the three design principles (problem, rule, where it is enforced)
 \begin{figure}[H]
   \centering
   % \principle{icon}{title}{problem}{rule}{where}
@@ -14,18 +14,11 @@
     \principle{\faProjectDiagram}{A constrained flow}{Models are not predictable.}
       {The model interprets; code decides which \acsp{api} to call.}{\S\ref{sec:routing}}
     \principle{\faUserLock}{Identity outside the model}{Prompts can be manipulated.}
-      {The customer ID comes only from the login token (\ac{jwt}), never from a prompt.}{\S\ref{sec:state-context}}
-    \principle{\faHistory}{The right edition}{Old editions still apply.}
-      {Clauses filtered by product and signed edition.}{\S\ref{sec:knowledge-base}}
-    \principle{\faCalculator}{Numbers from the APIs}{Wrong numbers cost most.}
-      {Amounts and dates come from the core system and are checked.}
-      {\texttt{output\_guard}, Figure~\ref{fig:graph}}
+      {The customer ID comes only from the login token (\ac{jwt}), never from a prompt.}{\S\ref{sec:components}}
     \principle{\faEyeSlash}{No unverified text}{Drafts can be wrong.}
-      {Only progress states until the output guardrail passes.}{\S\ref{sec:api}}
-    \principle{\faEuroSign}{Zero cost, minimal exposure}{Free services see what they get.}
-      {Only what the answer needs leaves the server, identifiers masked.}
-      {\S\ref{sec:deployment}}
+      {Only progress states until the output guardrail passes.}
+      {\texttt{output\_guard}, Figure~\ref{fig:graph}}
   \end{tcbraster}
-  \caption{The six design principles.}
+  \caption{The three design principles.}
   \label{fig:principles}
 \end{figure}

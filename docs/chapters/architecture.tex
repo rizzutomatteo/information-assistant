@@ -43,29 +43,6 @@ decisions are plain rules (Figure~\ref{fig:routing-rules}).
 \input{figures/routing-rules}
 
 \needspace{7cm}
-\subsection{State and Context}
-\label{sec:state-context}\index{state}\index{context}
-
-The identity never reaches a prompt (Figure~\ref{fig:state-context}).
-
-\input{figures/state-context}
-
-\subsection{API and Streaming}
-\label{sec:api}\index{streaming}\index{FastAPI}
-
-Two endpoints: the customer's messages and Chatwoot's webhook (Figure~\ref{fig:sequence}). The
-client receives progress states, never an unverified draft.
-
-\input{figures/sequence}
-
-\needspace{7cm}
-\subsection{Handover to the Operator}
-\label{sec:handover}\index{handover}\index{Chatwoot}
-
-Nine situations end with a person or a fixed reply (Figure~\ref{fig:handover}).
-
-\input{figures/handover}
-
 \subsection{Operator Corrections}
 \label{sec:corrections}\index{operator corrections}\index{unanswered questions}
 
@@ -74,22 +51,10 @@ answers, through a human review (Figure~\ref{fig:feedback}).
 
 \input{figures/feedback}
 
-\needspace{7cm}
-\subsection{Failure Handling}
-\label{sec:failures}\index{failure handling}\index{fallback chain}
-
-Every component has a planned reaction when it fails (Figure~\ref{fig:failures}).
-
-\input{figures/failures}
-
 \section{Deployment}
-\label{sec:deployment}\index{deployment}\index{Docker Compose}\index{latency budget}\index{Oracle Cloud}
+\label{sec:deployment}\index{deployment}\index{Docker Compose}\index{Oracle Cloud}
 
 Everything runs on one free server, with the two large models on Groq's free \acs{api}
-(Figure~\ref{fig:server}). The free quota sets how many questions fit in a day
-(Figure~\ref{fig:quota}), and each step of a turn has a time budget
-(Figure~\ref{fig:latency}). Memory and times are estimates, to be measured.
+(Figure~\ref{fig:server}). Memory use is an estimate, to be measured.
 
 \input{figures/server}
-\input{figures/quota}
-\input{figures/latency}
