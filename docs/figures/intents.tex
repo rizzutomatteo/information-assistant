@@ -1,0 +1,41 @@
+% Figure 2.3: the eight intents recognised by classify and the route each one takes
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+      font=\scriptsize,
+      chip/.style={rounded corners=6pt, draw=catmodel!60, fill=catmodel!8, inner sep=3pt,
+                   align=left, text width=2.75cm, anchor=west},
+      dest/.style={rounded corners=3pt, draw=black!40, fill=white, inner sep=4pt, align=left,
+                   text width=4.9cm},
+      route/.style={-{Stealth[length=2mm]}, black!55, line width=0.6pt},
+    ]
+    \node[rounded corners=3pt, cat model, align=center, text width=1.7cm, minimum height=1.2cm]
+      (cl) at (0.95,-2.5) {\logo[0.5cm]{openai}\\[2pt]{\ttfamily classify}};
+    % \route{id}{y}{label}{meaning}{second label}{second meaning}{destination}
+    \newcommand\intent[7]{%
+      \node[chip] (a#1) at (2.5,#2) {{\ttfamily\bfseries #3}\\{\color{black!65}#4}};
+      \ifx\relax#5\relax
+        \coordinate (b#1) at (a#1.east);
+      \else
+        \node[chip] (c#1) at (5.75,#2) {{\ttfamily\bfseries #5}\\{\color{black!65}#6}};
+        \coordinate (b#1) at (c#1.east);
+      \fi
+      \node[dest] (d#1) at (13.25,#2) {#7};
+      \draw[route] (cl.east) -- (a#1.west);
+      \draw[route] (b#1) -- (d#1.west);}
+    \intent{1}{0}{polizza}{conditions of one's policy}{}{}
+      {after login: \code{resolve_policy}, then \code{fetch_policy_data} and \code{retrieve} in
+       parallel. A guest is asked to log in}
+    \intent{2}{-1.3}{sinistro}{status of a claim}{pagamenti}{instalments, payments}
+      {after login: \code{resolve_policy}, then \code{fetch_policy_data} with the claims or the
+       instalments. A guest is asked to log in}
+    \intent{3}{-2.6}{prodotto}{a product in general}{}{}
+      {\code{retrieve} on the public documents, for guests and customers alike}
+    \intent{4}{-3.8}{operatore}{asks for a person}{reclamo}{a complaint}
+      {\code{handoff}; a complaint goes with high priority}
+    \intent{5}{-5.0}{fuori\_ambito}{off-topic request}{saluto}{greeting}
+      {\code{direct_reply}, a fixed text}
+  \end{tikzpicture}
+  \caption{The intents recognised by \texttt{classify} (labels as in the code) and their routes.}
+  \label{fig:intents}
+\end{figure}

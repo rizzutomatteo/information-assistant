@@ -1,4 +1,7 @@
 \documentclass[11pt,a4paper]{report}
+% The logos are PDF 1.7 files
+\pdfminorversion=7
+\pdfsuppresswarningpagegroup=1
 
 % --- Language and encoding ---
 \usepackage[T1]{fontenc}
@@ -10,21 +13,97 @@
 % --- Useful packages ---
 \usepackage[margin=2.5cm]{geometry}
 \usepackage{graphicx}
+\usepackage{subcaption}
+% [H]: a figure stays exactly where it is written (used where the text depends on it)
+\usepackage{float}
+% \keepwithfigure: a heading moves to the next page if its figure would not follow it there
+\usepackage{needspace}
+\newcommand\keepwithfigure{\needspace{0.3\textheight}}
 \usepackage{xcolor}
 \usepackage{booktabs}
 \usepackage{tabularx}
+% Tables that continue on the next page (e.g. the graph nodes in Chapter 2)
+\usepackage{xltabular}
+% Table columns with ragged-right text: L{width} for a fixed width, Y for the flexible column
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
 \usepackage{pgfgantt}
 
 % Diagrams (e.g. the component architecture in Chapter 2)
 \usepackage{tikz}
-\usetikzlibrary{positioning, arrows.meta, fit}
+\usetikzlibrary{positioning, arrows.meta, fit, calc, backgrounds, decorations.pathreplacing, patterns}
+% Component categories, shared by the figures of Chapter 2.
+% Each category also has its own border, so the figures stay readable in black and white.
+\definecolor{catmodel}{HTML}{3B43B0}
+\definecolor{catsec}{HTML}{AD2440}
+\definecolor{catdata}{HTML}{8E5C0B}
+\definecolor{catinfra}{HTML}{4C5B66}
+\tikzset{
+  cat model/.style={draw=catmodel, fill=catmodel!10, line width=1pt},
+  cat sec/.style={draw=catsec, fill=catsec!8, double, double distance=0.7pt, line width=0.4pt},
+  cat data/.style={draw=catdata, fill=catdata!12, line width=0.4pt},
+  cat infra/.style={draw=catinfra, fill=white, line width=0.4pt},
+}
+% Accent colour of the figures and cards
+\definecolor{accent}{HTML}{0A6873}
+\colorlet{good}{green!45!black}
+\colorlet{bad}{red!70!black}
+
+% Logos of the technologies (folder logos/, sources in logos/README.md):
+% \logo{qwen} in the text, \logo[0.5cm]{qwen} for a different height
+\newlength\logoheight
+\newcommand\logo[2][0.95em]{%
+  \setlength\logoheight{#1}%
+  \raisebox{-0.2\logoheight}{%
+    \includegraphics[height=\logoheight, width=1.6\logoheight, keepaspectratio]{logos/#2}}}
+% Generic icons (Font Awesome), for the parts that have no logo
+\usepackage{fontawesome5}
+
+% Cards: \begin{tcolorbox}[card] ... \end{tcolorbox}, in grids with tcbraster
+\usepackage[most]{tcolorbox}
+\tcbset{
+  card/.style={enhanced, colback=white, colframe=black!20, boxrule=0.5pt, arc=3pt,
+               left=5pt, right=5pt, top=4pt, bottom=4pt, fontupper=\footnotesize,
+               fontlower=\footnotesize, segmentation style={black!25, dashed},
+               before upper={\raggedright\setlength{\parskip}{3pt}},
+               before lower={\raggedright}},
+  accentcard/.style={card, colback=accent!7, colframe=accent!60},
+  cardgrid/.style={raster equal height=rows, raster column skip=6pt,
+                   raster row skip=6pt, raster before skip=8pt, raster after skip=8pt},
+}
+% Title line of a card: \cardtitle{\faLock}{Title} or \cardtitle{\logo{qwen}}{Title}
+\newcommand\cardtitle[2]{{\color{accent}\large #1}\enspace{\small\bfseries #2}\par}
+
+% Prompts (Appendix): listings needs the accented letters spelled out
+\usepackage{listings}
+\lstdefinestyle{prompt}{
+  basicstyle=\ttfamily\footnotesize,
+  basewidth=0.5em,
+  frame=single,
+  breaklines=true,
+  columns=fullflexible,
+  keepspaces=true,
+  literate={à}{{\`a}}1 {è}{{\`e}}1 {é}{{\'e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
+           {€}{{\texteuro}}1,
+}
+
 \usepackage[backend=biber, style=numeric]{biblatex}
 % Index: mark terms in the text with \index{term}
 \usepackage{makeidx}
 \usepackage[nottoc,notlot,notlof,notbib]{tocbibind}
 \makeindex
 
-\usepackage[hidelinks]{hyperref}
+% hyperfootnotes=false: the footnotes of Table 1.1 are set with \footnotemark/\footnotetext
+\usepackage[hidelinks, hyperfootnotes=false]{hyperref}
+
+% Identifiers from the code (node names, fields, endpoints): \code{fetch_policy_data}.
+% Underscores need no escaping and long names can break across lines.
+\DeclareUrlCommand\code{\urlstyle{tt}}
+
+% Acronyms: declared in acronyms.tex, used with \ac{rag}, listed at the end
+\usepackage{acro}
+\acsetup{make-links=true, list/sort=true, list/display=all}
+\input{acronyms}
 
 \addbibresource{references.bib}
 
@@ -50,6 +129,11 @@
 \input{chapters/conclusions}
 
 % --- Back matter ---
+% Acronyms used in the text (only the ones actually used appear)
+\clearpage
+\addcontentsline{toc}{chapter}{Acronyms}
+\printacronyms[heading=chapter*, name=Acronyms]
+
 % Lists every entry in references.bib, even the ones not cited with \cite
 % (remove this line to list only the cited ones)
 \nocite{*}

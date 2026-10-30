@@ -1,0 +1,38 @@
+% Figure 2.9: what one question costs in free quota, and how many questions fit in a day
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[font=\scriptsize]
+    \newcommand\lgx[1]{\includegraphics[height=0.32cm, width=0.4cm, keepaspectratio]{logos/#1}}
+    % One question: calls and tokens (estimated)
+    \node[anchor=west, font=\footnotesize\bfseries] at (0,0.6) {One question};
+    % \call{row}{logo}{step}{tokens in thousands}{style}{where}
+    \newcommand\call[6]{%
+      \node at (0.25,-#1*0.55) {\lgx{#2}};
+      \node[anchor=west, font=\scriptsize\ttfamily] at (0.55,-#1*0.55) {#3};
+      \fill[#5] (3.4,-#1*0.55-0.15) rectangle ({3.4+#4*0.6},-#1*0.55+0.15);
+      \node[anchor=west, text=black!70] at ({3.45+#4*0.6},-#1*0.55) {#6};}
+    \call{0}{qwen}{input\_guard}{0}{white}{on the server: no quota}
+    \call{1}{openai}{classify}{1.5}{catmodel!35}{$\approx$1.5K tokens, 20b}
+    \call{2}{openai}{rewrite\_query}{0.5}{catmodel!35}{0--2 $\times$ 0.5K, 20b}
+    \call{3}{openai}{generate}{4}{catmodel}{$\approx$4K tokens, 120b}
+    \call{4}{openai}{output\_guard}{4}{catmodel!35}{$\approx$4K tokens, 20b}
+    \call{5}{qwen}{embed, rerank}{0}{white}{on the server: no quota}
+
+    % Daily capacity
+    \begin{scope}[xshift=10.2cm]
+      \node[anchor=west, font=\footnotesize\bfseries] at (0,0.6) {Questions a day};
+      \node[anchor=west] at (0,-0.1) {\lgx{openai}\ gpt-oss-120b: 200K / 4K};
+      \fill[catmodel] (0,-0.75) rectangle (5.0,-0.45);
+      \node[anchor=east, text=white, font=\scriptsize\bfseries] at (5.0,-0.6) {$\approx$50};
+      \node[anchor=west] at (0,-1.25) {\lgx{openai}\ gpt-oss-20b: 200K / 5.5K};
+      \fill[catmodel!35] (0,-1.9) rectangle (3.6,-1.6);
+      \node[anchor=east, font=\scriptsize\bfseries] at (3.6,-1.75) {$\approx$36};
+      \node[anchor=west, text width=5.4cm, align=left] at (0,-2.65)
+        {\textbf{About 35 questions a day}, set by the 20b. Then the chain falls back to Qwen3-4B
+         on the server, slower but without limits.};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{The free quota of one question (estimated tokens) and the questions it allows each day.
+    During development, a cache keeps repeated calls from using quota.}
+  \label{fig:quota}
+\end{figure}

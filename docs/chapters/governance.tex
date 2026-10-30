@@ -1,22 +1,79 @@
 \chapter*{Governance}
 \addcontentsline{toc}{chapter}{Governance}
 
-The project is carried out by a team of three students, Matteo Rizzuto, Mattia Farabollini and
-Paolo Campanari, under the supervision of Prof.\ Flavio Corradini.
+Three students, one supervisor, no fixed roles.
 
-The team has a flat organization based on shared responsibility. There are no fixed roles: every
-member takes part in all the phases of the project, from the analysis of the domain and the
-design of the architecture to the development, the evaluation and the writing of this report.
-In this way each member has a complete view of the system and can take over any activity when
-needed, so the progress of the project never depends on a single person.
+% The team: supervisor, three members on the same level, one shared repository
+\begin{center}
+  \begin{tikzpicture}[font=\footnotesize,
+      person/.style={rounded corners=4pt, cat infra, text width=3.6cm, align=center,
+                     minimum height=1.15cm, inner sep=4pt},
+      link/.style={-{Stealth[length=2mm]}, black!55, line width=0.6pt}]
+    \node[rounded corners=4pt, draw=accent, fill=accent!8, text width=4.6cm, align=center,
+          inner sep=5pt] (sup) at (7.9,0)
+      {{\color{accent}\Large\faIcon{chalkboard-teacher}}\\[2pt]\textbf{Prof.\ Flavio Corradini}\\
+       {\scriptsize\color{black!65}supervisor: requirements, reviews}};
+    \node[person] (m1) at (1.9,-2.6) {{\color{accent}\faUser}\enspace\textbf{Matteo Rizzuto}\\
+      {\scriptsize\color{black!65}every phase}};
+    \node[person] (m2) at (7.9,-2.6) {{\color{accent}\faUser}\enspace\textbf{Mattia Farabollini}\\
+      {\scriptsize\color{black!65}every phase}};
+    \node[person] (m3) at (13.9,-2.6) {{\color{accent}\faUser}\enspace\textbf{Paolo Campanari}\\
+      {\scriptsize\color{black!65}every phase}};
+    \node[rounded corners=4pt, cat data, text width=5.2cm, align=center, inner sep=5pt]
+      (repo) at (7.9,-4.9) {{\Large\faGithub}\\[2pt]\textbf{Shared Git repository}\\
+      {\scriptsize\color{black!65}code and report, visible to all}};
+    % Questions on the requirements go to the supervisor
+    \foreach \m in {m1, m2, m3}
+      \draw[link, dashed] (\m.north) -- (sup.south);
+    \node[fill=white, inner sep=1.5pt, font=\scriptsize\itshape, text=black!65] at (7.9,-1.35)
+      {questions on the requirements};
+    % A flat team: joint decisions
+    \draw[black!40, line width=1.2pt] (m1.east) -- (m2.west);
+    \draw[black!40, line width=1.2pt] (m2.east) -- (m3.west);
+    \node[above, font=\scriptsize\itshape, text=black!65, align=center] at (4.9,-2.6)
+      {joint\\decisions};
+    \node[above, font=\scriptsize\itshape, text=black!65, align=center] at (10.9,-2.6)
+      {joint\\decisions};
+    % Everyone works on the repository
+    \foreach \m in {m1, m2, m3}
+      \draw[link] (\m.south) -- (repo.north);
+  \end{tikzpicture}
+\end{center}
 
-The activities are distributed as the work proceeds, according to the availability of each
-member and to the priorities of the schedule in Figure~\ref{fig:gantt}. Several members can work
-on the same activity, and any activity can be continued by a different member at any time.
+% Everyone, every phase
+\begin{tcbraster}[raster columns=2, cardgrid, raster force size=false]
+  \begin{tcolorbox}[card, add to width=1.2cm]
+    \cardtitle{\faUsers}{Everyone, every phase}
+    \centering
+    \begin{tikzpicture}[font=\scriptsize, x=1.35cm, y=0.42cm]
+      \foreach \name [count=\c] in {Matteo, Mattia, Paolo}
+        \node[font=\scriptsize\bfseries] at (\c+0.6,0.2) {\name};
+      \foreach \phase [count=\r] in {Domain analysis, Architecture, Development, Evaluation, Report} {
+        \node[anchor=east] at (1.15,-\r) {\phase};
+        \foreach \c in {1,2,3}
+          \node[text=good] at (\c+0.6,-\r) {\faCheckCircle};
+      }
+    \end{tikzpicture}
+  \end{tcolorbox}
+  \begin{tcolorbox}[accentcard, add to width=-1.2cm]
+    \cardtitle{\faIcon{shield-alt}}{Why no fixed roles}
+    Everyone knows the whole system: the project never depends on one person.
+  \end{tcolorbox}
+\end{tcbraster}
 
-Decisions that affect the whole project, such as its scope, the architecture and the evaluation
-criteria, are taken jointly by the team. Questions about the requirements are discussed with the
-supervisor.
-
-The code and this report are kept in a shared Git repository: every change is visible to all
-members, who can review it, discuss it and build on it.
+% How the work is organised
+\begin{tcbraster}[raster columns=3, cardgrid]
+  \begin{tcolorbox}[card]
+    \cardtitle{\faTasks}{Flexible tasks}
+    Assigned by availability and Gantt priorities (Figure~\ref{fig:gantt}); anyone can take one
+    over.
+  \end{tcolorbox}
+  \begin{tcolorbox}[card]
+    \cardtitle{\faHandshake}{Joint decisions}
+    Scope, architecture, evaluation: decided together.
+  \end{tcolorbox}
+  \begin{tcolorbox}[card]
+    \cardtitle{\faCodeBranch}{One repository}
+    Code and report in Git, visible to everyone.
+  \end{tcolorbox}
+\end{tcbraster}

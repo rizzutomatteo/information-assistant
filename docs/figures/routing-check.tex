@@ -1,0 +1,45 @@
+% Figure 1.7: (a) what the routing evaluation looks for; (b) the scenarios already verified
+\begin{figure}[H]
+  \centering
+  \begin{minipage}[b]{0.43\textwidth}
+    \centering
+    \begin{tikzpicture}[font=\scriptsize, x=0.4cm, y=0.4cm]
+      \def\intents{polizza, sinistro, pagamenti, prodotto, operatore, reclamo, fuori\_ambito, saluto}
+      \foreach \lab [count=\i from 0] in \intents {
+        \node[anchor=east, font=\scriptsize\ttfamily] at (-0.2,-\i-0.5) {\lab};
+        \node[anchor=west, rotate=90, font=\scriptsize\ttfamily] at (\i+0.5,0.2) {\lab};
+        \fill[good!35] (\i,-\i) rectangle (\i+1,-\i-1);
+      }
+      % The costliest error: a complaint recognised as a question on the policy
+      \fill[bad] (0,-5) rectangle (1,-6);
+      \node[text=white] at (0.5,-5.5) {\faExclamation};
+      \draw[black!25, step=1] (0,0) grid (8,-8);
+      \node[rotate=90, text=black!60] at (-5.2,-4) {true intent};
+      \node[text=black!60] at (4,5.9) {recognised intent};
+    \end{tikzpicture}
+
+    \smallskip
+    {\scriptsize {\color{good}\faSquare}\ correct\quad {\color{bad}\faSquare}\ costliest error}
+    \subcaption{Confusion matrix of the intents.}
+  \end{minipage}\hfill
+  \begin{minipage}[b]{0.54\textwidth}
+    \begin{tcolorbox}[card, fontupper=\footnotesize]
+      \cardtitle{\logo{langgraph}}{Scenarios to run \textmd{(mock services)}}
+      \renewcommand\arraystretch{1.15}
+      \begin{tabular}{@{}l@{\hspace{5pt}}l@{}}
+        {\color{accent}\faSquare[regular]} & Conditions: data and clauses read in parallel \\
+        {\color{accent}\faSquare[regular]} & Status of a claim \\
+        {\color{accent}\faSquare[regular]} & Product question: two rewordings, then an operator \\
+        {\color{accent}\faSquare[regular]} & Conversation resumed after a handover \\
+        {\color{accent}\faSquare[regular]} & Blocked message \\
+        {\color{accent}\faSquare[regular]} & Choice between two policies, then the answer \\
+        {\color{accent}\faSquare[regular]} & Answer rejected twice by the output check \\
+        {\color{accent}\faSquare[regular]} & Guest asks about a policy: asked to log in \\
+      \end{tabular}
+    \end{tcolorbox}
+    \subcaption{Scenarios planned for the graph.}
+  \end{minipage}
+  \caption{Routing and graph tests. In (a), rows are the true intents, columns the recognised
+    ones (labels as in Figure~\ref{fig:intents}).}
+  \label{fig:routing-check}
+\end{figure}

@@ -1,0 +1,39 @@
+% Figure 1.4: the offline pipeline that builds the knowledge base (three steps per row)
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+      font=\scriptsize,
+      stage/.style={rounded corners=3pt, text width=4.75cm, minimum height=1.2cm, inner sep=3pt},
+      num/.style={circle, fill=accent, text=white, font=\scriptsize\bfseries, inner sep=1.2pt,
+                  minimum size=0.42cm},
+      flow/.style={-{Stealth[length=2.2mm]}, accent, line width=0.8pt},
+    ]
+    % \stage{name}{category}{x}{y}{number}{logo or icon}{title}{what it does}
+    \newcommand\stage[8]{%
+      \node[stage, cat #2] (#1) at (#3,#4) {%
+        \begin{tabular}{@{}m{0.75cm}@{\hspace{4pt}}m{3.85cm}@{}}
+          \centering #6 & {\footnotesize\bfseries #7}\newline #8
+        \end{tabular}};
+      \node[num] at (#1.north west) {#5};}
+    \stage{s1}{infra}{2.45}{0}{1}{{\color{catinfra}\huge\faClock}}{Scheduled script}
+      {New or updated FAQ, form, DIP, CGA or support page $\to$ a new version}
+    \stage{s2}{model}{7.9}{0}{2}{\logo[0.6cm]{docling}}{Docling + EasyOCR}
+      {PDF and HTML $\to$ titles, paragraphs, tables; \acs{ocr} only on scans}
+    \stage{s3}{data}{13.35}{0}{3}{\logo[0.6cm]{docling}}{HybridChunker}
+      {One chunk per article, FAQ entry, form or page section\index{chunking}}
+    \stage{s4}{data}{2.45}{-1.95}{4}{{\color{catdata}\huge\faTags}}{Metadata}
+      {Type, product, edition, validity, article, page: the search filters}
+    \stage{s5}{model}{7.9}{-1.95}{5}{\logo[0.6cm]{qwen}}{Qwen3-Embedding-0.6B}
+      {Vector + BM25 text: hybrid search\index{hybrid search}}
+    \stage{s6}{data}{13.35}{-1.95}{6}{\logo[0.6cm]{opensearch}}{OpenSearch}
+      {New index $\to$ evaluation $\to$ alias; instant rollback}
+    \draw[flow] (s1) -- (s2);
+    \draw[flow] (s2) -- (s3);
+    \draw[flow] (s3.south) -- ++(0,-0.2) -| (s4.north);
+    \draw[flow] (s4) -- (s5);
+    \draw[flow] (s5) -- (s6);
+  \end{tikzpicture}
+  \caption{The ingestion pipeline, run offline at every new version of a public document,
+    including the FAQ entries that come from the operators' corrections.}
+  \label{fig:ingestion}
+\end{figure}

@@ -1,0 +1,32 @@
+% Figure 1.4: the sources of the answers, public and personal
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[font=\footnotesize, panel/.style={rounded corners=5pt, inner sep=5pt}]
+    % \doc{row}{icon}{name}{what it holds}
+    \newcommand\doc[4]{%
+      \node at (0.45,-0.55-#1*0.52) {{\color{catdata}\large #2}};
+      \node[anchor=west, font=\footnotesize\bfseries] at (0.85,-0.55-#1*0.52) {#3};
+      \node[anchor=west, text=black!75] at (3.35,-0.55-#1*0.52) {#4};}
+    \node[anchor=west, font=\footnotesize\bfseries] at (0.15,0) {Public documents
+      \textmd{\color{black!60}\ \textbullet\ indexed \textbullet\ for everyone}};
+    \doc{0}{\faQuestionCircle}{FAQ}{short answers, also from the corrections}
+    \doc{1}{\faIcon{file-signature}}{Forms}{what each one is for and how to send it}
+    \doc{2}{\faFileContract}{\acs{dip}}{the pre-contractual summary of each product}
+    \doc{3}{\faBook}{\acs{cga}}{the terms and conditions, edition by edition}
+    \doc{4}{\faLifeRing}{Support pages}{procedures, deadlines, contacts}
+    \begin{scope}[on background layer]
+      \draw[panel, draw=catdata!60, fill=catdata!5] (0,0.32) rectangle (10.1,-2.95);
+    \end{scope}
+    \node[panel, cat sec, text width=5.0cm, align=left, anchor=north west] at (10.45,0.32)
+      {{\footnotesize\bfseries Customer data \textmd{\color{black!60}\textbullet\ after login}}\\[5pt]
+       \logo[0.9em]{mcp}\enspace Read through the policy server: guarantees, limits, deductibles,
+       claims, instalments.\\[4pt]
+       {\color{bad}\faBan}\enspace Never indexed, never seen by a guest.};
+    % Who reads what
+    \node[anchor=west] at (0.15,-3.4) {\faUser\enspace\textbf{Guest}: public documents only};
+    \node[anchor=west] at (10.5,-3.4) {\faUserLock\enspace\textbf{Customer}: both};
+  \end{tikzpicture}
+  \caption{The sources of the answers. A guest gets only general answers; a customer who logs in
+    also gets answers on their own policy.}
+  \label{fig:sources}
+\end{figure}

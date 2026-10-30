@@ -1,0 +1,29 @@
+% Figure 2.8: the eight situations in which the assistant does not answer on its own
+\begin{figure}[H]
+  \centering
+  \newcommand\case[2]{\textbf{#1}\newline{\color{black!65}#2}\par\smallskip}
+  \begin{tcbraster}[raster columns=3, cardgrid, raster before skip=0pt]
+    \begin{tcolorbox}[card, colframe=bad!60]
+      \cardtitle{\logo{chatwoot}}{Operator}
+      \case{Asks for a person}{\code{classify} $\to$ \code{handoff}}
+      \case{Complaint, high priority}{\code{classify} $\to$ \code{handoff}}
+      \case{No clause after 2 rewordings}{\code{grade} $\to$ \code{handoff}}
+      \case{Unverifiable after 1 regeneration}{\code{output_guard} $\to$ \code{handoff}}
+      \case{Writes during a handover}{to Chatwoot; graph stays paused}
+    \end{tcolorbox}
+    \begin{tcolorbox}[card]
+      \cardtitle{\faCommentDots}{Fixed reply or question}
+      \case{Blocked message}{\code{input_guard} $\to$ \code{direct_reply}}
+      \case{Several policies, none named}{\code{resolve_policy} $\to$ \code{ask_clarification}}
+      \case{Personal question, no login}{\code{classify} $\to$ \code{direct_reply}: log in, or
+        ask an operator}
+    \end{tcolorbox}
+    \begin{tcolorbox}[card, colframe=good!60]
+      \cardtitle{\faIcon{file-alt}}{Answer + operator offered}
+      \case{Coverage of an event}{\code{finalize}: clauses and the notice on claims}
+    \end{tcolorbox}
+  \end{tcbraster}
+  \caption{When the assistant does not answer on its own. Summaries for the operator are masked;
+    a rejected draft goes to the operator, never to the customer.}
+  \label{fig:handover}
+\end{figure}

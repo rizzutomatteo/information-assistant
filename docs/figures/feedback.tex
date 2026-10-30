@@ -1,0 +1,42 @@
+% Figure 2.9: how the operators' corrections improve the assistant
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[font=\scriptsize,
+      fbstep/.style={rounded corners=3pt, text width=2.9cm, minimum height=1.45cm, align=left,
+                   inner sep=4pt},
+      fbout/.style={rounded corners=3pt, draw=good!60, fill=good!7, text width=3.0cm,
+                  minimum height=0.95cm, align=left, inner sep=3pt},
+      flow/.style={-{Stealth[length=2.2mm]}, accent, line width=0.8pt}]
+    % \fb{name}{x}{category}{icon}{title}{text}
+    \newcommand\fb[6]{\node[fbstep, cat #3] (#1) at (#2,0)
+      {{\footnotesize\bfseries #4\enspace #5}\\[2pt]#6};}
+    \fb{a}{1.6}{infra}{{\color{accent}\faComments}}{Answer}
+      {with its sources, the intent and the confidence}
+    \fb{o}{5.55}{infra}{\logo{chatwoot}}{Operator}
+      {in Chatwoot, marks a wrong answer and writes the right one, with the reason}
+    \fb{l}{9.5}{data}{\logo{postgresql}}{Log}
+      {corrections and questions left without an answer, masked}
+    \fb{r}{13.45}{sec}{{\color{catsec}\faUsers}}{Review}
+      {every week the team checks each item: nothing enters unchecked}
+    \draw[flow] (a) -- (o);
+    \draw[flow] (o) -- (l);
+    \draw[flow] (l) -- (r);
+    % Approved changes
+    \node[fbout] (u1) at (13.45,-2.25) {\faQuestionCircle\ \textbf{FAQ entries} $\to$ the index
+      (Figure~\ref{fig:ingestion})};
+    \node[fbout] (u2) at (9.5,-2.25) {\faIcon{exchange-alt}\ \textbf{Synonyms} $\to$ the glossary of
+      \code{rewrite_query}};
+    \node[fbout] (u3) at (5.55,-2.25) {\faDatabase\ \textbf{Test cases} $\to$ the golden set};
+    \node[fbout] (u4) at (1.6,-2.25) {\faEdit\ \textbf{Prompt fixes}, tested in \acs{ci} first};
+    \begin{scope}[on background layer]
+      \node[fit=(u1)(u2)(u3)(u4), rounded corners=5pt, draw=good!50, fill=good!3,
+            inner sep=5pt] (box) {};
+    \end{scope}
+    \draw[flow] (r) -- node[right, text=black!70] {approved} (u1);
+    \draw[flow] (box.west) -- ++(-0.15,0) |- node[pos=0.25, right, text=black!70, align=left]
+      {better\\answers} (a.west);
+  \end{tikzpicture}
+  \caption{The operators' corrections, and the questions left without an answer, become better
+    answers after a human review.}
+  \label{fig:feedback}
+\end{figure}

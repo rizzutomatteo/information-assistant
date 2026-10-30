@@ -1,0 +1,52 @@
+% Table 1.1: the evaluation levels. Not a float, so that its footnotes stay on the same page.
+\begin{tcolorbox}[accentcard, top=3pt, bottom=3pt]
+  \cardtitle{\faDatabase}{Golden set}
+  150--300 questions written by the team, by intent and product, each with its expected clauses
+  and a checked answer; it grows with the operators'
+  corrections.\enspace
+  \faArrowRight\ measures quality \textbullet\ calibrates thresholds \textbullet\ accepts every
+  new index
+\end{tcolorbox}
+
+% The table is a \parbox in a paragraph, and the footnote texts follow it in the same paragraph:
+% so caption, table and footnotes stay on the same page (a minipage would number them a, b, c).
+\par\medskip\noindent\parbox{\textwidth}{\centering
+  \captionsetup{hypcap=false}
+  \captionof{table}{Evaluation levels.}
+  \label{tab:evaluation}\par\smallskip
+  \small
+  \renewcommand\arraystretch{1.25}
+  \begin{tabular}{@{}l@{\hspace{10pt}}p{8.3cm}@{\hspace{10pt}}l@{}}
+    \toprule
+    Level & What is checked & Tool \\
+    \midrule
+    {\color{accent}\faSearch}\ Retrieval & Recall@8\footnotemark; no clause from a wrong edition
+      & golden set \\
+    {\color{accent}\faCommentDots}\ Answers & Faithfulness\footnotemark, answer
+      relevancy\footnotemark & \logo{ragas}\,\logo{gemini}\ Ragas, Gemini judge \\
+    {\color{accent}\faCalculator}\ Numbers & Every amount and date found in the sources
+      & validator \\
+    {\color{accent}\faRandom}\ Routing & Confusion matrix of the intents
+      (Figure~\ref{fig:routing-check}) & golden set \\
+    {\color{accent}\faUserSecret}\ Security & Injection, prompt extraction, others' policies
+      $\to$ 404; a guest never reaches policy data & \logo{promptfoo}\ promptfoo \\
+    {\color{accent}\faProjectDiagram}\ Graph & Every routing function, full scenarios with mock
+      services & \logo{pytest}\ pytest \\
+    {\color{accent}\faChartLine}\ Monitoring & Handover, rejection and correction rates,
+      confidence, quota used, response times & logs \\
+    \bottomrule
+  \end{tabular}}%
+\addtocounter{footnote}{-2}%
+\footnotetext{Recall@8: the share of the expected clauses among the eight passages given to the
+  generation model.}%
+\stepcounter{footnote}%
+\footnotetext{Faithfulness: the share of the statements of the answer that are supported by the
+  retrieved sources. The judge is Gemini Flash, free and of a different family than the generator;
+  it only sees the test set.}%
+\stepcounter{footnote}%
+\footnotetext{Answer relevancy: how well the answer addresses the question that was asked.}\par\medskip
+
+\begin{tcolorbox}[accentcard, halign=center, top=2pt, bottom=2pt]
+  \faIcon{sync-alt}\enspace pytest and the retrieval tests run in \ac{ci} at every change; the
+  suites with a model judge run before each release, to spare the free quotas.
+\end{tcolorbox}

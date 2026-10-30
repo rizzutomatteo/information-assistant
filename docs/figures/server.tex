@@ -1,0 +1,51 @@
+% Figure 2.8: the free server (estimated memory of each service) and the free external APIs
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[font=\scriptsize]
+    % \svc{row}{logo or icon}{service}{GB}{style}
+    \newcommand\svc[5]{%
+      \node at (0.3,-#1*0.55) {#2};
+      \node[anchor=west] at (0.65,-#1*0.55) {#3};
+      \fill[#5] (5.2,-#1*0.55-0.16) rectangle ({5.2+#4*0.55},-#1*0.55+0.16);
+      \node[anchor=west, text=black!70] at ({5.25+#4*0.55},-#1*0.55) {#4\,GB};}
+    \newcommand\lgx[1]{\includegraphics[height=0.32cm, width=0.4cm, keepaspectratio]{logos/#1}}
+    \tikzset{on/.style={fill=catdata!70}, demand/.style={pattern=north east lines,
+      pattern color=catdata!80}}
+    % Server frame
+    \draw[rounded corners=4pt, draw=catinfra, line width=0.7pt, fill=catinfra!4]
+      (-0.1,0.95) rectangle (9.4,-6.25);
+    \node[anchor=west, font=\footnotesize\bfseries] at (0.05,0.55)
+      {\lgx{oracle}\enspace Free Oracle Cloud server \textmd{\color{black!60} 4 Arm cores,
+      24\,GB}};
+    \svc{0.4}{\lgx{opensearch}}{OpenSearch (1\,GB heap)}{2.0}{on}
+    \svc{1.4}{\lgx{keycloak}}{Keycloak}{0.8}{on}
+    \svc{2.4}{\lgx{chatwoot}}{Chatwoot + Valkey}{2.2}{on}
+    \svc{3.4}{\lgx{postgresql}}{PostgreSQL}{0.5}{on}
+    \svc{4.4}{\lgx{langgraph}}{API, graph, policy server}{0.6}{on}
+    \svc{5.4}{\lgx{qwen}}{Three Qwen3 0.6B (int8)}{2.0}{on}
+    \svc{6.4}{{\color{catinfra}\faServer}}{Other services on it}{0.5}{on}
+    \svc{7.4}{\lgx{ollama}}{Qwen3-4B fallback}{3.0}{demand}
+    \svc{8.4}{\lgx{docling}}{Docling, when ingesting}{3.5}{demand}
+    \draw[black!30] (0.1,-5.15) -- (9.2,-5.15);
+    \node[anchor=west, font=\footnotesize] at (0.1,-5.55)
+      {\textbf{Always on} $\approx$ 8.6\,GB \quad \textbf{Peak} $\approx$ 15\,GB \quad
+       \textbf{Free} $\geq$ 9\,GB};
+    \node[anchor=west, text=black!55] at (0.1,-5.95) {Estimates, to be measured on the server.};
+
+    % External free APIs
+    \node[anchor=north west, rounded corners=4pt, draw=catmodel, fill=catmodel!6, text width=5.6cm,
+          inner sep=5pt, align=left] at (9.9,0.95) {%
+      {\footnotesize\bfseries \lgx{groq}\enspace Groq, free plan}\\[3pt]
+      \lgx{openai}\ gpt-oss-120b \textbullet\ gpt-oss-20b\\[2pt]
+      each: 30 requests/min, 1{,}000/day,\\ 8K tokens/min, 200K tokens/day};
+    \node[anchor=north west, rounded corners=4pt, draw=catmodel, fill=catmodel!6, text width=5.6cm,
+          inner sep=5pt, align=left] at (9.9,-1.75) {%
+      {\footnotesize\bfseries \lgx{gemini}\enspace Google AI Studio, free}\\[3pt]
+      Gemini Flash, only as the judge of the tests};
+    \node[anchor=north west, text width=5.6cm, align=left, text=black!60] at (9.9,-3.3)
+      {Only what the answer needs is sent, with the identifiers masked.};
+  \end{tikzpicture}
+  \caption{Where everything runs: one free server, plus two free \acsp{api}~\cite{groq2026limits}.
+    Hatched: memory used only when needed.}
+  \label{fig:server}
+\end{figure}

@@ -1,0 +1,40 @@
+% Figure 2.10: time budget of every step of a turn (1.35 cm per second), as design targets
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[font=\scriptsize, x=1.35cm, y=0.95cm]
+    \def\xo{3.45}  % the time axis starts here, in units of 1.35 cm
+    % \step{row}{logo}{node}{note}{from s}{to s}{category}
+    \newcommand\step[7]{%
+      \node at (0.13,-#1) {\includegraphics[height=0.4cm, width=0.45cm, keepaspectratio]{logos/#2}};
+      \node[anchor=west, align=left, text width=3.8cm] at (0.3,-#1)
+        {{\ttfamily #3}\\[-1pt]{\tiny\color{black!60}#4}};
+      \draw[cat #7, rounded corners=1.5pt] (\xo+#5,-#1-0.3) rectangle (\xo+#6,-#1+0.3);}
+    \step{1}{qwen}{input\_guard}{0.6B model on the CPU}{0}{0.5}{sec}
+    \step{2}{openai}{classify}{short \acs{json} on Groq}{0.5}{1.0}{model}
+    \step{3}{mcp}{resolve\_policy}{core insurance system \acsp{api}}{1.0}{1.2}{data}
+    \step{4}{mcp}{fetch\_policy\_data}{in parallel with retrieve}{1.2}{1.4}{data}
+    \step{5}{opensearch}{retrieve}{rerank of 40 on the CPU: the slower}{1.2}{3.2}{data}
+    \step{6}{openai}{generate}{about 300 tokens on Groq}{3.2}{4.7}{model}
+    \step{7}{openai}{output\_guard}{validator + gpt-oss-20b}{4.7}{5.7}{sec}
+    % Durations
+    \foreach \r/\a/\b/\t in {1/0/0.5/0.5, 2/0.5/1.0/0.5, 3/1.0/1.2/0.2, 4/1.2/1.4/0.2,
+                             5/1.2/3.2/2.0, 6/3.2/4.7/1.5, 7/4.7/5.7/1.0}
+      \node[anchor=west, font=\tiny] at (\xo+\b,-\r) {\t\,s};
+    % Axis
+    \draw[black!50] (\xo,-7.6) -- (\xo+8.2,-7.6);
+    \foreach \s in {0,...,8}
+      \draw[black!50] (\xo+\s,-7.6) -- (\xo+\s,-7.75) node[below] {\s\,s};
+    % Targets
+    \draw[bad, dashed, line width=0.8pt] (\xo+8,0.2) -- (\xo+8,-7.6);
+    \node[anchor=south east, text=bad, font=\scriptsize\bfseries] at (\xo+8.05,0.2)
+      {target: under 8\,s};
+    \draw[good, dashed, line width=0.8pt] (\xo+1,0.2) -- (\xo+1,-7.6);
+    \node[anchor=south, text=good, font=\scriptsize\bfseries, align=center] at (\xo+1,0.2)
+      {first progress state within 1\,s};
+    \draw[decorate, decoration={brace, mirror, amplitude=4pt}, black!60]
+      (\xo,-8.45) -- node[below=4pt] {sum of the budgets: 5.7\,s} (\xo+5.7,-8.45);
+  \end{tikzpicture}
+  \caption{Time budget per step, as design targets to be measured (p95: 95\% of the requests
+    within the time).}
+  \label{fig:latency}
+\end{figure}

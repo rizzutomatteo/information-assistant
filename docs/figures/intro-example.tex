@@ -1,0 +1,45 @@
+% Figure I.1: one question and the two places its answer comes from (illustrative example)
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[font=\scriptsize,
+      bubble/.style={rounded corners=7pt, inner sep=5pt, align=left},
+      src/.style={rounded corners=3pt, inner sep=5pt, align=left, text width=5.6cm, anchor=west},
+      link/.style={-{Stealth[length=2mm]}, accent, line width=0.8pt, dashed}]
+    % The chat: each message is placed under the previous one, and the frame fits around them
+    \node[anchor=west, font=\scriptsize\bfseries, text=black!65] (hdr) at (0.2,0.25)
+      {\faComments\enspace Web chat};
+    \node[bubble, fill=accent!14, text width=5.2cm, anchor=north east] (q) at (8.15,-0.15)
+      {La grandine sul tetto della mia auto è coperta? Quanto pago?\\[1pt]
+       {\tiny\color{black!55}Is hail damage to my car roof covered? How much do I pay?}};
+    \path (q.south) ++(0,-3pt) coordinate (qs);
+    \node[anchor=north west, font=\tiny\itshape, text=black!55] (st) at (qs -| hdr.west)
+      {\faSearch\enspace Cerco nelle condizioni di assicurazione\ldots};
+    \path (st.south) ++(0,-3pt) coordinate (ss);
+    \node[bubble, fill=white, draw=black!20, text width=6.6cm, anchor=north west] (a)
+      at (ss -| hdr.west)
+      {Sì: la sua polizza copre la grandine\,\textbf{[1]}. Per questo danno paga uno scoperto del
+       10\%, minimo 250\,€\,\textbf{[2]}.\\[1pt]
+       {\tiny\color{black!55}Yes: your policy covers hail [1]. For this damage you pay 10\%, at least
+       €250 [2].}\\[4pt]
+       {\tiny\textbf{[1]} CGA Auto ed.~03/2024, art.~12, p.~18\quad \textbf{[2]} dati della polizza}\\[3pt]
+       {\tiny\itshape\color{black!70}La decisione sull'indennizzo spetta all'ufficio sinistri.}};
+    \begin{scope}[on background layer]
+      \node[fit=(hdr)(q)(st)(a), rounded corners=6pt, draw=black!25, fill=black!3,
+            inner sep=6pt] {};
+    \end{scope}
+    % The two sources
+    \node[src, cat data] (clause) at (9.6,-0.9)
+      {{\footnotesize\bfseries\faIcon{file-alt}\enspace [1] The clause}\\[2pt]
+       In the \acs{cga}: long contractual PDFs, one per product and edition. The customer's
+       edition counts, not the one on sale.};
+    \node[src, cat data] (data) at (9.6,-3.75)
+      {{\footnotesize\bfseries\faDatabase\enspace [2] The numbers}\\[2pt]
+       In the customer's policy: guarantees, limits, deductibles, claims, instalments. Copied, never
+       computed.};
+    \draw[link] ([yshift=4mm]a.east) -- (clause.west);
+    \draw[link] ([yshift=-4mm]a.east) -- (data.west);
+  \end{tikzpicture}
+  \caption{For a logged-in customer, an answer joins a clause and the customer's own data, and
+    cites both (illustrative example; the assistant speaks Italian).}
+  \label{fig:intro-example}
+\end{figure}

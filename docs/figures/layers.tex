@@ -1,0 +1,109 @@
+% Figure 2.1: the eight layers crossed by a question, with the logo of every technology.
+% Tools sit in three columns, at x = 4.85, 9.25 and 13.65.
+\begin{figure}[p]
+  \centering
+  \begin{tikzpicture}[
+      font=\scriptsize,
+      layer/.style={draw=black!30, fill=black!4, rounded corners=4pt},
+      band/.style={draw=black!45, dashed, rounded corners=4pt},
+      tool/.style={rounded corners=2pt, minimum height=0.85cm, inner sep=2pt},
+      layername/.style={anchor=west, text width=2.3cm, align=left, font=\footnotesize\bfseries},
+      grouptitle/.style={font=\scriptsize\bfseries, text=black!65},
+      hop/.style={-{Stealth[length=2mm]}, black!55, line width=0.6pt},
+      hoplabel/.style={anchor=west, font=\scriptsize\itshape, text=black!70},
+      swatch/.style={rounded corners=1.5pt, minimum width=0.55cm, minimum height=0.32cm},
+    ]
+    % \tool{category}{x}{y}{logo or icon}{name}{role}
+    \newcommand\tool[6]{\node[tool, cat #1] at (#2,#3) {%
+      \begin{tabular}{@{}>{\centering\arraybackslash}m{0.55cm}@{\hspace{3pt}}
+                         >{\raggedright\arraybackslash}m{3.45cm}@{}}
+        #4 & \textbf{#5}\newline #6
+      \end{tabular}};}
+    \newcommand\lgo[1]{\logo[0.5cm]{#1}}
+    \newcommand\ico[1]{{\color{accent}\Large #1}}
+    % \layer{top}{bottom}{number and name}
+    \newcommand\layer[3]{%
+      \draw[layer] (0,#1) rectangle (15.85,#2);
+      \node[layername] at (0.15,{(#1+#2)/2}) {#3};}
+    % \hop{from y}{to y}{what travels between two layers}
+    \newcommand\hop[3]{%
+      \draw[hop] (0.9,#1) -- (0.9,#2);
+      \node[hoplabel] at (1.05,{(#1+#2)/2}) {#3};}
+
+    \layer{0.6}{-0.6}{1\enspace Channels}
+    \tool{infra}{4.85}{0}{\ico{\faComments}}{Web chat}{HTML + JS, served by FastAPI}
+    \hop{-0.6}{-1.1}{message, + JWT after login}
+
+    \layer{-1.1}{-2.3}{2\enspace Access}
+    \tool{infra}{4.85}{-1.7}{\lgo{caddy}}{Caddy}{HTTPS, reverse proxy}
+    \tool{sec}{9.25}{-1.7}{\lgo{keycloak}}{Keycloak}{optional login, token exchange}
+    \hop{-2.3}{-2.8}{verified identity}
+
+    \layer{-2.8}{-4.0}{3\enspace Input guardrail}
+    \tool{model}{4.85}{-3.4}{\lgo{qwen}}{Qwen3Guard-Gen-0.6B}{jailbreaks, banned content}
+    \tool{sec}{9.25}{-3.4}{\lgo{presidio}}{Presidio}{masks personal data}
+    \hop{-4.0}{-4.5}{admitted question}
+
+    \layer{-4.5}{-5.7}{4\enspace Orchestrator}
+    \tool{infra}{4.85}{-5.1}{\lgo{langgraph}}{LangGraph}{graph of 13 nodes}
+    \tool{infra}{9.25}{-5.1}{\lgo{fastapi}}{FastAPI + SSE}{API, streamed states}
+    \tool{model}{13.65}{-5.1}{\lgo{openai}}{gpt-oss-20b}{intent, rewording \textbullet\ Groq}
+    \hop{-5.7}{-6.2}{query, filters, service token}
+
+    \layer{-6.2}{-9.6}{5\enspace Sources\\[2pt]{\mdseries\color{black!60}read in parallel}}
+    \node[grouptitle] at (4.85,-6.45) {Knowledge};
+    \node[grouptitle] at (9.25,-6.45) {Customer data};
+    \node[grouptitle] at (13.65,-6.45) {Memory};
+    \tool{data}{4.85}{-7.125}{\lgo{opensearch}}{OpenSearch}{BM25 + vectors, filters}
+    \tool{model}{4.85}{-8.075}{\lgo{qwen}}{Qwen3-Embedding-0.6B}{clause vectors}
+    \tool{model}{4.85}{-9.025}{\lgo{qwen}}{Qwen3-Reranker-0.6B}{reorders the top 40}
+    \tool{data}{9.25}{-7.125}{\lgo{mcp}}{MCP policy server}{after login, read only}
+    \tool{infra}{9.25}{-8.075}{\ico{\faBuilding}}{Core insurance system}{existing company APIs}
+    \tool{data}{13.65}{-7.125}{\lgo{postgresql}}{PostgreSQL}{checkpoints, audit}
+    \tool{data}{13.65}{-8.075}{\lgo{valkey}}{Valkey}{cache, Chatwoot queues}
+    \hop{-9.6}{-10.1}{clauses + policy data}
+
+    \layer{-10.1}{-11.3}{6\enspace Generation}
+    \tool{model}{4.85}{-10.7}{\lgo{openai}}{gpt-oss-120b}{117B MoE \textbullet\ Groq}
+    \tool{model}{9.25}{-10.7}{\lgo{ollama}}{Qwen3-4B on Ollama}{last fallback, CPU}
+    \hop{-11.3}{-11.8}{draft with citations}
+
+    \layer{-11.8}{-13.0}{7\enspace Output guardrail}
+    \tool{sec}{4.85}{-12.4}{\ico{\faCheckDouble}}{Validator}{citations, amounts, dates}
+    \tool{model}{9.25}{-12.4}{\lgo{openai}}{gpt-oss-20b}{groundedness, criteria}
+    \hop{-13.0}{-13.5}{verified answer}
+
+    \layer{-13.5}{-14.7}{8\enspace Output}
+    \tool{infra}{4.85}{-14.1}{\ico{\faIcon{file-alt}}}{Answer with sources}{citations, intent, confidence}
+    \tool{infra}{9.25}{-14.1}{\lgo{chatwoot}}{Chatwoot}{operator console, corrections}
+
+    % Services used by every layer
+    \draw[band] (0,-15.3) rectangle (15.85,-18.7);
+    \node[layername] at (0.15,-17.0)
+      {Cross-cutting services\\[2pt]{\mdseries\color{black!60}used by every layer}};
+    \node[grouptitle] at (4.85,-15.55) {Observability};
+    \node[grouptitle] at (9.25,-15.55) {Quality};
+    \node[grouptitle] at (13.65,-15.55) {Hosting};
+    \tool{infra}{4.85}{-16.225}{\ico{\faStream}}{JSON logs}{a trace per node, masked}
+    \tool{sec}{4.85}{-17.175}{\ico{\faLink}}{Audit chain}{hash-linked rows}
+    \tool{infra}{9.25}{-16.225}{\logo[0.32cm]{ragas}\,\logo[0.32cm]{gemini}}{Ragas + Gemini}
+      {judge of the tests}
+    \tool{sec}{9.25}{-17.175}{\lgo{promptfoo}}{promptfoo}{red teaming, injection}
+    \tool{infra}{9.25}{-18.125}{\lgo{pytest}}{pytest}{routes, scenarios}
+    \tool{infra}{13.65}{-16.225}{\lgo{docker}}{Docker Compose}{every service, one file}
+    \tool{infra}{13.65}{-17.175}{\lgo{oracle}}{Oracle Cloud}{free server, 4 cores, 24 GB}
+
+    % Legend
+    \node[swatch, cat model] at (0.4,-19.35) {};
+    \node[anchor=west] at (0.75,-19.35) {open-weight model};
+    \node[swatch, cat sec] at (3.8,-19.35) {};
+    \node[anchor=west] at (4.15,-19.35) {security and controls};
+    \node[swatch, cat data] at (7.7,-19.35) {};
+    \node[anchor=west] at (8.05,-19.35) {data and knowledge};
+    \node[swatch, cat infra] at (11.4,-19.35) {};
+    \node[anchor=west] at (11.75,-19.35) {infrastructure and channels};
+  \end{tikzpicture}
+  \caption{The layers of the assistant, crossed by a question from top to bottom. Everything runs
+    on one free server, except the two gpt-oss models (Groq's free \acs{api}).}
+  \label{fig:architecture}
+\end{figure}

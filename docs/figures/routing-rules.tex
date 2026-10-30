@@ -1,0 +1,49 @@
+% Figure 2.5: the three decisions of the graph that are rules written in code
+\begin{figure}[H]
+  \centering
+  \begin{tcbraster}[raster columns=3, cardgrid, raster before skip=0pt]
+    \begin{tcolorbox}[card]
+      \cardtitle{\faFileContract}{Which policy?}
+      \begin{tikzpicture}[font=\scriptsize, rung/.style={rounded corners=2pt, draw=accent!60,
+          fill=accent!6, text width=3.75cm, align=left, inner sep=2.5pt},
+          go/.style={-{Stealth[length=1.6mm]}, accent}]
+        \node[rung] (a) at (0,0) {\textbf{1}\enspace the one named (number, plate)};
+        \node[rung, below=0.22cm of a] (b) {\textbf{2}\enspace the only active one};
+        \node[rung, below=0.22cm of b] (c) {\textbf{3}\enspace the one of the last turn};
+        \node[rung, below=0.22cm of c, draw=bad!60, fill=bad!6] (d) {\textbf{?}\enspace ask the
+          customer};
+        \draw[go] (a) -- (b); \draw[go] (b) -- (c); \draw[go] (c) -- (d);
+      \end{tikzpicture}
+    \end{tcolorbox}
+    \begin{tcolorbox}[card]
+      \cardtitle{\faFilter}{Enough context?}
+      \begin{tikzpicture}[font=\scriptsize, x=4.3cm]
+        \fill[bad!25] (0,0) rectangle (0.55,0.35);
+        \fill[good!25] (0.55,0) rectangle (0.80,0.35);
+        \fill[good!60] (0.80,0) rectangle (1,0.35);
+        \node at (0.275,0.175) {dropped};
+        \node at (0.675,0.175) {kept};
+        \node[text=white] at (0.9,0.175) {strong};
+        \foreach \v in {0, 0.55, 0.80, 1}
+          \draw[black!50] (\v,0) -- (\v,-0.08) node[below, font=\tiny] {\v};
+        \node[anchor=north, text=black!60] at (0.5,-0.33) {rerank score of a clause};
+      \end{tikzpicture}\par
+      Confidence shown with the answer:\par
+      {\color{good}\faCheck}\ \textbf{high}: one strong clause\par
+      {\color{good}\faCheck}\ \textbf{medium}: two kept clauses\par
+      {\color{bad}\faTimes}\ otherwise: reword, then operator\par
+      {\color{black!55}Thresholds calibrated on the golden set.}
+    \end{tcolorbox}
+    \begin{tcolorbox}[card]
+      \cardtitle{\faRedo}{How many attempts?}
+      {\color{accent}\Large\bfseries ×2}\enspace rewordings, with synonyms:\par
+      \textit{furto/sottrazione}, \textit{franchigia/scoperto}, \textit{sinistro/evento}\par
+      {\color{black!55}(theft, deductible, claim)}\par
+      {\color{accent}\Large\bfseries ×1}\enspace regeneration\par
+      {\color{bad}\faHeadset}\ then an operator
+    \end{tcolorbox}
+  \end{tcbraster}
+  \caption{The three decisions that are rules, not model outputs. Counters restart at every
+    turn.}
+  \label{fig:routing-rules}
+\end{figure}

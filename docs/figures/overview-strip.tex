@@ -1,0 +1,25 @@
+% Figure 2.1: a question at a glance, from the chat to the answer (details in the next figure)
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[font=\scriptsize,
+      lay/.style={rounded corners=3pt, text width=1.5cm, minimum height=1.55cm, align=center,
+                  inner sep=2pt},
+      flow/.style={-{Stealth[length=1.8mm]}, accent, line width=0.7pt}]
+    \newcommand\lgx[1]{\includegraphics[height=0.5cm, width=0.62cm, keepaspectratio]{logos/#1}}
+    % \lay{index}{category}{icon or logo}{label}
+    \newcommand\lay[4]{\node[lay, cat #2] (l#1) at ({(#1-1)*1.98},0)
+      {#3\\[3pt]{\bfseries #4}};}
+    \lay{1}{infra}{{\color{accent}\Large\faComments}}{Web chat}
+    \lay{2}{sec}{\lgx{keycloak}}{Optional login}
+    \lay{3}{sec}{\lgx{qwen}}{Input guardrail}
+    \lay{4}{infra}{\lgx{langgraph}}{Orche\-strator}
+    \lay{5}{data}{\lgx{opensearch}\,\lgx{mcp}}{Sources}
+    \lay{6}{model}{\lgx{openai}}{Generation}
+    \lay{7}{sec}{{\color{catsec}\Large\faCheckDouble}}{Output guardrail}
+    \lay{8}{infra}{\lgx{chatwoot}}{Answer or operator}
+    \foreach \a/\b in {1/2,2/3,3/4,4/5,5/6,6/7,7/8}
+      \draw[flow] (l\a) -- (l\b);
+  \end{tikzpicture}
+  \caption{A question at a glance. Figure~\ref{fig:architecture} shows each layer in detail.}
+  \label{fig:overview-strip}
+\end{figure}

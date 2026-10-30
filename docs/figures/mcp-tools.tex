@@ -1,0 +1,24 @@
+% Figure 2.3: the four read-only tools of the policy server, one card each
+\begin{figure}[H]
+  \centering
+  % \mcptool{icon}{function}{what it returns}{protection}
+  \newcommand\mcptool[4]{%
+    \begin{tcolorbox}[card]
+      \cardtitle{#1}{\texttt{#2}}
+      #3\par
+      {\color{catsec}\faLock}\ #4
+    \end{tcolorbox}}
+  \begin{tcbraster}[raster columns=2, cardgrid, raster before skip=0pt]
+    \mcptool{\faList}{list\_my\_policies()}{Product, \acs{cga} edition, status, dates, insured
+      object masked.}{Only the token subject's policies.}
+    \mcptool{\faFileContract}{get\_policy(policy\_id)}{Guarantees, limits, deductibles,
+      premium.}{Someone else's policy: 404, not 403.}
+    \mcptool{\faEuroSign}{get\_payments(policy\_id)}{Instalments, due dates, status.}
+      {IBAN cut to its last four digits.}
+    \mcptool{\faCarCrash}{get\_claims(policy\_id)}{Open claims, stage, contact.}
+      {No reserves, no internal notes.}
+  \end{tcbraster}
+  \caption{The four read-only tools of the policy server, in front of the core insurance system.
+    They are used only after login.}
+  \label{fig:mcp-tools}
+\end{figure}

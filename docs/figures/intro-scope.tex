@@ -1,0 +1,24 @@
+% Figure I.3: scope of the assistant and how its success is measured
+\begin{figure}[H]
+  \centering
+  \newcommand\yes[1]{{\color{good}\faCheck}~#1\par}
+  \newcommand\no[1]{{\color{bad}\faTimes}~#1\par}
+  \newcommand\goal[1]{{\color{accent}\faBullseye}~#1\par}
+  \begin{tcbraster}[raster columns=2, cardgrid, raster before skip=0pt]
+    \begin{tcolorbox}[card, colframe=good!60]
+      \cardtitle{\faCheckCircle}{In scope}
+      \yes{Questions on products, forms and procedures, without login}
+      \yes{After login: one's own policy, claims and payments}
+      \yes{Handover to an operator}
+      \yes{Learning from the operators' corrections}
+    \end{tcolorbox}
+    \begin{tcolorbox}[card, colframe=bad!60]
+      \cardtitle{\faTimesCircle}{Out of scope}
+      \no{Deciding whether a claim is paid}
+      \no{Selling or pricing products}
+      \no{Handling complaints: they go to the complaints office}
+    \end{tcolorbox}
+  \end{tcbraster}
+  \caption{Scope of the assistant and how its success is measured.}
+  \label{fig:intro-scope}
+\end{figure}

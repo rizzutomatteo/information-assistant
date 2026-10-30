@@ -2,64 +2,94 @@
 \label{chap:architecture}
 
 \section{Architecture Overview}
-\label{sec:architecture-overview}
+\label{sec:architecture-overview}\index{architecture}\index{login}\index{guest}\index{Keycloak}\index{Caddy}
 
-\begin{figure}[htbp]
-  \centering
-  \begin{tikzpicture}[
-      component/.style={draw, rounded corners, fill=blue!10, minimum width=3.4cm,
-                        minimum height=1.1cm, align=center},
-      external/.style={draw, rounded corners, fill=gray!15, minimum width=3.4cm,
-                       minimum height=1.1cm, align=center},
-      interaction/.style={-{Stealth[length=2.5mm]}, thick},
-      edgelabel/.style={font=\small\itshape, fill=white, inner sep=1pt},
-      node distance=1.4cm and 2.2cm,
-    ]
-    \node[external]                 (user) {External User};
-    \node[component, below=of user] (a)    {Component A};
-    \node[component, below=of a]    (b)    {Component B};
-    \node[component, below=of b]    (c)    {Component C};
-    \node[external, right=of b]     (ext)  {External Service};
+A question crosses eight layers (Figure~\ref{fig:architecture}): from the web chat to access
+control, the input guardrail, the LangGraph\index{LangGraph} orchestrator~\cite{langgraph}, the
+sources, the generation and the output guardrail, up to the answer or an operator. Login is optional: a guest gets general answers from the
+public documents, a customer also gets answers on their own policy. Everything is free: one
+server, plus Groq's free \acs{api} for the two large models (Figure~\ref{fig:overview-strip}).
 
-    \node[draw, dashed, rounded corners, inner sep=0.5cm, fit=(a) (b) (c),
-          label={[font=\small\bfseries]below:Information Assistant}] (system) {};
+\input{figures/overview-strip}
+\input{figures/layers}
 
-    \draw[interaction] (user) -- node[edgelabel, right] {request} (a);
-    \draw[interaction] (a)    -- node[edgelabel, right] {call}    (b);
-    \draw[interaction] (b)    -- node[edgelabel, right] {query}   (c);
-    \draw[interaction] (b)    -- node[edgelabel, above] {request} (ext);
-  \end{tikzpicture}
-  \caption{Components of the system and their interactions.}
-  \label{fig:architecture}
-\end{figure}
-
-\clearpage
 \section{Components}
-\label{sec:components}
+\label{sec:components}\index{policy server}\index{token exchange}\index{core insurance system}
 
-\subsection{Component A}
-\label{sec:component-a}
+Figure~\ref{fig:architecture} shows every component and its role; technologies, licences and
+details are in Table~\ref{tab:components} (Appendix). The policy
+server\index{Model Context Protocol}~\cite{mcp} exposes four read-only tools over the company's core
+insurance system (Figure~\ref{fig:mcp-tools}). Keycloak issues its tokens
+through standard token exchange~\cite{keycloak2026tokenexchange}.
 
-\begin{description}
-  \item[What it is:]
-  \item[What it does:]
-\end{description}
-
-\subsection{Component B}
-\label{sec:component-b}
-
-\begin{description}
-  \item[What it is:]
-  \item[What it does:]
-\end{description}
-
-\subsection{Component C}
-\label{sec:component-c}
-
-\begin{description}
-  \item[What it is:]
-  \item[What it does:]
-\end{description}
+\input{figures/mcp-tools}
 
 \section{Component Interactions}
 \label{sec:interactions}
+
+The intent recognised by \code{classify} decides the route (Figure~\ref{fig:intents}). A turn is
+one run of the graph (Figure~\ref{fig:graph}): after each node, a function written in code picks
+the next one.\index{intent}
+
+\input{figures/intents}
+\input{figures/graph}
+
+\subsection{Routing Rules}
+\label{sec:routing}\index{confidence}\index{policy selection}\index{rewording}
+
+Policy data and clauses are read in parallel, and \code{grade} starts once, after both. Three
+decisions are plain rules (Figure~\ref{fig:routing-rules}).
+
+\input{figures/routing-rules}
+
+\needspace{7cm}
+\subsection{State and Context}
+\label{sec:state-context}\index{state}\index{context}
+
+The identity never reaches a prompt (Figure~\ref{fig:state-context}).
+
+\input{figures/state-context}
+
+\subsection{API and Streaming}
+\label{sec:api}\index{streaming}\index{FastAPI}
+
+Two endpoints: the customer's messages and Chatwoot's webhook (Figure~\ref{fig:sequence}). The
+client receives progress states, never an unverified draft.
+
+\input{figures/sequence}
+
+\needspace{7cm}
+\subsection{Handover to the Operator}
+\label{sec:handover}\index{handover}\index{Chatwoot}
+
+Nine situations end with a person or a fixed reply (Figure~\ref{fig:handover}).
+
+\input{figures/handover}
+
+\subsection{Operator Corrections}
+\label{sec:corrections}\index{operator corrections}\index{unanswered questions}
+
+What the operators correct, and what the assistant could not answer, comes back as better
+answers, through a human review (Figure~\ref{fig:feedback}).
+
+\input{figures/feedback}
+
+\needspace{7cm}
+\subsection{Failure Handling}
+\label{sec:failures}\index{failure handling}\index{fallback chain}
+
+Every component has a planned reaction when it fails (Figure~\ref{fig:failures}).
+
+\input{figures/failures}
+
+\section{Deployment}
+\label{sec:deployment}\index{deployment}\index{Docker Compose}\index{latency budget}\index{Oracle Cloud}
+
+Everything runs on one free server, with the two large models on Groq's free \acs{api}
+(Figure~\ref{fig:server}). The free quota sets how many questions fit in a day
+(Figure~\ref{fig:quota}), and each step of a turn has a time budget
+(Figure~\ref{fig:latency}). Memory and times are estimates, to be measured.
+
+\input{figures/server}
+\input{figures/quota}
+\input{figures/latency}

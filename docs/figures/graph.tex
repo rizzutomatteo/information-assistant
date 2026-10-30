@@ -1,0 +1,101 @@
+% Figure 2.2: the LangGraph graph of a conversation turn; badges show the technology of each node
+\begin{figure}[p]
+  \centering
+  \begin{tikzpicture}[
+      font=\scriptsize,
+      gnode/.style={rounded corners=3pt, text width=2.6cm, minimum height=0.8cm, align=center,
+                    inner sep=2pt},
+      term/.style={dashed},
+      pill/.style={rounded corners=7pt, draw=black!55, fill=black!5, minimum width=1.4cm,
+                   minimum height=0.45cm, font=\scriptsize\bfseries},
+      route/.style={-{Stealth[length=2mm]}, black!60, line width=0.6pt},
+      loop/.style={route, dashed},
+      elabel/.style={font=\scriptsize, text=black!75, align=center, inner sep=1.5pt},
+      badge/.style={circle, fill=white, draw=black!25, inner sep=1pt, minimum size=0.5cm},
+    ]
+    % \gnode{name}{category, extra styles}{x}{y}{node}{what it uses}
+    \newcommand\gnode[6]{%
+      \node[gnode, cat #2] (#1) at (#3,#4) {{\ttfamily #5}\\{\color{black!70}#6}};}
+    % \badge{node}{logo}: the logo on the top-left corner of a node
+    \newcommand\badge[2]{%
+      \node[badge] at ([xshift=-1.6mm, yshift=1.6mm]#1.north west) {\includegraphics[height=0.3cm, width=0.34cm,
+        keepaspectratio]{logos/#2}};}
+
+    \node[pill] (start) at (4.6,0) {START};
+    \gnode{ig}{sec}{4.6}{-1.2}{input\_guard}{Qwen3Guard 0.6B}
+    \gnode{cl}{model}{4.6}{-2.75}{classify}{gpt-oss-20b}
+    \gnode{dr}{infra, term}{0}{-2.75}{direct\_reply}{fixed replies}
+    \gnode{rp}{data}{4.6}{-4.3}{resolve\_policy}{MCP, policy list}
+    \gnode{ac}{infra, term}{0}{-4.3}{ask\_clarification}{which policy?}
+    \gnode{fp}{data}{4.6}{-5.85}{fetch\_policy\_data}{MCP, read only}
+    \gnode{rt}{data}{9.0}{-5.85}{retrieve}{search + rerank}
+    \gnode{gr}{data}{4.6}{-7.4}{grade}{rerank threshold}
+    \gnode{rq}{model}{9.0}{-7.4}{rewrite\_query}{gpt-oss-20b, glossary}
+    \gnode{ge}{model}{4.6}{-8.95}{generate}{gpt-oss-120b}
+    \gnode{ho}{infra, term}{12.9}{-8.95}{handoff}{Chatwoot + pause}
+    \gnode{og}{sec}{4.6}{-10.5}{output\_guard}{validator + 20b}
+    \gnode{fi}{infra}{4.6}{-12.05}{finalize}{sources, audit}
+    \node[pill] (end) at (4.6,-13.3) {END};
+    \badge{ig}{qwen} \badge{cl}{openai} \badge{rq}{openai}
+    \badge{rp}{mcp} \badge{fp}{mcp} \badge{rt}{opensearch}
+    \badge{ge}{openai} \badge{og}{openai} \badge{ho}{chatwoot}
+    \badge{fi}{postgresql}
+
+    \draw[route] (start) -- (ig);
+    \draw[route] (ig) -- node[elabel, right] {admitted} (cl);
+    \draw[route] (ig.west) -| node[elabel, above, pos=0.25] {blocked} (dr.north);
+    \draw[route] (cl.west) -- node[elabel, above] {greeting,\\off-topic,\\no login} (dr.east);
+    \draw[route] ([yshift=2mm]cl.east) -| (ho.north);
+    \node[elabel, above] at (11.0,-2.55) {operator, complaint};
+    \draw[route] ([yshift=-2mm]cl.east) -| (rt.north);
+    \node[elabel, below] at (7.6,-2.95) {product};
+    \draw[route] (cl) -- node[elabel, right] {policy, claim,\\payment} (rp);
+    \draw[route] (rp.west) -- node[elabel, above] {no single\\policy} (ac.east);
+    \draw[route] (rp) -- node[elabel, right] {policy found} (fp);
+    \draw[route] (rp.east) -- node[elabel, above] {in parallel} (9.0,-4.3);
+    \fill[black!60] (9.0,-4.3) circle (1.6pt);
+    \draw[route] (fp) -- (gr);
+    \draw[route] (fp.west) -- ++(-0.6,0) |- ([yshift=1.5mm]ge.west);
+    \node[elabel, left] at (2.6,-7.4) {claim,\\payment};
+    \draw[route] ([xshift=-6mm]rt.south) -- ++(0,-0.2) -| ([xshift=6mm]gr.north);
+    \draw[route] ([yshift=1.5mm]gr.east) -- node[elabel, above, pos=0.35] {context\\too weak}
+      ([yshift=1.5mm]rq.west);
+    \draw[loop] ([xshift=6mm]rq.north) -- node[elabel, right] {max 2} ([xshift=6mm]rt.south);
+    \draw[route] (gr) -- node[elabel, right] {enough\\context} (ge);
+    \draw[route] ([yshift=-1.5mm]gr.east) -- ++(0.45,0) |- (ho.west);
+    \node[elabel, above] at (9.4,-8.95) {no relevant clause};
+    \draw[route] (ge) -- (og);
+    \draw[loop] (og.west) -- ++(-0.3,0) |- ([yshift=-1.5mm]ge.west);
+    \node[elabel, left] at (2.85,-9.8) {regenerate,\\max 1};
+    \draw[route] (og) -- node[elabel, right] {verified} (fi);
+    \draw[route] (og.east) -| (ho.south);
+    \node[elabel, above] at (9.4,-10.5) {not verifiable};
+    \draw[route] (fi) -- (end);
+
+    % Legend: what colours, borders, arrows and badges mean
+    \begin{scope}[yshift=-14.3cm]
+      \node[rounded corners=4pt, draw=black!20, fill=black!3, minimum width=15.4cm,
+            minimum height=1.55cm] at (6.45,-0.45) {};
+      \newcommand\sw[3]{\node[rounded corners=2pt, cat #1, minimum width=0.6cm,
+        minimum height=0.32cm] at (#2,0) {}; \node[anchor=west] at (#2+0.4,0) {#3};}
+      \sw{model}{-0.6}{language model}
+      \sw{sec}{3.3}{check}
+      \sw{data}{5.6}{data and search}
+      \sw{infra}{9.0}{output}
+      \node[rounded corners=2pt, cat infra, dashed, minimum width=0.6cm, minimum height=0.32cm]
+        at (11.3,0) {};
+      \node[anchor=west] at (11.7,0) {ends the turn};
+      \draw[route] (-0.9,-0.85) -- (-0.1,-0.85);
+      \node[anchor=west] at (0,-0.85) {route chosen by code};
+      \draw[loop] (3.0,-0.85) -- (3.8,-0.85);
+      \node[anchor=west] at (3.9,-0.85) {loop with a maximum};
+      \fill[black!60] (7.6,-0.85) circle (1.6pt);
+      \node[anchor=west] at (7.8,-0.85) {nodes in parallel};
+      \node[badge] at (10.9,-0.85) {\includegraphics[height=0.3cm, width=0.34cm,
+        keepaspectratio]{logos/openai}};
+      \node[anchor=west] at (11.25,-0.85) {technology used};
+    \end{scope}
+  \end{tikzpicture}
+  \caption{The graph of a conversation turn.}
+  \label{fig:graph}
+\end{figure}

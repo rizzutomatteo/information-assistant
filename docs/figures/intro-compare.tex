@@ -1,0 +1,32 @@
+% Figure I.2: what goes wrong with a generic chatbot, and what this assistant does instead
+\begin{figure}[H]
+  \centering
+  \small
+  \renewcommand\arraystretch{1.5}
+  % \leavevmode: a colour at the start of a table cell would otherwise push the text a line down
+  \newcommand\no{\leavevmode{\color{bad}\faTimesCircle}\ }
+  \newcommand\yes{\leavevmode{\color{good}\faCheckCircle}\ }
+  \begin{tabularx}{\textwidth}{@{}l@{\hspace{6pt}}L{2.6cm}YY@{\hspace{6pt}}r@{}}
+    \toprule
+    & \textbf{Risk} & \textbf{A generic chatbot} & \textbf{This assistant} & \\
+    \midrule
+    {\color{accent}\faMagic} & Invented answers & \no fills the gaps with general knowledge
+      & \yes answers only from the sources, cites them, says when it does not know
+      & {\scriptsize\S\ref{sec:routing}} \\
+    {\color{accent}\faHistory} & Wrong edition & \no reads the conditions on sale today
+      & \yes reads the edition the customer signed & {\scriptsize\S\ref{sec:knowledge-base}} \\
+    {\color{accent}\faCalculator} & Wrong numbers & \no computes or estimates amounts
+      & \yes copies them from the policy and checks them
+      & {\scriptsize\S\ref{sec:architecture-overview}} \\
+    {\color{accent}\faHandshake} & Promises & \no may promise or deny a payment
+      & \yes never decides: the claims office does & {\scriptsize\S\ref{sec:constraints}} \\
+    {\color{accent}\faUserSecret} & Other people's data & \no can be talked into showing it
+      & \yes identity from the token, never from the prompt & {\scriptsize\S\ref{sec:state-context}} \\
+    {\color{accent}\faEuroSign} & Cost & \no paid \acsp{api} or \acsp{gpu}
+      & \yes one free server and free quotas & {\scriptsize\S\ref{sec:deployment}} \\
+    \bottomrule
+  \end{tabularx}
+  \caption{What can go wrong when a chatbot answers about insurance, and how this assistant
+    prevents it.}
+  \label{fig:intro-compare}
+\end{figure}

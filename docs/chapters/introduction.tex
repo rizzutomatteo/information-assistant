@@ -1,12 +1,51 @@
 \chapter*{Introduction}
 \addcontentsline{toc}{chapter}{Introduction}
 
+% Figures of this unnumbered chapter are numbered I.1, I.2, ...
+\begingroup
+\setcounter{figure}{0}
+\renewcommand\thefigure{I.\arabic{figure}}
+\renewcommand\theHfigure{intro.\arabic{figure}}
+
+A customer who wants to know whether a hailstorm is covered should not have to read dozens of
+pages of conditions, nor wait for the office to open. This project builds an assistant that gives
+that answer at any hour, in plain Italian, with its sources, and that knows when to call a person.
+Anyone can ask about the company's products; customers who log in can also ask about their own
+policy.\index{guest}\index{login}
+
 \section*{Application Domain}
 \addcontentsline{toc}{section}{Application Domain}
+
+Insurance customers ask the same questions again and again: what is covered, what is excluded,
+how much they pay, which form to fill in, where their claim stands. The answers are spread over
+FAQs, forms, support pages, the \acf{dip} and the \acf{cga}, long contractual documents that change
+with every edition; for a customer, the numbers are in their own policy
+(Figure~\ref{fig:intro-example}).
+
+\input{figures/intro-example}
 
 \section*{Motivation}
 \addcontentsline{toc}{section}{Motivation}
 
+A language model can read those documents and answer in seconds, and a \ac{rag} system gives it
+the right passages. But in insurance a fluent answer is not enough: an invented clause, a number
+from the wrong edition or a promise of payment can cost the company a complaint, and the customer
+a wrong decision. The assistant is designed around these risks (Figure~\ref{fig:intro-compare}),
+and it does so at zero cost.
+
+\input{figures/intro-compare}
+
 \section*{Problem Statement}
 \addcontentsline{toc}{section}{Problem Statement}
 
+\begin{tcolorbox}[accentcard, top=4pt, bottom=4pt]
+  \cardtitle{\faBullseye}{Goal}
+  An assistant that answers in Italian, only from the approved documents, citing every source:
+  general questions for anyone, and questions on their own policy for customers who log in. It
+  states its confidence, hands the conversation to a person whenever it cannot answer safely,
+  learns from the operators' corrections, and costs nothing to run.
+\end{tcolorbox}
+
+\input{figures/intro-scope}
+
+\endgroup

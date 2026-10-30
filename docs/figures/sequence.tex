@@ -1,0 +1,49 @@
+% Figure 2.6: a conversation turn over the API, with progress events and a handover to an operator
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+      font=\scriptsize,
+      actor/.style={rounded corners=3pt, draw=black!40, fill=black!4, align=center,
+                    minimum width=2.6cm, minimum height=0.9cm},
+      call/.style={-{Stealth[length=2mm]}, black!75, line width=0.6pt},
+      event/.style={-{Stealth[length=2mm]}, accent, line width=0.6pt, dashed},
+      msg/.style={fill=white, inner sep=1.5pt, align=center},
+    ]
+    \def\xc{1.3} \def\xa{6.9} \def\xg{10.6} \def\xo{14.4}
+    \node[actor] at (\xc,0) {{\color{accent}\faComments}\\Web chat};
+    \node[actor] at (\xa,0) {\logo{fastapi}\\Orchestrator \acs{api}};
+    \node[actor] at (\xg,0) {\logo{langgraph}\\Graph};
+    \node[actor] at (\xo,0) {\logo{chatwoot}\\Chatwoot (operator)};
+    \foreach \x in {\xc, \xa, \xg, \xo} \draw[black!30, dashed] (\x,-0.45) -- (\x,-8.7);
+
+    % A normal turn
+    \draw[call] (\xc,-1.0) -- node[msg, above] {{\tiny\ttfamily POST /v1/conversazioni/\{conv\_id\}/messaggi}
+      \ + \acs{jwt} after login} (\xa,-1.0);
+    \draw[call] (\xa,-2.35) -- node[msg, above] {run, with context} (\xg,-2.35);
+    \draw[event] (\xg,-2.9) -- (\xc,-2.9);
+    \node[msg, anchor=south west, text=accent, yshift=1.5pt] at (\xc+0.15,-2.9) {\code{stato}: progress};
+    \draw[event] (\xg,-3.55) -- (\xc,-3.55);
+    \node[msg, anchor=south west, text=accent, yshift=1.5pt] at (\xc+0.15,-3.55) {\code{risposta}: after \code{finalize}};
+
+    % A handover
+    \draw[black!35, dash dot] (0,-4.05) -- (15.7,-4.05);
+    \node[fill=white, text=black!60, font=\scriptsize\itshape] at (8,-4.05) {handover};
+    \draw[call] (\xg,-4.6) -- node[msg, above] {ticket, masked summary; pause} (\xo,-4.6);
+    \draw[event] (\xg,-5.25) -- (\xc,-5.25);
+    \node[msg, anchor=south west, text=accent, yshift=1.5pt] at (\xc+0.15,-5.25) {\code{operatore}: ticket};
+    \draw[call] (\xc,-5.9) -- node[msg, above] {message while paused} (\xa,-5.9);
+    \draw[call] (\xa,-6.35) -- node[msg, pos=0.75, above] {forwarded} (\xo,-6.35);
+    \draw[call] (\xo,-7.1) -- node[msg, above, pos=0.45]
+      {{\tiny\ttfamily POST /webhook/chatwoot/conversazione-risolta}, \acs{hmac} verified} (\xa,-7.1);
+    \draw[call] (\xa,-7.7) -- node[msg, above] {resume} (\xg,-7.7);
+    \draw[event] (\xg,-8.35) -- (\xc,-8.35);
+    \node[msg, anchor=south west, text=accent, yshift=1.5pt] at (\xc+0.15,-8.35) {closing note};
+
+    % Legend
+    \draw[call] (0,-9.15) -- (0.6,-9.15) node[right, text=black] {call};
+    \draw[event] (2.2,-9.15) -- (2.8,-9.15) node[right, text=black] {\acs{sse} event};
+  \end{tikzpicture}
+  \caption{A turn over the \acs{api}. The thread is keyed by the token subject (or a guest
+    session) and the conversation, so no one can resume someone else's.}
+  \label{fig:sequence}
+\end{figure}

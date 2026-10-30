@@ -1,0 +1,54 @@
+% Figure 1.5: why every chunk keeps its edition (illustrative example)
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[font=\scriptsize]
+    % --- Left: editions of the same product over time
+    \draw[-{Stealth[length=2mm]}, black!50] (0,0) -- (9.4,0) node[right] {time};
+    \foreach \x/\y in {0.4/2023, 3.0/2024, 5.6/2025, 8.2/2026}
+      \draw[black!50] (\x,0.08) -- (\x,-0.08) node[below, text=black!60] {\y};
+    \fill[catdata!35] (0.4,0.35) rectangle (2.95,0.75);
+    \node at (1.675,0.55) {\textbf{ed.\ 2023}};
+    \fill[catdata!55] (3.05,0.35) rectangle (7.95,0.75);
+    \node at (5.5,0.55) {\textbf{ed.\ 03/2024}};
+    \fill[catdata!80] (8.05,0.35) rectangle (9.3,0.75);
+    \node[text=white] at (8.675,0.55) {\textbf{on sale}};
+    \node[anchor=west, text=black!60] at (0,-0.75) {\textbf{CGA Auto}: every edition stays in the index};
+    % Readers
+    \node[draw=accent, rounded corners=2pt, fill=accent!8, align=center] (a) at (1.675,2.2)
+      {\faUser\ policy issued\\in 2023};
+    \node[draw=accent, rounded corners=2pt, fill=accent!8, align=center] (b) at (5.5,2.2)
+      {\faUser\ policy issued\\in 2025};
+    \node[draw=accent, rounded corners=2pt, fill=accent!8, align=center] (c) at (8.675,2.2)
+      {\faQuestionCircle\ question on\\a product};
+    \foreach \n/\x in {a/1.675, b/5.5, c/8.675}
+      \draw[-{Stealth[length=2mm]}, accent, line width=0.7pt] (\n.south) -- (\x,0.8);
+
+    % --- Right: one chunk and its metadata
+    \node[anchor=north west, draw=catdata, fill=catdata!8, rounded corners=3pt, text width=5.1cm,
+          inner sep=5pt, align=left] at (10.3,2.75) {%
+      {\footnotesize\bfseries\faIcon{file-alt}\ One chunk = one article}\\[3pt]
+      {\scriptsize\begin{tabular}{@{}l@{\hspace{5pt}}l@{}}
+        \code{product_code} & AUTO \\
+        \code{cga_version} & 03/2024 \\
+        \code{valid_from}, \code{valid_to} & validity dates \\
+        \code{section}, \code{article} & art.~12 \\
+        \code{page} & 18 \\
+        \code{guarantee} & the guarantee \\
+        \code{doc_type} & \acs{cga} \\
+      \end{tabular}}\\[3pt]
+      {\color{black!60}\textit{text of the article, with its section title}}\\[3pt]
+      \faArrowRight\ cited as \enquote{CGA Auto ed.~03/2024, art.~12, p.~18}};
+  \end{tikzpicture}
+  \caption{Each customer reads the edition they signed; a product question reads the one on
+    sale (illustrative example).}
+  \label{fig:editions}
+\end{figure}
+
+\noindent
+\begin{tabularx}{\textwidth}{@{}l@{\hspace{8pt}}Y@{}}
+  {\color{accent}\faUserSecret} & Issued policies never enter the shared index: personal data
+    comes only from the \acsp{api} (personalised riders, if any, in a separate per-customer
+    index). \\[2pt]
+  {\color{accent}\faFilePdf} & The original PDFs are kept on the server: every citation opens
+    the official page. \\
+\end{tabularx}

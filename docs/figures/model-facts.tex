@@ -1,0 +1,31 @@
+% Figure 1.3: three facts behind the choices
+\begin{figure}[H]
+  \centering
+  \begin{tcbraster}[raster columns=3, cardgrid, raster before skip=0pt]
+    \begin{tcolorbox}[card]
+      \cardtitle{\logo{oracle}}{Hosting}
+      {\color{accent}\LARGE\bfseries 0\,€}\,{\color{accent} a month}\par
+      one free Oracle Cloud server (4 Arm cores, 24\,GB) plus free \acs{api} quotas.
+    \end{tcolorbox}
+    \begin{tcolorbox}[card]
+      \cardtitle{\logo{groq}}{Free quota}
+      {\color{accent}\LARGE\bfseries 200K}\,{\color{accent} tokens/day}\par
+      for each gpt-oss model~\cite{groq2026limits}: about 35 questions a day
+      (Figure~\ref{fig:quota}).
+    \end{tcolorbox}
+    \begin{tcolorbox}[card]
+      \cardtitle{\logo{qwen}\,\logo{openai}}{Two guardrails}
+      \begin{tikzpicture}[font=\scriptsize]
+        \fill[catmodel] (0,0.4) rectangle (3.0,0.7);
+        \node[anchor=west] at (3.05,0.55) {91.0\%};
+        \node[anchor=west, text=white, font=\scriptsize\bfseries] at (0,0.55) {known prompts};
+        \fill[bad] (0,0) rectangle (1.115,0.3);
+        \node[anchor=west] at (1.17,0.15) {33.8\% \enspace new prompts};
+      \end{tikzpicture}\par
+      Qwen3Guard alone is not enough~\cite{young2025guardrails}\index{guardrail}: an output check
+      too, and data protected by the policy server.
+    \end{tcolorbox}
+  \end{tcbraster}
+  \caption{Three facts behind the choices.}
+  \label{fig:model-facts}
+\end{figure}

@@ -1,0 +1,42 @@
+% Figure 2.6: state (changed by the nodes, saved) versus context (the identity, never in prompts)
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}[
+      font=\scriptsize,
+      panel/.style={rounded corners=4pt, inner sep=5pt, align=left, anchor=north west},
+      dest/.style={rounded corners=3pt, align=center, text width=3.6cm, anchor=north},
+      ok/.style={-{Stealth[length=2.2mm]}, good, line width=0.9pt},
+      no/.style={-{Stealth[length=2.2mm]}, bad, line width=0.9pt, dashed},
+    ]
+    \node[panel, cat data, text width=7.3cm] (state) at (0,0) {%
+      {\small\bfseries \logo{postgresql}\enspace State}\hfill{\color{black!60}saved at every step,
+      \acs{aes}}\\[4pt]
+      \begin{tabular}{@{}>{\raggedright\arraybackslash}p{2.9cm}@{\hspace{8pt}}
+                         >{\raggedright\arraybackslash}p{4.1cm}@{}}
+        \textbf{kept between turns} & \textbf{reset at every turn} \\[2pt]
+        {\ttfamily messages}\newline {\ttfamily policy\_id}\newline {\ttfamily policy\_meta}
+        & {\ttfamily intent, query, policy\_hint, candidates, policy, chunks, context\_ok,
+           attempts, gen\_attempts, draft, verdict, handoff\_reason} \\
+      \end{tabular}};
+    \node[panel, cat sec, text width=6.9cm] (ctx) at (8.45,0) {%
+      {\small\bfseries \logo{keycloak}\enspace Context}\hfill{\color{black!60}from the verified
+      \acs{jwt}}\\[4pt]
+      \begin{tabular}{@{}l@{\hspace{6pt}}>{\raggedright\arraybackslash}p{4.4cm}@{}}
+        {\ttfamily customer\_id} & token subject; none for a guest \\
+        {\ttfamily access\_token} & {\ttfamily polizze-mcp}, read only; customers only \\
+        {\ttfamily channel} & {\ttfamily web} \\
+      \end{tabular}};
+    \path (state.south) ++(0,-0.9) node[dest, draw=catmodel, fill=catmodel!8] (prompt)
+      {\faRobot\enspace\textbf{Prompts}};
+    \path (ctx.south) ++(0,-0.9) node[dest, draw=catdata, fill=catdata!10] (mcp)
+      {\logo{mcp}\enspace\textbf{Policy server}};
+    \draw[ok] (state.south) -- node[right, text=good] {\faCheck} (prompt.north);
+    \draw[ok] (ctx.south) -- node[right, text=good] {\faCheck\ token} (mcp.north);
+    \draw[no] ([xshift=6mm]ctx.south west) -- node[pos=0.5, fill=white, inner sep=1pt, text=bad]
+      {\faTimes\ never} (prompt.north east);
+  \end{tikzpicture}
+  \caption{The identity lives in the context, which never reaches a prompt: a message like
+    \enquote{show me customer 1234's policy} cannot change it. \texttt{input\_guard} resets the
+    fields of the turn.}
+  \label{fig:state-context}
+\end{figure}
