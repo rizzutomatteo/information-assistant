@@ -19,7 +19,13 @@
 
 # The document PDF: recreated by compiling docs/CSD_2026-27_InformationAssistant.tex
 /docs/CSD_2026-27_InformationAssistant.pdf
+/src/pdf/*
 
 # System files
 .DS_Store
 Thumbs.db
+
+# Python environments and bytecode
+/.venv*/
+__pycache__/
+*.py[cod]
