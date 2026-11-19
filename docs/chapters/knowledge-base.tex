@@ -1,0 +1,289 @@
+\chapter{Knowledge Base and Data Preparation}
+\label{chap:knowledge-base}\index{knowledge base}
+
+The assistant can only say what its knowledge base contains, and it can only cite what the
+knowledge base lets it locate. Preparing the data is therefore not a technical detail: it decides
+which questions can be answered, how precisely, and with which source. The preparation is done
+offline, before the assistant is started, and follows the order of this chapter: the documents
+are selected (Section~\ref{sec:knowledge-base}), made synthetic (Section~\ref{sec:synthetic-data}),
+converted from \ac{pdf} into structured text (Section~\ref{sec:parsing}), cleaned of what is not
+text (Section~\ref{sec:non-text}) and anonymized (Section~\ref{sec:anonymization}).
+
+\section{Sources and Types of Data}
+\label{sec:knowledge-base}\index{FAQ}\index{forms}\index{DIP}\index{CGA}\index{support pages}
+
+The public part of the knowledge base comes from public insurance documentation, the kind of
+documents that insurers publish online for their customers. The documents were preselected and are
+grouped into four areas: motor (\textit{Auto e altri veicoli}), home and family (\textit{Casa e
+famiglia}), life and savings (\textit{Vita e risparmio}) and pension (\textit{Previdenza}). The
+collection contains 138 \ac{pdf} documents, about 1{,}450 pages and 670{,}000 words in all. Motor
+is by far the largest area, with roughly half of the pages.
+
+The documents are of very different kinds, and each kind is written for a different purpose
+(Table~\ref{tab:document-types}). The pre-contractual documents (\ac{dip}, the additional \ac{dip}
+and, for investment products, the key information document) summarise a product in a fixed
+structure: what is insured, what is not, the limits, the obligations. The \ac{cga} are the full
+contract, organised in sections and numbered articles; they are the longest documents and the ones
+that settle most questions. The pension documents describe the supplementary pension plan: costs,
+investment options, taxation, advances and annuities. The forms are short, but they answer a
+frequent practical question, namely what has to be sent, and how, to open a claim or ask for a
+payment. Smaller groups are the privacy notices, the rules of promotional campaigns, a report on
+the segregated funds and the list of the insurers designated by the road victims guarantee fund.
+
+\begin{table}[H]
+  \centering
+  \small
+  \renewcommand\arraystretch{1.25}
+  \begin{tabularx}{\textwidth}{@{}L{4.2cm}rY@{}}
+    \toprule
+    \textbf{Type} & \textbf{Docs} & \textbf{What it contains} \\
+    \midrule
+    Forms & 49 & Claim reports, requests for payment, statements, mandates, sample letters \\
+    \acs{dip} and additional \acs{dip} & 37 & Fixed-structure summary of a product \\
+    \acs{cga} & 21 & The full contract, in sections and articles \\
+    Pension plan documents & 15 & Costs, investment options, taxation, advances, annuities \\
+    Privacy notices & 6 & How personal data is processed, for each kind of product \\
+    Promotions & 5 & Rules of campaigns, discounts and cashback \\
+    Key information documents & 3 & Risks, costs and scenarios of investment options \\
+    Other & 2 & Report on the segregated funds, list of designated insurers \\
+    \midrule
+    FAQ & 170 & Short questions and answers, in five categories \\
+    \bottomrule
+  \end{tabularx}
+  \caption{The public documents of the knowledge base.}
+  \label{tab:document-types}
+\end{table}
+
+The second public source is a list of frequently asked questions, collected in a structured
+file: 170 questions, each with its answer, the address of its page and one or more of
+five categories. The categories reflect what customers ask most: vehicle insurance (68 questions)
+and the management of a policy (60) come first, followed by claims (30), life, investment and
+pension products (24) and home, family, pets and travel (18). The FAQs are written in the words
+customers use, which makes them valuable for the search even when the same information is also
+somewhere in a contract.
+
+The third source is of a different nature: the data of an individual customer, such as their
+policies, limits, deductibles, claims and instalments. It never enters the knowledge base. It is
+read through the policy server, only after login and only for the customer who is logged in
+(Section~\ref{sec:components}).
+
+\section{Synthetic Data}
+\label{sec:synthetic-data}\index{synthetic data}
+
+All the documents used in this project are synthetic. They were not invented from scratch: they
+were generated with \ac{ai} tools starting from real public insurance documentation, and every
+element that could identify a real company or person was replaced. The company that results,
+Velaria S.p.A., with its life insurance arm Velaria Vita and its parent group, the Gruppo Altaire,
+does not exist, and neither do its partners, its products or its websites. Every document begins
+with a note stating that it is synthetic and generated with \ac{ai}, and the FAQ file carries the
+same note.
+
+There are two reasons for this choice. The first is that the project, its report and its public
+repository must not expose, or be traceable to, a real company: the answers of a prototype could
+be mistaken for statements about that company's products. The second is that real documents, even
+public ones, contain the names and personal details of real people, such as the members of a board
+or the manager of a pension fund, which have no place in a student project.
+
+What was changed is everything that points to someone: the names of the company, of the group and
+of its partners, the names of other insurers, people and their dates of birth, street addresses,
+phone and fax numbers, e-mail addresses and websites, tax and registration codes, bank
+coordinates, and the names of products and funds that would reveal their origin. The names of
+companies, products and websites were replaced with invented ones, because the assistant needs a
+company to talk about; the invented websites use the \texttt{.example} domain, which is reserved for
+examples and cannot belong to anyone. On the advice of the supervisor, the data that concern people
+and contacts were instead replaced with placeholders in square brackets, rather than with invented
+but realistic values: names and surnames become \texttt{[NOME] [COGNOME]}, places and dates of birth
+\texttt{[LUOGO DI NASCITA]} and \texttt{[DATA DI NASCITA]}, and street addresses, phone and fax numbers
+and e-mail addresses \texttt{[INDIRIZZO]}, \texttt{[TELEFONO]}, \texttt{[FAX]} and \texttt{[EMAIL]}.
+A placeholder can never be mistaken for a real person or a real number, and it shows at a glance
+where something was removed.
+What was deliberately kept is the insurance content: guarantees, exclusions, limits, deductibles,
+procedures and deadlines are as in the originals, because the assistant has to be tested on
+realistic contracts. Public authorities such as \ac{ivass} and CONSAP, and the laws and regulations
+cited by the documents, were also kept: they do not identify the company and they are part of the
+answers a customer needs, for instance when explaining where to send a complaint.
+
+Keeping the insurance content does not tie the documents to a particular company, because most of
+it is common to the Italian market. The pre-contractual documents follow formats set by European
+and Italian regulation, with the same sections in the same order for every insurer; the terms and
+conditions follow the guidelines of the Italian insurers' association (ANIA) for simple and clear
+contracts; and the procedures, such as reporting a road accident or claiming from the road victims
+guarantee fund, are set by law. What made the documents recognisable were the names, the brands of
+products and services and the contact details, and these are exactly what was replaced.
+
+One limit remains. Some aggregate financial figures, such as the solvency ratio or the returns of
+the funds, are still the original ones. They concern no person, but in principle they could help
+someone trace the source, and they are the next candidates for being altered.
+
+\section{From PDF to Text: Mistral OCR}
+\label{sec:parsing}\index{Mistral OCR}\index{parsing}
+
+The \acsp{pdf} of the collection are digital documents, not scans: each of them already contains its
+text. That text, however, has no structure. It is a sequence of lines in the order in which they
+were drawn, so titles look like ordinary sentences, the columns of a page can be mixed together,
+and a table becomes a list of loose words and numbers. A search engine can still find words in it,
+but it cannot cut it into meaningful passages or tell which number belongs to which row.
+
+For this reason the documents were converted with Mistral \ac{ocr}~\cite{mistral2026ocr}, which reads
+the layout of each page and returns Markdown: titles become headings, lists
+become lists, tables become tables in the text, and the header and footer of each page are kept
+apart from the body. The conversion was done through the Document~\ac{ai} page of Mistral's
+console, on the free plan, in batches of at most ten files and five hundred pages to respect its
+limits. Since the documents are public, sending them to an
+external service raised no privacy issue; this is also why only public documents were sent, as on the
+free plan the provider may use the inputs to improve its models. Every page of the result
+begins with a marker that records its number, so that each passage can later be cited with its
+page.
+
+An \ac{ocr} model can misread a word or a number, and in insurance a wrong number is the worst
+possible error. The output was therefore corrected automatically against the text layer of the
+original \acsp{pdf}: where Mistral's text and the \ac{pdf}'s text disagree on a word or a number,
+the \ac{pdf}, which is exact, wins. The correction script records each of its 853 changes, so that
+they can be checked. Measured against the text of the \acsp{pdf}, the wrong or invented words went
+from 1.16 to about 0.45 every thousand, and the numbers of the \acsp{pdf} missing from the text
+from 365 to 66.
+
+\section{Images, Tables and Other Content}
+\label{sec:non-text}\index{images}\index{tables}
+
+Not everything in a \ac{pdf} is running text, and each kind of content needed a decision.
+
+\paragraph{Photos and images.} The knowledge base contains text only. The extraction of images was
+switched off during the conversion, and the placeholders that marked their position were removed
+afterwards. The images in these documents are photos, illustrations, icons and logos: they decorate
+the page but carry no information that the assistant needs to answer, and the logos would even
+carry the brand that the synthetic data is meant to remove. The assistant never shows images
+either: when a customer needs to see the original page, the citation points to it.
+
+\paragraph{Charts.} The text inside a chart, such as the labels and the values of a bar chart, is
+recovered from the text layer of the \ac{pdf}, in the order in which it was drawn. The numbers are
+there, but it is not always clear which label each one belongs to. Answers based on a chart are
+therefore less reliable, and the assistant always cites the page so that the customer can check it.
+
+\paragraph{Tables.} Tables are kept as tables, in Markdown, next to their titles, so that every
+value keeps the name of its row and of its column.
+
+\paragraph{Check boxes.} In the \acsp{pdf} the boxes of the forms and of some comparison tables are
+drawings, not characters, and after the conversion they all look empty. For the forms this does not
+matter, because they are blank templates; for the few tables that use ticks to show what a plan
+includes, the original page remains the reference.
+
+\paragraph{Headers, footers and notes.} The headers and footers repeat the same lines on every page
+and would only add noise to the search, so they are kept apart from the body text. Footnote marks
+written as superscripts were normalised, and the page markers are preserved for the citations.
+
+\section{Manual Anonymization and Automated Substitution}
+\label{sec:anonymization}\index{anonymization}
+
+The anonymization was first carried out by hand by the team. Working on a set of base documents,
+the team identified every element that points to a company or a person, decided which elements had
+to be kept instead, and fixed how each reference is replaced, always in the same way for the same
+entity: with a fictional name for companies and products, and with a placeholder for people and
+contact details. This manual work produced the outline of the whole anonymization: the kinds of
+reference to look for and the rule to apply to each of them.
+
+The team then wrote a script that applies the same replacements to all the files of the
+collection. The documents are not rewritten: rewriting a contract, by hand or with a language
+model, can drop a sentence, rephrase a clause or change a limit without anyone noticing, while a
+deterministic script can be checked and run again. Following the outline, the team searched the
+collection for every kind of reference: names of companies and products, people, addresses, phone numbers, e-mail addresses
+and websites, tax and registration codes, bank coordinates. Each one was written as a rule in a
+dictionary, together with the value that replaces it and a short note; the dictionary has 209
+rules. Some rules are simple words, others need care: the name of the
+parent group, for instance, is also an ordinary Italian word that appears in the expression
+\textit{Condizioni Generali}, so the rule replaces it only where it names the group; a phone number
+is recognised whatever its punctuation; an address is recognised in its different spellings.
+The script applies all the rules to the original text in a single pass. Where two rules
+overlap, the longer one wins, so that a multi-word name is replaced as a whole, and a replaced name
+is never replaced a second time. The text outside the substitutions does not change by a single
+character, which guarantees that every limit, deductible and article number is exactly as in the
+original.
+
+The script writes a log with every substitution, its file and its page, 9{,}919 for the
+documents and 747 for the FAQs. The FAQs were processed in the same way, including the
+addresses of their pages; since each FAQ carries a hash of its text, the hashes were computed again
+on the anonymized text. At the end a separate check searches the result for anything that is still
+there: the real names of the dictionary, e-mail addresses, websites and phone numbers that are
+neither placeholders nor of a public authority, tax codes, bank coordinates and dates of birth. The
+check found nothing, and a comparison of headings, tables and page markers confirmed that the
+structure of every document is unchanged. Because the dictionary and the log contain the real
+names, they are kept in a private folder of the team and never in the public repository.
+
+% ---------------------------------------------------------------------------------------------
+% SOSPESO: deduplicazione, chunking e aggiornamento non sono ancora stati fatti.
+% Il testo resta qui sotto, escluso dal documento, per quando ci arriveremo.
+% ---------------------------------------------------------------------------------------------
+\iffalse
+\section{Deduplication}
+\label{sec:deduplication}\index{duplicates}
+
+Some documents are relevant to more than one area of the knowledge base: the form to claim a
+benefit from a life policy, for instance, concerns both life and savings and pension, and the
+privacy notices apply to every life product. When the collection was assembled area by area, such a
+document ended up in each of the areas it belongs to. Indexing every copy would be harmful: the
+search would return the same passage several times for one question, crowding out other useful
+passages, and it would give that document more weight than the others.
+
+The documents were therefore compared by their content, byte by byte, regardless of their file
+names. 19 groups of identical documents were found; one copy of each group was kept and the other
+23 were removed, which brought the collection from 161 to 138 documents. Among the copies, the one
+kept is the one whose name says what the document is: a form called only \textit{allegato 3}, for
+example, was also present as \textit{modulo unico precontrattuale}, and the second name was kept.
+The areas are not lost: each document keeps the list of all the areas it belongs to, and this list
+will become part of its metadata, so that a form kept under life and savings is still found when a
+question concerns pension. The same check also revealed one file with a wrong title, identical to
+another form, which was removed.
+
+Documents that are similar but not identical, such as the \acp{dip} of car and motorcycle
+insurance, were all kept. They share many sentences, but they describe different products, and
+merging them would give wrong answers on the details that differ.
+
+\section{Chunking and Metadata}
+\label{sec:chunking}\index{chunking}\index{metadata}\index{edition of the conditions}\index{Docling}\index{OpenSearch}\index{hybrid search}
+
+Chunking is the next step of the work; this section describes how it is planned. A chunk is the
+passage that the search returns and the assistant cites. It must be small enough to be precise and
+large enough to make sense on its own; the right size depends on how each type of document is
+written, so the documents will not be cut at a fixed length but along their own structure
+(Table~\ref{tab:document-types}). The articles of the \ac{cga} are the natural unit: an article
+regulates one matter and is what a customer is referred to. The \acp{dip} and the pension documents
+will be divided by section, the forms kept whole or divided by section, and a FAQ will be one chunk
+made of the question together with its answer, because the question is written in the same words a
+customer would use. The planned tool is the chunker of Docling~\cite{docling2026catalog}, which can
+follow this structure from the Markdown headings produced by Mistral \ac{ocr} and divide a section
+only when it exceeds the length that the embedding model handles well, at the boundary between
+paragraphs and using the same tokenizer as the model. Each chunk will start with the titles of the
+sections it belongs to, so that a passage such as \enquote{the deductible is 10\%} still says which
+guarantee it refers to.
+
+Each chunk will carry metadata that serve two purposes: filtering the search and citing the source.
+They are the type of document, the product, the areas where it is published (already recorded
+during the deduplication), the edition of the conditions and the dates in which it is valid, the
+section and article, the page, taken from the page markers, and the source file; a FAQ also keeps
+the address of its page. With them the assistant can cite a passage as \enquote{CGA Auto
+ed.~03/2024, art.~12, p.~18}, and the citation opens the original document, which is kept on the
+server.
+
+The edition deserves a word of its own. Insurance conditions change over time, but a policy remains
+bound to the edition that was signed. All editions will therefore stay in the index: when a logged-in
+customer asks about their policy, the search is restricted to the edition of that policy, while a
+general question about a product reads the edition currently on sale. Issued policies, which are
+personal, never enter this shared index.
+
+The chunks will be indexed in OpenSearch both as vectors, computed with Qwen3-Embedding, and as
+text for a \ac{bm25} keyword search, and the two searches combined. The vector search finds passages
+that say the same thing in other words; the keyword search finds exact terms, such as the name of a
+guarantee or the number of a form, that a vector may blur.
+
+\section{Keeping the Knowledge Base Up to Date}
+\label{sec:updates}\index{ingestion}
+
+Documents change: a new edition of the conditions comes out, a form is replaced, a FAQ is added.
+Once the first index is built, a scheduled script will look for new or updated documents and pass
+them through the same steps as the first collection: conversion, correction, anonymization,
+deduplication and chunking. The new chunks will be written into a new index, which is evaluated on
+a fixed set of test questions before it replaces the one in use; the switch is a change of alias,
+so going back to the previous index takes an instant. The FAQ entries that come from the operators'
+corrections, once approved by the team (Section~\ref{sec:corrections}), will enter the knowledge
+base in the same way.
+\fi

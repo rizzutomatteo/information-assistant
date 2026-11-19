@@ -27,8 +27,13 @@
       {0.6}{0.6}{0.6B \textbullet\ 32K context}
     \model{-4}{qwen}{Qwen3Guard-Gen-0.6B}{input guardrail \textbullet\ server~\cite{zhao2025qwen3guard}}
       {0.6}{0.6}{0.6B \textbullet\ 119 languages}
-    \model{-5}{docling}{Docling + EasyOCR}{reading the PDFs \textbullet\ server~\cite{docling2026catalog}}
-      {0}{0}{Heron and TableFormer, on CPU}
+    % Mistral OCR: no logo in logos/, an icon instead; closed model, so no parameter bar
+    \node at (0.35,-5) {{\color{catmodel}\Large\faIcon{file-pdf}}};
+    \node[anchor=west, font=\footnotesize\bfseries] at (0.8,-5+0.17) {Mistral OCR};
+    \node[anchor=west, font=\scriptsize, text=black!60] at (0.8,-5-0.2)
+      {reading the PDFs \textbullet\ API~\cite{mistral2026ocr}};
+    \node[anchor=west, font=\scriptsize, text=black!75] at (5.25,-5-0.2)
+      {closed model \textbullet\ used once, offline};
     \draw[black!30] (0,-5.5) -- (15.75,-5.5);
     % Legend
     \fill[catmodel] (5.3,-5.85) rectangle (5.6,-5.65);

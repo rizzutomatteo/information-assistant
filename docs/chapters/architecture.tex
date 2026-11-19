@@ -4,25 +4,39 @@
 \section{Architecture Overview}
 \label{sec:architecture-overview}\index{architecture}\index{login}\index{guest}\index{Keycloak}\index{Caddy}
 
-A question crosses eight layers (Figure~\ref{fig:architecture}): from the web chat to access
-control, the input guardrail, the LangGraph\index{LangGraph} orchestrator~\cite{langgraph}, the
-sources, the generation and the output guardrail, up to the answer or an operator. Login is optional: a guest gets general answers from the
-public documents, a customer also gets answers on their own policy. Everything is free: one
-server, plus Groq's free \acs{api} for the two large models (Figure~\ref{fig:overview-strip}).
+A question crosses eight layers: from the web chat to access control, the input guardrail, the
+LangGraph\index{LangGraph} orchestrator~\cite{langgraph}, the sources, the generation and the
+output guardrail, up to the answer or an operator. Login is optional: a guest gets general answers
+from the public documents, a customer also gets answers on their own policy. Everything is free:
+one server, plus Groq's free \acs{api} for the two large models (Figure~\ref{fig:overview-strip}).
 
 \input{figures/overview-strip}
-\input{figures/layers}
 
 \section{Components}
 \label{sec:components}\index{policy server}\index{token exchange}\index{core insurance system}
 
-Figure~\ref{fig:architecture} shows every component and its role; technologies, licences and
-details are in Table~\ref{tab:components} (Appendix). The policy
-server\index{Model Context Protocol}~\cite{mcp} exposes four read-only tools over the company's core
-insurance system (Figure~\ref{fig:mcp-tools}). Keycloak issues its tokens
-through standard token exchange~\cite{keycloak2026tokenexchange}.
+Most components in Figure~\ref{fig:architecture} are standard pieces chosen for being free and
+well documented; the one written specifically for this project is the policy server. It is a
+server based on the Model Context Protocol\index{Model Context Protocol}~\cite{mcp} that stands in
+front of the company's core insurance system and exposes only four read-only operations:
 
-\input{figures/mcp-tools}
+\begin{itemize}
+  \item the list of the policies of the logged-in customer, with product, edition of the
+    conditions, status and dates, and the insured object masked;
+  \item the guarantees, limits, deductibles and premium of one policy;
+  \item the instalments of a policy, with their due dates and status;
+  \item the open claims of a policy, with their stage and the contact person.
+\end{itemize}
+
+Each operation protects the data in its own way. A customer only ever sees policies that belong to
+the subject of the login token: asking for someone else's policy returns \enquote{not found}, rather
+than \enquote{forbidden}, so as not to confirm that the policy exists. Bank details are cut to their
+last four digits, and the claims never include reserves or internal notes. The token used by the
+policy server is not the one of the chat: Keycloak issues a new one, limited to this purpose,
+through the standard token exchange~\cite{keycloak2026tokenexchange}.
+
+\input{figures/layers}
+\clearpage
 
 \section{Component Interactions}
 \label{sec:interactions}
@@ -37,10 +51,24 @@ the next one.\index{intent}
 \subsection{Routing Rules}
 \label{sec:routing}\index{confidence}\index{policy selection}\index{rewording}
 
-Policy data and clauses are read in parallel, and \code{grade} starts once, after both. Three
-decisions are plain rules (Figure~\ref{fig:routing-rules}).
+Three decisions of the graph are plain rules, not model outputs, and their counters restart at
+every turn.
 
-\input{figures/routing-rules}
+\paragraph{Which policy?} A customer may hold several policies. The graph uses the one the customer
+names, by its number or by the plate of the vehicle; otherwise, the only active one; otherwise, the
+one discussed in the previous turn. If none of these applies, it asks the customer.
+
+\paragraph{Is the context enough?} The reranker gives each retrieved clause a score. Clauses below
+a minimum threshold are dropped, the others are kept, and those above a higher threshold are
+considered strong. The confidence shown with the answer follows from them: it is high when at least
+one clause is strong and medium when at least two are kept. Otherwise the context is too weak to
+answer. The thresholds are calibrated on the golden set of test questions.
+
+\paragraph{How many attempts?} When the context is too weak, the question is reworded with
+insurance synonyms, such as \textit{furto} and \textit{sottrazione} (theft), \textit{franchigia} and
+\textit{scoperto} (deductible), \textit{sinistro} and \textit{evento} (claim), and searched again, at
+most twice. When a draft fails the output check, it is regenerated once. If the problem persists,
+the conversation goes to an operator.
 
 \needspace{7cm}
 \subsection{Operator Corrections}
@@ -50,11 +78,3 @@ What the operators correct, and what the assistant could not answer, comes back 
 answers, through a human review (Figure~\ref{fig:feedback}).
 
 \input{figures/feedback}
-
-\section{Deployment}
-\label{sec:deployment}\index{deployment}\index{Docker Compose}\index{Oracle Cloud}
-
-Everything runs on one free server, with the two large models on Groq's free \acs{api}
-(Figure~\ref{fig:server}). Memory use is an estimate, to be measured.
-
-\input{figures/server}

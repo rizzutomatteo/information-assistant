@@ -1,10 +1,16 @@
 \chapter*{Governance}
 \addcontentsline{toc}{chapter}{Governance}
 
-Three students, one supervisor, no fixed roles.
+Three students, one supervisor, no fixed roles. Figure~\ref{fig:governance} shows how the team is
+organised. The supervisor is at the top, because he sets the requirements and reviews the work; the
+dashed arrows are the questions on the requirements that each student can bring to him. The three
+students are on the same level, joined by the lines of their joint decisions, and each of them
+works in every phase. The arrows at the bottom converge on the shared repository, where all the work
+ends up.
 
 % The team: supervisor, three members on the same level, one shared repository
-\begin{center}
+\begin{figure}[H]
+\centering
   \begin{tikzpicture}[font=\footnotesize,
       person/.style={rounded corners=4pt, cat infra, text width=3.6cm, align=center,
                      minimum height=1.15cm, inner sep=4pt},
@@ -38,42 +44,22 @@ Three students, one supervisor, no fixed roles.
     \foreach \m in {m1, m2, m3}
       \draw[link] (\m.south) -- (repo.north);
   \end{tikzpicture}
-\end{center}
+  \caption{The organisation of the team: one supervisor, three members on the same level and one
+    shared repository.}
+  \label{fig:governance}
+\end{figure}
 
-% Everyone, every phase
-\begin{tcbraster}[raster columns=2, cardgrid, raster force size=false]
-  \begin{tcolorbox}[card, add to width=1.2cm]
-    \cardtitle{\faUsers}{Everyone, every phase}
-    \centering
-    \begin{tikzpicture}[font=\scriptsize, x=1.35cm, y=0.42cm]
-      \foreach \name [count=\c] in {Matteo, Mattia, Paolo}
-        \node[font=\scriptsize\bfseries] at (\c+0.6,0.2) {\name};
-      \foreach \phase [count=\r] in {Domain analysis, Architecture, Development, Evaluation, Report} {
-        \node[anchor=east] at (1.15,-\r) {\phase};
-        \foreach \c in {1,2,3}
-          \node[text=good] at (\c+0.6,-\r) {\faCheckCircle};
-      }
-    \end{tikzpicture}
-  \end{tcolorbox}
-  \begin{tcolorbox}[accentcard, add to width=-1.2cm]
-    \cardtitle{\faIcon{shield-alt}}{Why no fixed roles}
-    Everyone knows the whole system: the project never depends on one person.
-  \end{tcolorbox}
-\end{tcbraster}
+The team has no fixed roles. All three students take part in every phase of the project:
+domain analysis, architecture, development, evaluation and the writing of this report. The reason
+is resilience: since everyone knows the whole system, the project never depends on a single
+person, and anyone can continue the work of the others when needed.
 
-% How the work is organised
-\begin{tcbraster}[raster columns=3, cardgrid]
-  \begin{tcolorbox}[card]
-    \cardtitle{\faTasks}{Flexible tasks}
-    Assigned by availability and Gantt priorities (Figure~\ref{fig:gantt}); anyone can take one
-    over.
-  \end{tcolorbox}
-  \begin{tcolorbox}[card]
-    \cardtitle{\faHandshake}{Joint decisions}
-    Scope, architecture, evaluation: decided together.
-  \end{tcolorbox}
-  \begin{tcolorbox}[card]
-    \cardtitle{\faCodeBranch}{One repository}
-    Code and report in Git, visible to everyone.
-  \end{tcolorbox}
-\end{tcbraster}
+Tasks are not assigned once and for all. They are distributed according to everyone's
+availability and to the priorities of the Gantt diagram (Figure~\ref{fig:gantt}), and anyone can
+take over a task that someone else has started. The decisions that shape the project, such as its
+scope, its architecture and the way it is evaluated, are taken together by the three members.
+Questions on the requirements are brought to the supervisor, Prof.\ Flavio Corradini, who also
+reviews the progress of the work.
+
+All the work lives in one shared Git repository, which holds both the code and this report and is
+visible to everyone, so that each member always sees the current state of the project.

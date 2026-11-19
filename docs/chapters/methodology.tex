@@ -1,77 +1,86 @@
 \chapter{Methodology}
 \label{chap:methodology}
 
-The assistant answers anyone about the company's products and, after login, customers about the
-policies they hold. It is a \ac{rag}\index{retrieval-augmented generation} system: it retrieves
-the relevant passages and, for customers, their policy data, then writes the answer only from
-them. It is built entirely with free resources: one
-cloud server and free \ac{api} quotas. This chapter explains why it is designed this way;
-Chapter~\ref{chap:architecture} shows how.
+This chapter explains the reasoning behind the assistant before its parts are described. The
+assistant is a \ac{rag}\index{retrieval-augmented generation} system: for each question it first
+looks for the relevant passages in the company's documents and, when a customer has logged in, in
+the data of their policy; only then does it write an answer, based on what it found and nothing
+else. The sections that follow present the principles behind the design, the technologies chosen
+to respect them at zero cost, the sources the knowledge base is built from and the regulatory
+constraints that apply. Chapter~\ref{chap:architecture} then shows how the parts work together,
+and Chapter~\ref{chap:knowledge-base} describes the data in detail.
 
 \section{Design Principles}
 \label{sec:principles}\index{design principles}
 
-Three principles drive every choice (Figure~\ref{fig:principles}).
+Three principles drive every choice. Each one starts from a weakness of language models and turns
+it into a rule that does not depend on the model behaving well.
 
-\input{figures/principles}
+\paragraph{A constrained flow.} Models are not predictable: the same question can lead to
+different steps on different days. For this reason the model only interprets, for example by
+recognising what the customer is asking, while plain code decides which step comes next and which
+\acsp{api} to call. The path of a question is a fixed graph, and its decisions are rules that can
+be read and tested (Section~\ref{sec:routing}).
+
+\paragraph{Identity outside the model.} A prompt can be manipulated: a message can claim to come
+from someone else or ask to see another policy. The identity of the customer is therefore never
+taken from the conversation. It comes only from the login token (\ac{jwt}), which the policy server
+checks on every call, so that a customer can read only their own data whatever the text says
+(Section~\ref{sec:components}).
+
+\paragraph{No unverified text.} A draft can be wrong, and a wrong sentence that has already been
+shown cannot be taken back. While the answer is being prepared the customer sees only progress
+messages; the text appears only after the output guardrail has checked it against its sources
+(the \texttt{output\_guard} step in Figure~\ref{fig:graph}).
 
 \section{Technology Selection}
 \label{sec:technology-selection}\index{technology selection}\index{Groq}\index{gpt-oss}\index{Qwen3}\index{Gemini}\index{free quota}
 
-\begin{tcbraster}[raster columns=4, cardgrid]
-  \begin{tcolorbox}[card]
-    \cardtitle{\faEuroSign}{Zero cost}
-    Open source on one free cloud server, plus free \acs{api} quotas.
-  \end{tcolorbox}
-  \begin{tcolorbox}[card]
-    \cardtitle{\faBalanceScale}{Open weights}
-    Every model in the answer path is Apache~2.0. Gemini, closed, only judges tests.
-  \end{tcolorbox}
-  \begin{tcolorbox}[card]
-    \cardtitle{\faMicrochip}{No GPU}
-    Small models on the server's CPU; the large ones through the \acs{api}.
-  \end{tcolorbox}
-  \begin{tcolorbox}[card]
-    \cardtitle{\faIcon{exchange-alt}}{Swappable}
-    OpenAI-compatible \acsp{api}: a provider is one line of configuration.
-  \end{tcolorbox}
-\end{tcbraster}
+Four criteria guided the choice of the technologies. The system must cost nothing: it uses open
+source software on one free cloud server, plus the free quotas of external \acsp{api}. Every model
+that takes part in writing an answer has open weights under the Apache~2.0 licence; Gemini, a
+closed model, is used only to judge the answers during the tests. No \ac{gpu} is needed: the small
+models run on the server's \ac{cpu}, and the large ones are reached through an \ac{api}. Finally,
+every provider is reached through an OpenAI-compatible \ac{api}, so replacing one is a single line
+of configuration.
 
-The models are compared in Figure~\ref{fig:models}.
+Figure~\ref{fig:models} compares the models, drawn at the same scale. The two large ones run
+through Groq's free \ac{api}: gpt-oss-120b writes the answers, while gpt-oss-20b recognises the
+intent of each question and checks the answers. Both are \ac{moe} models, so only a small part of
+their parameters is active for each token. The three small Qwen3 models run on the server's
+\ac{cpu}, for the search, the reranking of the passages and the screening of the incoming messages.
+Mistral \ac{ocr}, finally, is used only to prepare the documents, before the assistant starts.
 
 \input{figures/models}
 
+The documents were prepared with two more tools, outside the answer path. Mistral
+\ac{ocr}~\cite{mistral2026ocr} converted the \acsp{pdf} into structured text once, offline, on
+Mistral's free plan. Claude~\cite{anthropic2026claude} was used to anonymize
+them, following the outline set by the team (Section~\ref{sec:anonymization}).
+
 \section{Knowledge Base Construction}
-\label{sec:knowledge-base}\index{knowledge base}\index{FAQ}\index{forms}\index{DIP}\index{CGA}\index{support pages}\index{edition of the conditions}\index{Docling}\index{OpenSearch}
+\label{sec:kb-summary}\index{knowledge base}
 
 The assistant draws on five kinds of public documents and, for customers only, on their own data
-(Figure~\ref{fig:sources}). A pipeline indexes the public documents at every new version
-(Figure~\ref{fig:ingestion}), and every chunk keeps its edition (Figure~\ref{fig:editions}).
+(Figure~\ref{fig:sources}). How the public documents are prepared is described in
+Chapter~\ref{chap:knowledge-base}.
 
 \input{figures/sources}
-\input{figures/ingestion}
 
 \section{Regulatory Constraints}
 \label{sec:constraints}\index{regulatory constraints}\index{AI Act}\index{personal data}\index{audit}
 
-\begin{tcbraster}[raster columns=3, cardgrid]
-  \begin{tcolorbox}[card]
-    \cardtitle{\faGavel}{AI Act}
-    Transparency: the customer knows it is an \ac{ai}~\cite{euaiact2024}. Not high-risk: no
-    pricing or risk assessment in life and health.
-    \tcblower
-    To be confirmed by the legal office.
-  \end{tcolorbox}
-  \begin{tcolorbox}[card]
-    \cardtitle{\faUserShield}{Personal data}
-    Guests: none. Customers: only their own, after login.
-    \tcblower
-    Identifiers masked by Presidio, \acs{aes}-encrypted checkpoints, expired chats deleted.
-  \end{tcolorbox}
-  \begin{tcolorbox}[card]
-    \cardtitle{\faLink}{Audit}
-    Answers, sources and model versions in a hash-chained table: any change is detected.
-    \tcblower
-    No audit, no answer.
-  \end{tcolorbox}
-\end{tcbraster}
+Under the European \ac{ai} Act~\cite{euaiact2024} the main obligation of this assistant is
+transparency: the customer must always know that they are talking to an \ac{ai}. The
+assistant should not fall among the high-risk systems, because it does not price products or assess
+risks in life and health insurance; this reading still has to be confirmed by the legal office.
+
+Personal data is limited by design. A guest shares none. A customer shares only their own data, and
+only after login. Presidio masks the personal identifiers in the text, and only what the answer
+needs is sent to the external models; the conversation checkpoints are encrypted
+with \ac{aes}, and expired chats are deleted. The knowledge base adds nothing to this: being
+synthetic, it contains no real person.
+
+Every answer is recorded together with its sources and the versions of the models that produced
+it, in a table where each row is chained to the previous one by a hash, so that any later change
+is detected. If the record cannot be written, the answer is not given.
