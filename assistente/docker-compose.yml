@@ -1,0 +1,68 @@
+# L'assistente assicurativo su qualsiasi macchina con Docker: il sito di Velaria con la chat,
+# l'accesso e la voce, e la finta API dell'assistente al posto di quella vera.
+#
+#   docker compose up -d --build      avvia (la prima volta costruisce l'immagine: qualche minuto)
+#   apri http://localhost:8002
+#   docker compose logs -f sito       log
+#   docker compose down               ferma (gli utenti restano nel volume «dati»)
+#
+# Funzionano ovunque chat, documenti, registrazione, accesso e polizze. Le chiamate dal browser:
+# su Linux, aprendo il sito dalla stessa macchina, l'audio arriva diretto al container; altrimenti
+# (Windows, Mac, un altro computer) serve il TURN di Cloudflare, gratuito: la sua chiave va nel
+# file .env (CLOUDFLARE_TURN_KEY_ID e CLOUDFLARE_TURN_KEY_TOKEN, vedi .env.example).
+# Il microfono funziona solo su localhost o in HTTPS.
+#
+# La VPS del progetto usa docker-compose.vps.yml (copia privata e pubblica, tunnel, centralino).
+name: assistente
+
+services:
+  sito:
+    build: .
+    image: assistente:1
+    ports:
+      - "${PORTA:-8002}:8002"
+    environment:
+      ASSISTENTE_API_URL: http://finta-api:8001
+      ASSISTENTE_PORTA: "8002"
+      # Facoltativi, nel file .env: la password della pagina /a, «Accedi con Google» (il client
+      # deve avere tra le origini autorizzate l'indirizzo da cui si apre il sito), Whisper su Groq
+      ASSISTENTE_AMMINISTRAZIONE_PASSWORD: ${AMMINISTRAZIONE_PASSWORD:-}
+      ASSISTENTE_GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+      ASSISTENTE_GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-}
+      VOCE_GROQ_CHIAVE: ${GROQ_API_KEY:-}
+      # STUN e TURN di Cloudflare per le chiamate che non arrivano dirette
+      VOCE_ICE: stun:stun.cloudflare.com:3478
+      VOCE_TURN_CHIAVE: ${CLOUDFLARE_TURN_KEY_ID:-}
+      VOCE_TURN_TOKEN: ${CLOUDFLARE_TURN_KEY_TOKEN:-}
+      # I modelli sono nell'immagine: niente controlli né download
+      HF_HUB_OFFLINE: "1"
+    volumes:
+      # Utenti e polizze: restano tra un avvio e l'altro
+      - dati:/dati
+    depends_on: [finta-api]
+    mem_limit: 2500m
+    restart: unless-stopped
+    read_only: true
+    tmpfs: ["/tmp"]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+
+  # Fa le veci dell'API dell'assistente (il RAG) finché quella vera non c'è: con l'API vera,
+  # ASSISTENTE_API_URL punta a lei e questo servizio non serve più
+  finta-api:
+    # La stessa immagine del sito: così Compose la costruisce invece di cercarla in rete
+    build: .
+    image: assistente:1
+    command: ["finta-api"]
+    environment:
+      FINTA_API_HOST: 0.0.0.0
+      FINTA_API_PORTA: "8001"
+    mem_limit: 300m
+    restart: unless-stopped
+    read_only: true
+    tmpfs: ["/tmp"]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+
+volumes:
+  dati:

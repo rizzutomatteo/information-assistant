@@ -1,0 +1,17 @@
+{# Un messaggio della conversazione, da un evento della chat o della chiamata (pagina.py) #}
+{% if tipo == "utente" %}
+<div class="messaggio da-utente"><p>{{ dati.testo }}</p></div>
+{% elif tipo == "risposta" %}
+<div class="messaggio da-assistente">
+  {{- (dati.get("testo") or "") | markdown -}}
+  {%- if dati.get("operatore") %}<p class="nota-operatore">{{ t.operatore }}</p>{% endif -%}
+  {#- L'API chiede l'accesso: il pulsante apre la finestra di accesso.js -#}
+  {%- if dati.get("accesso") %}<button class="bottone bottone-piccolo accedi-chat" type="button" data-accedi>{{ t.accedi }}</button>{% endif -%}
+  {#- Una citazione può essere un link a un documento: [testo](/documenti/…#pagina-N) -#}
+  {%- if dati.get("citazioni") -%}
+  <div class="fonti">{{ t.fonti }}<ul>{% for c in dati.citazioni %}<li>{{ c | riga }}</li>{% endfor %}</ul></div>
+  {%- endif -%}
+</div>
+{% elif tipo == "errore" %}
+<div class="messaggio errore"><p>{{ dati.get("testo") or t.non_risponde }}</p></div>
+{% endif %}

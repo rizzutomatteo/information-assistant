@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{# La pagina /a (accesso/amministrazione.py): con la password di amministrazione si incolla il JSON degli
+   utenti di prova. entrato: se la password è già stata data; utenti: quelli nell'anagrafe;
+   esempio: il JSON di esempio, già formattato #}
+
+{% block titolo %}{{ t.amministrazione }} · Velaria{% endblock %}
+{% block descrizione %}{{ t.amministrazione }}{% endblock %}
+{% block script %}
+<meta name="robots" content="noindex">
+<script src="statico/amministrazione.js" defer></script>
+{% endblock %}
+
+{% block contenuto %}
+<main id="contenuto" class="amministrazione">
+  <section class="documenti-testa">
+    <div class="contenitore amministrazione-testa">
+      <h1>{{ t.amministrazione }}</h1>
+      {% if entrato %}
+      <button id="a-esci" class="bottone bottone-piccolo bottone-secondario" type="button">
+        <svg class="icona" aria-hidden="true"><use href="#i-esci"/></svg><span>{{ t.esci }}</span>
+      </button>
+      {% endif %}
+    </div>
+  </section>
+
+  <div class="contenitore amministrazione-corpo">
+    {% if not entrato %}
+    <form id="a-accesso" class="scheda campi a-accesso">
+      <label class="campo"><span>{{ t.campo_password }}</span>
+        <input name="password" type="password" autocomplete="current-password" maxlength="200" required>
+      </label>
+      <button class="bottone" type="submit">{{ t.accedi }}</button>
+      <p id="a-errore" class="errore-accesso" role="alert" hidden></p>
+    </form>
+    {% else %}
+    <section class="scheda a-carica" aria-labelledby="a-titolo-carica">
+      <h2 id="a-titolo-carica">{{ t.utenti_di_prova }}</h2>
+      <div class="a-colonne">
+        <form id="a-utenti" class="campi">
+          <label class="campo"><span>{{ t.json_utenti }}</span>
+            <textarea name="json" rows="18" spellcheck="false" required></textarea>
+          </label>
+          <div class="a-azioni">
+            <button class="bottone" type="submit">{{ t.carica }}</button>
+            <button id="a-usa-esempio" class="bottone bottone-secondario" type="button">{{ t.usa_esempio }}</button>
+          </div>
+          <p id="a-esito" class="a-esito" role="status" hidden></p>
+          <div id="a-errore" class="errore-accesso" role="alert" hidden></div>
+        </form>
+        <div class="campo">
+          <span>{{ t.formato_json }}</span>
+          <pre id="a-esempio" class="a-esempio">{{ esempio }}</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="scheda" aria-labelledby="a-titolo-utenti">
+      <h2 id="a-titolo-utenti">{{ t.utenti }} <span class="conta">{{ utenti | length }}</span></h2>
+      <div class="a-tabella">
+        <table>
+          <thead>
+            <tr>
+              <th>{{ t.campo_utente }}</th><th>{{ t.dati_nome }}</th><th>{{ t.dati_email }}</th>
+              <th>{{ t.dati_pin }}</th><th>{{ t.polizze_numero }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for u in utenti %}
+            <tr>
+              <td>{{ u.utente or t.solo_google }}</td><td>{{ u.nome_completo }}</td><td>{{ u.email }}</td>
+              <td>{{ u.pin_telefono }}</td><td>{{ u.polizze | length }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+    {% endif %}
+  </div>
+</main>
+
+<!-- I testi degli script, nella lingua della pagina -->
+<script type="application/json" id="testi-script">{{ testi_script | tojson }}</script>
+{% endblock %}
