@@ -10,7 +10,7 @@ import unittest
 import venv
 
 
-ROOT = Path(__file__).resolve().parents[1]
+SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
 ENGINES = {
     "marker": ("pdf_to_md_marker.py", "--marker-bin", "marker_single"),
     "mineru": ("pdf_to_md_mineru.py", "--mineru-bin", "mineru-kit"),
@@ -94,7 +94,7 @@ class ConversionCliTests(unittest.TestCase):
         env["ADAPTER_TEST_RECORD"] = str(self.record)
         env["ADAPTER_TEST_MODE"] = mode
         return subprocess.run(
-            [sys.executable, str(ROOT / "src" / script), str(self.pdf),
+            [sys.executable, str(SCRIPTS / script), str(self.pdf),
              binary_flag, str(self.commands[engine]), *map(str, options)],
             env=env, capture_output=True, text=True,
         )
@@ -216,7 +216,7 @@ class ConversionCliTests(unittest.TestCase):
                 command.write_text(f"#!{sys.executable}\n" + FAKE_ENGINE, encoding="utf-8")
                 command.chmod(0o755)
                 result = subprocess.run(
-                    [str(interpreter), str(ROOT / "src" / script), str(self.pdf)],
+                    [str(interpreter), str(SCRIPTS / script), str(self.pdf)],
                     env=env, capture_output=True, text=True,
                 )
                 self.assertEqual(result.returncode, 0, result.stderr)

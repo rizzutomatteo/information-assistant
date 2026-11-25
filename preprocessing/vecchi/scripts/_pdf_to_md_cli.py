@@ -4,6 +4,7 @@ import argparse
 import os
 from pathlib import Path
 import re
+import shlex
 import shutil
 import stat
 import subprocess
@@ -80,9 +81,10 @@ def validate_paths(parser, args) -> tuple[Path, Path | None]:
 def executable(command: str, requirements: str) -> str:
     path = shutil.which(command, path=str(Path(sys.executable).parent)) or shutil.which(command)
     if path is None:
+        requirements_path = Path(__file__).resolve().parents[1] / requirements
         raise RuntimeError(
             f"Comando non trovato: {command}. Attivare l'ambiente del motore ed eseguire: "
-            f"python -m pip install -r {requirements}"
+            f"python -m pip install -r {shlex.quote(str(requirements_path))}"
         )
     return path
 

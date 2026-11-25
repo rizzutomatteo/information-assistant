@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Converte un PDF in Markdown tramite la CLI di Marker 2.1.
 
-Installazione: python -m pip install -r requirements-marker.txt
-Uso: python src/pdf_to_md_marker.py documento.pdf -o documento.md
+Dalla cartella preprocessing/vecchi:
+    python -m pip install -r requirements-marker.txt
+    python scripts/pdf_to_md_marker.py documento.pdf -o documento.md
 """
 
 import argparse

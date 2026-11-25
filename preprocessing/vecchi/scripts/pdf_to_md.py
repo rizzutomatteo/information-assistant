@@ -1,12 +1,10 @@
 #!/usr/bin/env python3
 """Converte un PDF locale in Markdown usando Docling.
 
-Installazione:
+Installazione ed esempi dalla cartella preprocessing/vecchi:
     python3 -m pip install -r requirements.txt
-
-Esempi:
-    python3 src/pdf_to_md.py documento.pdf
-    python3 src/pdf_to_md.py documento.pdf -o documento.md
+    python3 scripts/pdf_to_md.py documento.pdf
+    python3 scripts/pdf_to_md.py documento.pdf -o documento.md
 
 I modelli pubblici vengono scaricati senza inviare automaticamente il token
 Hugging Face salvato. Per abilitarlo, impostare HF_HUB_DISABLE_IMPLICIT_TOKEN=0.
@@ -20,6 +18,7 @@ from contextlib import redirect_stdout
 import os
 from pathlib import Path
 import re
+import shlex
 import sys
 
 
@@ -36,9 +35,10 @@ def pdf_to_md(pdf_path: Path) -> str:
             from docling.document_converter import DocumentConverter, PdfFormatOption
         except ModuleNotFoundError as exc:
             if exc.name == "docling":
+                requirements = Path(__file__).resolve().parents[1] / "requirements.txt"
                 raise RuntimeError(
                     "Docling non è installato. Esegui: "
-                    "python3 -m pip install -r requirements.txt"
+                    f"python3 -m pip install -r {shlex.quote(str(requirements))}"
                 ) from exc
             raise
 

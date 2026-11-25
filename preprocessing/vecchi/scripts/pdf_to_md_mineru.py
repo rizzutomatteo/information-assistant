@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Converte un PDF in Markdown con il parser locale stateless di MinerU 4.2.
 
-Installazione: python -m pip install -r requirements-mineru.txt
-Uso: python src/pdf_to_md_mineru.py documento.pdf -o documento.md
+Dalla cartella preprocessing/vecchi:
+    python -m pip install -r requirements-mineru.txt
+    python scripts/pdf_to_md_mineru.py documento.pdf -o documento.md
 """
 
 import argparse

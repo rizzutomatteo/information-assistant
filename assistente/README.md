@@ -413,10 +413,10 @@ browser ──WebRTC (audio cifrato)──▶ VAD ──▶ chi parla ──▶ 
 | Ponte con l'API | manda il testo all'API, dice le frasi di attesa, passa la risposta | `ponte.py` |
 | Testo per la voce | Markdown, importi, date, sigle e codici scritti per esteso | `parlato.py` |
 | Testo → voce | voce italiana o inglese, sulla CPU | Piper (GPL-3): `it_IT-paola-medium`; `en_GB-cori-medium`, la voce di Cori Samuel dal dataset Hi-Fi TTS di NVIDIA (CC BY 4.0) |
-| Numero di telefono | riceve le telefonate e passa l'audio in WebSocket | Asterisk 22 LTS (GPL-2), `voce/centralino/` |
+| Numero di telefono | riceve le telefonate e passa l'audio in WebSocket | Asterisk 22 LTS (GPL-2), `deploy/voce/centralino/` |
 
-Il codice è in `src/assistente/voce/`; fuori dal codice, in `voce/`, ci sono il centralino
-(`voce/centralino/`), i modelli scaricati per le prove in locale (`voce/modelli/`) e le
+Il codice è in `src/assistente/voce/` e il centralino in `deploy/voce/centralino/`. In `voce/` ci
+sono i modelli scaricati per le prove in locale (`voce/modelli/`) e le
 registrazioni delle chiamate di prova (`voce/prove/`).
 
 ## Come si comporta al telefono
@@ -565,7 +565,7 @@ telefono ──▶ operatore VoIP ──SIP──▶ Asterisk ──WebSocket (P
                                     (centralino)                         VAD → chi parla → Whisper → Assistente → Piper
 ```
 
-- **Asterisk** (`voce/centralino/`) riceve la telefonata e la passa al server con
+- **Asterisk** (`deploy/voce/centralino/`) riceve la telefonata e la passa al server con
   `Dial(WebSocket/voce/c(slin16))`: è `chan_websocket`, che esiste da Asterisk 22.6, quindi
   l'immagine compila la 22.12 (LTS); le distribuzioni hanno versioni più vecchie. Carica solo i
   moduli che servono (`modules.conf`), gira senza privilegi e in sola lettura.
@@ -584,8 +584,8 @@ telefono ──▶ operatore VoIP ──SIP──▶ Asterisk ──WebSocket (P
   se invece di digitare si parla, è una domanda nuova. Nei log c'è solo l'esito, mai le cifre.
 
 Password e dati dell'operatore stanno nel file `.env` (in `.gitignore` e `.dockerignore`), che
-`docker compose` passa al centralino; i file in `voce/centralino/conf/` sono modelli, e `avvio.sh` ci
-mette i valori all'avvio.
+`docker compose` passa al centralino. I file in `deploy/voce/centralino/conf/` sono modelli e
+`avvio.sh` ci mette i valori all'avvio.
 
 ### Provarlo senza numero
 
@@ -697,8 +697,8 @@ documenti/                 i documenti anonimizzati del gruppo, <area>/<nome>.md
 documenti_drive/           il resto della cartella del Drive (zip, FAQ, script e registri
                            dell'anonimizzazione; due file hanno i nomi reali); precedente/ ha lo
                            zip di prima, con i doppioni. Solo sulla VPS, fuori da git
-voce/                      il canale voce fuori dal codice
-  centralino/              Asterisk per il numero vero: Dockerfile, avvio.sh, conf/ (modelli)
+deploy/voce/centralino/    Asterisk per il numero vero: Dockerfile, avvio.sh, conf/ (modelli)
+voce/                      i file locali del canale voce
   modelli/                 voci di Piper e impronte, scaricati per le prove in locale; fuori da git
   prove/                   le registrazioni di prova-chiamata; fuori da git
 strumenti/

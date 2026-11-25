@@ -8,10 +8,10 @@ Per l'OCR installare Tesseract e i dati delle lingue richieste:
     macOS:         brew install tesseract tesseract-lang
     Debian/Ubuntu: sudo apt install tesseract-ocr tesseract-ocr-ita tesseract-ocr-eng
 
-Esempi:
-    python3 src/pdf_to_md_pymupdf.py documento.pdf
-    python3 src/pdf_to_md_pymupdf.py documento.pdf -o documento.md
-    python3 src/pdf_to_md_pymupdf.py documento.pdf --ocr auto --ocr-language eng
+Esempi dalla cartella preprocessing/vecchi:
+    python3 scripts/pdf_to_md_pymupdf.py documento.pdf
+    python3 scripts/pdf_to_md_pymupdf.py documento.pdf -o documento.md
+    python3 scripts/pdf_to_md_pymupdf.py documento.pdf --ocr auto --ocr-language eng
 """
 
 import argparse

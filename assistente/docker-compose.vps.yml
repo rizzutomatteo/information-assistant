@@ -102,10 +102,10 @@ services:
     cap_drop: [ALL]
     security_opt: ["no-new-privileges:true"]
 
-  # Il centralino delle telefonate (voce/centralino/ e README, «Il numero di telefono»). Password e
+  # Il centralino delle telefonate (deploy/voce/centralino/ e README, «Il numero di telefono»). Password e
   # dati dell'operatore stanno nel file .env, che non va nel repository
   centralino:
-    build: voce/centralino
+    build: deploy/voce/centralino
     image: centralino:1
     network_mode: host
     environment:

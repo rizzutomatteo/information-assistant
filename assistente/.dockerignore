@@ -11,5 +11,6 @@ strumenti/
 dati/
 # Il canale voce fuori dal codice: l'immagine scarica i suoi modelli, il centralino ha la sua
 voce/
+deploy/voce/centralino/
 # Dal Drive del gruppo: sostituzioni.tsv e anonimizzazione.tsv hanno i nomi reali
 documenti_drive/
