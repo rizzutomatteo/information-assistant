@@ -1,9 +1,13 @@
-"""La pagina /a: si caricano gli utenti di prova incollando un JSON (utenti.FileUtenti).
+"""La pagina /a: si caricano gli utenti di prova incollando un JSON (utenti.FileUtenti), e si
+modificano o si eliminano uno alla volta, o tutti insieme.
 
-    GET  /a                la pagina (sito/rotte.py): la password, poi il JSON e gli utenti
-    POST /api/a/accesso    la password di amministrazione → cookie
-    POST /api/a/utenti     il JSON → utenti creati, o sostituiti se il nome utente c'è già
-    POST /api/a/uscita     chiude la sessione di amministrazione
+    GET    /a                  la pagina (sito/rotte.py): la password, poi il JSON e gli utenti
+    POST   /api/a/accesso      la password di amministrazione → cookie
+    POST   /api/a/utenti       il JSON → utenti creati, o sostituiti se il nome utente c'è già
+    PUT    /api/a/utenti/<id>  dati e polizze di un utente, cambiati a mano (utenti.ModificaUtente)
+    DELETE /api/a/utenti/<id>  elimina un utente, con le sue polizze
+    DELETE /api/a/utenti       li elimina tutti
+    POST   /api/a/uscita       chiude la sessione di amministrazione
 
 Il formato del JSON è quello di esempio_utenti.json, che la pagina mostra e che si può copiare e
 riempire. Si entra con la password ASSISTENTE_AMMINISTRAZIONE_PASSWORD; senza password la pagina
@@ -19,7 +23,13 @@ from fastapi.concurrency import run_in_threadpool
 from pydantic import BaseModel, Field
 
 from assistente.accesso.sessioni import Limite, metti_cookie, togli_cookie
-from assistente.accesso.utenti import Anagrafe, Conflitto, FileUtenti, impronta_password
+from assistente.accesso.utenti import (
+    Anagrafe,
+    Conflitto,
+    FileUtenti,
+    ModificaUtente,
+    impronta_password,
+)
 
 COOKIE = "amministrazione"
 TENTATIVI = 5
@@ -88,10 +98,34 @@ def router_amministrazione(amministrazione: Amministrazione, anagrafe: Anagrafe)
             lambda: {nome: impronta_password(p) for nome, p in password.items()}
         )
         try:
-            creati, sostituiti = anagrafe.carica(corpo.utenti, impronte)
+            creati, sostituiti = await anagrafe.carica(corpo.utenti, impronte)
         except Conflitto as e:
             raise HTTPException(409, str(e)) from None
         return {"creati": creati, "sostituiti": sostituiti}
+
+    @router.put("/utenti/{id_utente}", status_code=204)
+    async def modifica(id_utente: int, corpo: ModificaUtente, richiesta: Request):
+        controlla(richiesta)
+        impronta = None
+        if corpo.password:
+            impronta = await run_in_threadpool(impronta_password, corpo.password)
+        try:
+            utente = await anagrafe.modifica(id_utente, corpo, impronta)
+        except Conflitto as e:
+            raise HTTPException(409, str(e)) from None
+        if utente is None:
+            raise HTTPException(404, "Utente non trovato.")
+
+    @router.delete("/utenti/{id_utente}", status_code=204)
+    async def elimina(id_utente: int, richiesta: Request):
+        controlla(richiesta)
+        if not await anagrafe.elimina(id_utente):
+            raise HTTPException(404, "Utente non trovato.")
+
+    @router.delete("/utenti")
+    async def elimina_tutti(richiesta: Request):
+        controlla(richiesta)
+        return {"eliminati": await anagrafe.elimina_tutti()}
 
     @router.post("/uscita", status_code=204)
     async def esci(richiesta: Request, risposta: Response):

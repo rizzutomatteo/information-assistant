@@ -16,7 +16,7 @@ telefono ── centralino (Asterisk) ────────┴──── vo
 
 | Parte | Dove | Cosa fa |
 |---|---|---|
-| Sito | `src/assistente/sito/` | la home page di Velaria, i documenti con le ancore per i link del RAG, la chat scritta |
+| Sito | `src/assistente/sito/` | la home page di Velaria, i documenti e le FAQ con le ancore per i link del RAG, la chat scritta |
 | Accesso | `src/assistente/accesso/` | registrazione, accesso con password, Google o PIN telefonico, polizze di ogni utente, utenti di prova (`/a`) |
 | Voce | `src/assistente/voce/`, `voce/` | le chiamate dal sito e le telefonate: voce → testo → API → testo → voce |
 | RAG | `src/assistente/rag/` | il client dell'API dell'assistente, lo stesso per chat e voce, e la finta API |
@@ -31,9 +31,10 @@ Serve solo Docker (con Compose). Dalla cartella del progetto:
 docker compose up -d --build     # la prima volta costruisce l'immagine (3,7 GB, con i modelli)
 ```
 
-Poi si apre <http://localhost:8002> (un'altra porta con `PORTA=8080` nel file `.env`). Partono due
-container: il sito (`sito`) e la finta API dell'assistente (`finta-api`); utenti e polizze restano
-nel volume `dati` anche dopo `docker compose down`.
+Poi si apre <http://localhost:8002> (un'altra porta con `PORTA=8080` nel file `.env`). Partono tre
+container: il sito (`sito`), il database PostgreSQL di utenti e polizze (`database`) e la finta API
+dell'assistente (`finta-api`); utenti e polizze restano nel volume `database` anche dopo
+`docker compose down`.
 
 - Chat, documenti, registrazione, accesso e polizze funzionano su qualsiasi macchina.
 - Le **chiamate dal browser**: su Linux, aprendo il sito dalla stessa macchina, l'audio arriva
@@ -46,14 +47,20 @@ nel volume `dati` anche dopo `docker compose down`.
 
 La VPS del progetto usa invece `docker-compose.vps.yml` (vedi «Sulla VPS»).
 
-## Provarlo in 3 comandi, senza Docker
+## Provarlo senza Docker
 
-Serve Python 3.11 o più recente. La prima volta si scaricano le due voci di Piper, italiana e
-inglese (60 MB ciascuna), e Whisper `small` (480 MB).
+Servono Python 3.11 o più recente e un PostgreSQL per utenti e polizze: uno già installato, con
+il suo indirizzo in `ASSISTENTE_DATABASE`, oppure quello del comando sotto (l'unico con Docker).
+La prima volta si scaricano le due voci di Piper, italiana e inglese (60 MB ciascuna), e Whisper
+`small` (480 MB).
 
 ```bash
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt && pip install --no-deps -e ".[test]"
+
+docker run -d --name assistente-database -p 127.0.0.1:5432:5432 \
+  -e POSTGRES_USER=assistente -e POSTGRES_PASSWORD=assistente postgres:18.7-alpine
+export ASSISTENTE_DATABASE=postgresql://assistente:assistente@127.0.0.1:5432/assistente
 
 finta-api &      # una finta API dell'assistente, sulla porta 8001 (vedi sotto)
 assistente       # il server: sito, chat, accesso e voce, sulla porta 8002
@@ -72,6 +79,9 @@ prova-chiamata --lingua en "What is the excess?"
 
 I test (nessun modello né rete): `pytest`. Sono divisi come il codice: `tests/sito/`,
 `tests/accesso/`, `tests/voce/`, `tests/rag/`, più `tests/test_server.py` per il server intero.
+Quelli che usano utenti e polizze avviano da soli un PostgreSQL usa e getta con Docker (dati in
+memoria, tolto alla fine), oppure usano il server indicato in `ASSISTENTE_DATABASE_PROVE`; ogni
+test ha il suo schema, quindi non si vedono tra loro (`tests/conftest.py`).
 
 ## La pagina dimostrativa
 
@@ -91,7 +101,7 @@ basso a destra c'è l'assistente, in un pannello solo:
 
 **La pagina è fatta in Python** (`sito/pagina.py`), con i modelli Jinja2 di `sito/pagine/`: `base.html` per
 ciò che hanno tutte le pagine (testata, icone, piede), `pagina.html` per la home page,
-`documenti.html` e `documento.html` per i documenti, `messaggio.html` per i messaggi della chat. Il server la compone a ogni visita,
+`documenti.html` e `documento.html` per i documenti, `faq.html` e `domanda.html` per le FAQ, `messaggio.html` per i messaggi della chat. Il server la compone a ogni visita,
 nella lingua scelta e con l'area riservata di chi ha fatto l'accesso. Anche i messaggi della chat
 li fa il server: a ogni evento, che arrivi da `/api/chat` o dal canale dati della chiamata,
 aggiunge `html` (il messaggio pronto, con la risposta in Markdown e le fonti) e `attesa` (la riga
@@ -175,11 +185,13 @@ deve riattaccare e richiamare.
 
 ### Utenti e polizze
 
-Utenti e polizze stanno in un file SQLite (`accesso/utenti.py`, `ASSISTENTE_UTENTI`): con docker compose è
-`dati/utenti.sqlite`, lo stesso per le due copie del sito, che così restano allineate. Le password
-non si salvano: si salva la loro impronta scrypt, con un sale diverso per ognuna. Al primo avvio
-c'è solo Mario Rossi, senza password, con il PIN `123456` delle prove al telefono. Ogni utente ha
-un PIN telefonico diverso, perché al telefono il PIN da solo dice chi è.
+Utenti e polizze stanno in PostgreSQL (`accesso/utenti.py`, indirizzo in `ASSISTENTE_DATABASE`;
+senza, il server non parte): con docker compose è il servizio `database`, lo stesso per le due
+copie del sito, che così restano allineate. Il server ci parla con psycopg, in modo asincrono,
+così le chiamate in corso non si fermano mentre legge gli utenti; all'avvio crea le tabelle se
+mancano. Le password non si salvano: si salva la loro impronta scrypt, con un sale diverso per
+ognuna. Al primo avvio c'è solo Mario Rossi, senza password, con il PIN `123456` delle prove al
+telefono. Ogni utente ha un PIN telefonico diverso, perché al telefono il PIN da solo dice chi è.
 
 Gli utenti di prova si caricano dalla pagina **`/a`** (`accesso/amministrazione.py`), protetta dalla
 password `ASSISTENTE_AMMINISTRAZIONE_PASSWORD` (con docker compose `AMMINISTRAZIONE_PASSWORD` nel file
@@ -228,6 +240,23 @@ Un utente con un nome che c'è già viene sostituito, polizze comprese (il PIN r
 ne dà uno). Il caricamento è tutto o niente: con un campo sbagliato, un doppione nel file o un PIN
 o un'email di un altro utente non cambia nulla, e la pagina dice dove sta l'errore.
 
+Nell'elenco degli utenti, **Modifica** apre una finestra con i dati e le polizze dell'utente, da
+cambiare a mano con le stesse regole del JSON (il nome utente può restare vuoto per chi entra solo
+con Google; con la password vuota resta quella di prima). **Elimina** toglie un utente con le sue
+polizze, **Elimina tutti** li toglie tutti, Mario Rossi compreso, che non torna nemmeno riavviando
+il server: c'è solo al primo avvio. Chi era dentro come un utente eliminato si ritrova fuori, e il
+suo posto non passa a un utente nuovo (gli id non si riusano).
+
+| Endpoint | Cosa fa |
+|---|---|
+| `POST /api/a/utenti` | il JSON → `{"creati": …, "sostituiti": …}` |
+| `PUT /api/a/utenti/<id>` | dati e polizze di un utente, come un elemento di `utenti` (404 se non c'è, 409 se nome utente, email o PIN sono di un altro) |
+| `DELETE /api/a/utenti/<id>` | elimina l'utente (404 se non c'è) |
+| `DELETE /api/a/utenti` | li elimina tutti → `{"eliminati": …}` |
+
+Tutti chiedono il cookie che dà `POST /api/a/accesso` con la password di amministrazione (401
+senza).
+
 ## I documenti
 
 Il sito mostra i documenti dei prodotti (condizioni di assicurazione, DIP, KID, moduli…), gli
@@ -257,10 +286,33 @@ distinguono le edizioni di uno stesso documento (`…_auto`, `…_auto_2`). Nei 
 parte i commenti, e il sito non lo lascerebbe passare: un `<` resta testo. I documenti sono in
 italiano anche nella pagina inglese.
 
-Per aggiornarli: si scompatta lo zip nuovo al posto di `documenti/` e si ricostruisce l'immagine
-(`docker compose up -d --build`), che li contiene (`ASSISTENTE_DOCUMENTI=/app/documenti`). Il resto della
-cartella del Drive (FAQ, script e registri dell'anonimizzazione) è in `documenti_drive/`, fuori
-dall'immagine: `sostituzioni.tsv` e `anonimizzazione.tsv` hanno i nomi reali e non vanno pubblicati.
+Per aggiornarli: si scompatta lo zip nuovo al posto di `documenti/` (lasciando `faq.json`, vedi
+«Le FAQ») e si ricostruisce l'immagine (`docker compose up -d --build`), che li contiene
+(`ASSISTENTE_DOCUMENTI=/app/documenti`). Il resto della cartella del Drive (lo zip, l'originale
+delle FAQ, script e registri dell'anonimizzazione) è in `documenti_drive/`, fuori dall'immagine:
+`sostituzioni.tsv` e `anonimizzazione.tsv` hanno i nomi reali e non vanno pubblicati.
+
+## Le FAQ
+
+Il sito mostra anche le domande frequenti, le stesse da cui il RAG prende le risposte: le 171 FAQ
+anonimizzate di `faq_anonime.json`, nella stessa cartella del Drive, copiate in
+`documenti/faq.json`. Ogni FAQ ha un `id`, la domanda, la risposta in Markdown e da zero a più
+categorie.
+
+| Indirizzo | Cosa c'è |
+|---|---|
+| `/faq` | l'elenco, diviso per categoria (`/faq#sinistri` porta a una categoria); ci si arriva dal menu in alto e dal pulsante «Domande frequenti» della sezione dei contatti |
+| `/faq/<id>` | una domanda con la sua risposta: l'`id` è quello del campo `url` del file (`https://www.velaria.example/faq/<id>`) |
+| `…#<titolo>` | un titolo della risposta, con l'ancora fatta come nei documenti («Cosa coprono le garanzie» → `#cosa-coprono-le-garanzie`) |
+
+Le categorie seguono l'ordine dell'elenco in `sito/faq.py` (le aree dei prodotti, poi «Gestione
+polizza» e «Sinistri»), il «FAQ» davanti a «FAQ Casa, Famiglia…» si toglie, e una domanda con due
+categorie compare in tutte e due. Le 8 domande senza categoria stanno in fondo, in «Altre domande»
+(`/faq#altre`); una categoria nuova del file va prima di loro. Come i documenti, le FAQ sono in
+italiano anche nella pagina inglese e il loro HTML non passa: un `<` resta testo.
+
+Per aggiornarle: si copia il `faq_anonime.json` nuovo su `documenti/faq.json` e si ricostruisce
+l'immagine.
 
 ## La finta API
 
@@ -311,8 +363,8 @@ data: {"testo": "…", "citazioni": ["CGA Auto ed. 03/2024, art. 12, p. 18"],
 ```
 
 Una citazione, come il testo della risposta, può essere un link Markdown a un documento del sito
-(vedi «I documenti»): la chat lo mostra cliccabile, in una scheda nuova, e la voce ne dice solo il
-testo. I link ammessi sono quelli che cominciano con `/documenti/` o con `https://`.
+o a una FAQ (vedi «I documenti» e «Le FAQ»): la chat lo mostra cliccabile, in una scheda nuova, e
+la voce ne dice solo il testo. I link ammessi sono quelli che cominciano con `/documenti/`, `/faq/` o `https://`.
 
 ```json
 "citazioni": ["[DIP Casa Velaria ed. 10/2026, p. 2](/documenti/casa_e_famiglia/dip_documento_informativo_precontrattuale_casa#pagina-2)"]
@@ -445,7 +497,8 @@ e circa 1 GB dopo una chiamata. I modelli si caricano una volta sola e servono t
 ## Sulla VPS: https://assicurazioni.matteorizzuto.com
 
 Sulla VPS gira `docker-compose.vps.yml`: la copia privata (`privata`) e quella pubblica
-(`pubblica`) del sito, la finta API, il tunnel e il centralino, che ripartono da soli. Gli
+(`pubblica`) del sito, il database (`database`, PostgreSQL solo su `127.0.0.1:5432`), la finta API,
+il tunnel e il centralino, che ripartono da soli. Gli
 indirizzi della VPS e i segreti stanno nel file `.env` (`.env.example`, «La VPS del progetto»),
 dove `COMPOSE_FILE=docker-compose.vps.yml` fa usare questo file a ogni `docker compose` (anche
 `docker compose up -d --build` per aggiornare). La copia privata è raggiungibile solo dalla
@@ -606,21 +659,22 @@ src/assistente/            il pacchetto Python
     client.py              il client dell'API (/turno, Server-Sent Events), per chat e voce
     finta.py               la finta API per le prove (finta-api)
   sito/                    il sito dimostrativo
-    rotte.py               home page, documenti, pagina /a, chat scritta (/api/chat)
+    rotte.py               home page, documenti, FAQ, pagina /a, chat scritta (/api/chat)
     pagina.py              le pagine e i messaggi della chat, fatti sul server con Jinja2
     testi.py               i testi, in italiano e in inglese
     documenti.py           i documenti da leggere nel sito, con le ancore per i link del RAG
+    faq.py                 le domande frequenti, per categoria
     pagine/                i modelli Jinja2: base.html (testata e piede), pagina.html (la home
-                           page), documenti.html, documento.html, messaggio.html,
-                           amministrazione.html (la pagina /a)
+                           page), documenti.html, documento.html, faq.html, domanda.html,
+                           messaggio.html, amministrazione.html (la pagina /a)
     statico/               stile.css, assistente.js (pannello, chat e chiamata), accesso.js
                            (registrazione, accesso e polizze), amministrazione.js, logo e caratteri
   accesso/                 chi è l'utente
-    utenti.py              l'anagrafe SQLite: utenti, polizze, impronte delle password
+    utenti.py              l'anagrafe in PostgreSQL: utenti, polizze, impronte delle password
     sessioni.py            le sessioni, l'accesso con il PIN al telefono, i limiti ai tentativi
     google.py              l'accesso con Google (codice → ID token verificato)
     rotte.py               registrazione, accesso, uscita, polizze aggiunte e tolte
-    amministrazione.py     la pagina /a per caricare gli utenti di prova
+    amministrazione.py     la pagina /a: utenti di prova caricati, modificati, eliminati
     esempio_utenti.json    lo stampino del JSON di /a
   voce/                    il canale voce
     canale.py              /api/config, /api/offer (WebRTC), /telefono, linee, registro
@@ -636,13 +690,13 @@ src/assistente/            il pacchetto Python
     turn.py                le credenziali del TURN di Cloudflare, per le chiamate da internet
     registro.py            il registro delle frasi
     prova.py               la chiamata di prova (prova-chiamata)
-tests/                     pytest, diviso come il codice: sito/, accesso/, voce/, rag/, e il server
-documenti/                 i documenti anonimizzati del gruppo, <area>/<nome>.md (nell'immagine)
+tests/                     pytest, diviso come il codice: sito/, accesso/, voce/, rag/, e il server;
+                           conftest.py prepara il PostgreSQL dei test
+documenti/                 i documenti anonimizzati del gruppo, <area>/<nome>.md, e le FAQ,
+                           faq.json (nell'immagine)
 documenti_drive/           il resto della cartella del Drive (zip, FAQ, script e registri
                            dell'anonimizzazione; due file hanno i nomi reali); precedente/ ha lo
                            zip di prima, con i doppioni. Solo sulla VPS, fuori da git
-dati/                      sulla VPS: utenti e polizze (utenti.sqlite), condivisi dalle due copie;
-                           fuori da git (con docker-compose.yml stanno nel volume «dati»)
 voce/                      il canale voce fuori dal codice
   centralino/              Asterisk per il numero vero: Dockerfile, avvio.sh, conf/ (modelli)
   modelli/                 voci di Piper e impronte, scaricati per le prove in locale; fuori da git
@@ -652,9 +706,9 @@ strumenti/
 documentazione/            la mappa dei componenti (index.html), su
                            https://doc.assicurazioni.matteorizzuto.com, e i loghi (loghi/)
                            (Caddy serve la cartella così com'è: basta modificare il file)
-docker-compose.yml         per provarlo su qualsiasi macchina: sito e finta API
-docker-compose.vps.yml     la VPS del progetto: copia privata e pubblica, tunnel, centralino
+docker-compose.yml         per provarlo su qualsiasi macchina: sito, database e finta API
+docker-compose.vps.yml     la VPS del progetto: copia privata e pubblica, database, tunnel, centralino
 ```
 
-Restano fuori dal repository (`.gitignore`): il file `.env`, `dati/`, i modelli e le registrazioni
+Restano fuori dal repository (`.gitignore`): il file `.env`, i modelli e le registrazioni
 della voce, la tesi e la cartella del Drive del gruppo.

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{# Le domande frequenti, divise per categoria (pagina.py, faq.py), con l'aspetto dell'elenco dei
+   documenti. categorie: per ogni categoria le sue domande. Le FAQ sono in italiano, anche nella
+   pagina inglese; solo «Altre domande» è un testo nostro #}
+
+{% block titolo %}{{ t.faq_titolo }} · Velaria{% endblock %}
+{% block descrizione %}{{ t.faq_descrizione }}{% endblock %}
+
+{% block contenuto %}
+<main id="contenuto" class="documenti">
+  <section class="documenti-testa">
+    <div class="contenitore">
+      <h1>{{ t.faq_titolo }}</h1>
+      <nav class="documenti-salti" aria-label="{{ t.faq_categorie }}">
+        {% for categoria, domande in categorie %}
+        <a class="area-{{ categoria.icona }}" href="#{{ categoria.ancora }}">
+          <svg class="icona" aria-hidden="true"><use href="#i-{{ categoria.icona }}"/></svg>
+          {% if categoria.nome %}<span lang="it">{{ categoria.titolo }}</span>{% else %}<span>{{ t.faq_altre }}</span>{% endif %}
+          <span class="conta">{{ domande | length }}</span>
+        </a>
+        {% endfor %}
+      </nav>
+    </div>
+  </section>
+
+  <div class="contenitore documenti-aree">
+    {% for categoria, domande in categorie %}
+    <section id="{{ categoria.ancora }}" class="documenti-area area-{{ categoria.icona }}" aria-labelledby="titolo-{{ categoria.ancora }}">
+      <h2 id="titolo-{{ categoria.ancora }}">
+        <span class="area-icona"><svg aria-hidden="true"><use href="#i-{{ categoria.icona }}"/></svg></span>
+        {% if categoria.nome %}<span lang="it">{{ categoria.titolo }}</span>{% else %}<span>{{ t.faq_altre }}</span>{% endif %}
+      </h2>
+      <ul class="documenti-elenco" lang="it">
+        {% for faq in domande %}
+        <li>
+          <a href="{{ radice }}{{ faq.indirizzo }}">
+            <svg class="icona" aria-hidden="true"><use href="#i-domanda"/></svg>
+            <span>{{ faq.domanda }}</span>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+    {% endfor %}
+  </div>
+</main>
+{% endblock %}

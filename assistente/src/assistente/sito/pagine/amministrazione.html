@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {# La pagina /a (accesso/amministrazione.py): con la password di amministrazione si incolla il JSON degli
-   utenti di prova. entrato: se la password è già stata data; utenti: quelli nell'anagrafe;
+   utenti di prova, e gli utenti si modificano o si eliminano. entrato: se la password è già stata
+   data; utenti: quelli nell'anagrafe; da_modificare: i loro dati per la finestra «Modifica», per id;
    esempio: il JSON di esempio, già formattato #}
 
 {% block titolo %}{{ t.amministrazione }} · Velaria{% endblock %}
@@ -55,13 +56,21 @@
     </section>
 
     <section class="scheda" aria-labelledby="a-titolo-utenti">
-      <h2 id="a-titolo-utenti">{{ t.utenti }} <span class="conta">{{ utenti | length }}</span></h2>
+      <div class="a-titolo">
+        <h2 id="a-titolo-utenti">{{ t.utenti }} <span class="conta">{{ utenti | length }}</span></h2>
+        {% if utenti %}
+        <button id="a-elimina-tutti" class="a-pulsante a-pericolo" type="button" data-quanti="{{ utenti | length }}">
+          <svg class="icona" aria-hidden="true"><use href="#i-cestino"/></svg><span>{{ t.elimina_tutti }}</span>
+        </button>
+        {% endif %}
+      </div>
       <div class="a-tabella">
         <table>
           <thead>
             <tr>
               <th>{{ t.campo_utente }}</th><th>{{ t.dati_nome }}</th><th>{{ t.dati_email }}</th>
               <th>{{ t.dati_pin }}</th><th>{{ t.polizze_numero }}</th>
+              <th><span class="solo-lettori">{{ t.azioni }}</span></th>
             </tr>
           </thead>
           <tbody>
@@ -69,6 +78,14 @@
             <tr>
               <td>{{ u.utente or t.solo_google }}</td><td>{{ u.nome_completo }}</td><td>{{ u.email }}</td>
               <td>{{ u.pin_telefono }}</td><td>{{ u.polizze | length }}</td>
+              <td class="a-azioni-riga">
+                <button class="a-pulsante" type="button" data-modifica="{{ u.id }}">
+                  <svg class="icona" aria-hidden="true"><use href="#i-matita"/></svg><span>{{ t.modifica }}</span>
+                </button>
+                <button class="a-pulsante a-pericolo" type="button" data-elimina="{{ u.id }}" data-nome="{{ u.nome_completo }}">
+                  <svg class="icona" aria-hidden="true"><use href="#i-cestino"/></svg><span>{{ t.elimina }}</span>
+                </button>
+              </td>
             </tr>
             {% endfor %}
           </tbody>
@@ -78,6 +95,76 @@
     {% endif %}
   </div>
 </main>
+
+{% if entrato %}
+<!-- Un utente cambiato a mano: amministrazione.js la riempie con i suoi dati (a-dati) -->
+<dialog id="a-finestra" class="finestra a-finestra" aria-labelledby="a-titolo-modifica">
+  <form id="a-modifica" class="modulo-accesso campi">
+    <button class="bottone-icona chiudi-finestra" type="button" data-chiudi-finestra aria-label="{{ t.chiudi }}">
+      <svg class="icona" aria-hidden="true"><use href="#i-chiudi"/></svg>
+    </button>
+    <h2 id="a-titolo-modifica">{{ t.modifica_utente }}</h2>
+    <div class="campi-affiancati">
+      <label class="campo"><span>{{ t.campo_nome }}</span><input name="nome" maxlength="60" required></label>
+      <label class="campo"><span>{{ t.campo_cognome }}</span><input name="cognome" maxlength="60"></label>
+      <label class="campo"><span>{{ t.campo_utente }}</span>
+        <input name="utente" maxlength="40" pattern="[a-z0-9][a-z0-9._\-]{2,39}" autocapitalize="none" spellcheck="false">
+      </label>
+      <label class="campo"><span>{{ t.campo_password_vuota }}</span>
+        <input name="password" type="password" minlength="8" maxlength="200" autocomplete="new-password">
+      </label>
+      <label class="campo"><span>{{ t.dati_email }}</span><input name="email" type="email" maxlength="120"></label>
+      <label class="campo"><span>{{ t.dati_pin }}</span>
+        <input name="pin_telefono" inputmode="numeric" pattern="\d{6}" maxlength="6" required>
+      </label>
+      <label class="campo"><span>{{ t.dati_cf }}</span><input name="codice_fiscale" maxlength="16"></label>
+      <label class="campo"><span>{{ t.dati_telefono }}</span><input name="telefono" maxlength="40"></label>
+    </div>
+    <label class="campo"><span>{{ t.dati_indirizzo }}</span><input name="indirizzo" maxlength="120"></label>
+
+    <div class="a-titolo">
+      <h3>{{ t.polizze_numero }}</h3>
+      <button id="a-nuova-polizza" class="a-pulsante" type="button">
+        <svg class="icona" aria-hidden="true"><use href="#i-piu"/></svg><span>{{ t.aggiungi_polizza }}</span>
+      </button>
+    </div>
+    <div id="a-polizze" class="a-polizze"></div>
+
+    <p id="a-errore-modifica" class="errore-accesso" role="alert" hidden></p>
+    <button class="bottone" type="submit">{{ t.salva }}</button>
+  </form>
+</dialog>
+
+<template id="a-polizza">
+  <fieldset class="a-polizza">
+    <div class="campi-affiancati">
+      <label class="campo"><span>{{ t.campo_prodotto }}</span>
+        <select name="prodotto" required>
+          {% for area in AREE.values() %}
+          <optgroup label="{{ t[area ~ '_titolo'] }}">
+            {% for nome, dove in PRODOTTI.items() if dove == area %}
+            <option>{{ nome }}</option>
+            {% endfor %}
+          </optgroup>
+          {% endfor %}
+        </select>
+      </label>
+      <label class="campo"><span>{{ t.campo_numero }}</span><input name="numero" maxlength="30" required></label>
+      <label class="campo"><span>{{ t.campo_oggetto }}</span><input name="oggetto" maxlength="120" required></label>
+      <label class="campo"><span>{{ t.polizza_scadenza }}</span><input name="scadenza" type="date" required></label>
+      <label class="campo"><span>{{ t.campo_premio }}</span>
+        <input name="premio" type="number" min="0" max="1000000" step="0.01" required>
+      </label>
+      <label class="campo"><span>{{ t.campo_garanzie }}</span><textarea name="garanzie" rows="3"></textarea></label>
+    </div>
+    <button class="a-pulsante a-pericolo" type="button" data-togli-polizza>
+      <svg class="icona" aria-hidden="true"><use href="#i-cestino"/></svg><span>{{ t.togli_polizza }}</span>
+    </button>
+  </fieldset>
+</template>
+
+<script type="application/json" id="a-dati">{{ da_modificare | tojson }}</script>
+{% endif %}
 
 <!-- I testi degli script, nella lingua della pagina -->
 <script type="application/json" id="testi-script">{{ testi_script | tojson }}</script>

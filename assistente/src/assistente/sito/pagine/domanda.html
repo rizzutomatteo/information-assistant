@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{# Una domanda frequente (pagina.py, faq.py): la risposta, dal Markdown in HTML, con le ancore
+   dei titoli. Ha l'aspetto di un documento; le FAQ sono in italiano, anche nella pagina inglese #}
+
+{% block titolo %}{{ faq.domanda }} · Velaria{% endblock %}
+{% block descrizione %}{{ faq.domanda }}{% endblock %}
+
+{% block contenuto %}
+{% set categoria = faq.categoria %}
+<main id="contenuto" class="sezione documento-pagina">
+  <div class="contenitore">
+    <nav class="briciole" aria-label="{{ t.briciole }}">
+      <a href="{{ radice }}faq">{{ t.faq }}</a>
+      <span aria-hidden="true">/</span>
+      {% if categoria.nome %}
+      <a href="{{ radice }}faq#{{ categoria.ancora }}" lang="it">{{ categoria.titolo }}</a>
+      {% else %}
+      <a href="{{ radice }}faq#{{ categoria.ancora }}">{{ t.faq_altre }}</a>
+      {% endif %}
+    </nav>
+    <h1 lang="it">{{ faq.domanda }}</h1>
+    <article class="documento" lang="it">
+      {{ html }}
+    </article>
+  </div>
+</main>
+{% endblock %}

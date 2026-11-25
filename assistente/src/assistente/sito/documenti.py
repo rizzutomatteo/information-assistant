@@ -106,17 +106,18 @@ def prodotto(testo: str) -> str:
     return trovato[1] if trovato else ""
 
 
-def in_html(testo: str) -> Markup:
+def in_html(testo: str, livello: int = 2) -> Markup:
     """Il Markdown di un documento in HTML, con le ancore delle pagine e dei titoli.
 
-    Nei file non c'è HTML, a parte i commenti: «<» si scrive come testo, così anche un file
-    sbagliato non può mettere nel sito qualcosa di suo.
+    livello: il titolo HTML che diventa «#»; nei documenti h2, perché l'h1 è il titolo della
+    pagina. Nei file non c'è HTML, a parte i commenti: «<» si scrive come testo, così anche un
+    file sbagliato non può mettere nel sito qualcosa di suo.
     """
     testo = COMMENTO.sub("", testo).replace("<", "&lt;")
     testo = PAGINA.sub(r'\n\n<p class="pagina" id="pagina-\1">p. \1</p>\n\n', testo)
     html = markdown.markdown(
         testo,
-        extensions=["tables", "sane_lists", TocExtension(baselevel=2)],
+        extensions=["tables", "sane_lists", TocExtension(baselevel=livello)],
         output_format="html",
     )
     return Markup(html)

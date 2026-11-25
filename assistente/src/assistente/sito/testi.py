@@ -41,6 +41,15 @@ TESTI: dict[str, Testo] = {
         "Policy terms, information documents and forms for Velaria products (in Italian).",
     ),
     "documenti_aree": Testo("Aree dei documenti", "Document areas"),
+    "faq": Testo("FAQ", "FAQ"),
+    "faq_titolo": Testo("Domande frequenti", "Frequently asked questions"),
+    "faq_descrizione": Testo(
+        "Le risposte alle domande più frequenti su polizze, sinistri e prodotti Velaria.",
+        "Answers to frequently asked questions about Velaria policies, claims and products (in "
+        "Italian).",
+    ),
+    "faq_categorie": Testo("Categorie delle domande", "Question categories"),
+    "faq_altre": Testo("Altre domande", "Other questions"),
     "briciole": Testo("Percorso", "Breadcrumb"),
     "accedi": Testo("Accedi", "Sign in"),
     "area_di": Testo("Area riservata di", "Personal area of"),
@@ -265,6 +274,16 @@ TESTI: dict[str, Testo] = {
     "utenti": Testo("Utenti", "Users"),
     "polizze_numero": Testo("Polizze", "Policies"),
     "solo_google": Testo("(solo Google)", "(Google only)"),
+    "azioni": Testo("Azioni", "Actions"),
+    "modifica": Testo("Modifica", "Edit"),
+    "elimina": Testo("Elimina", "Delete"),
+    "elimina_tutti": Testo("Elimina tutti", "Delete all"),
+    "modifica_utente": Testo("Modifica utente", "Edit user"),
+    "campo_password_vuota": Testo(
+        "Nuova password (vuota: resta quella di prima)",
+        "New password (empty: keep the current one)",
+    ),
+    "salva": Testo("Salva", "Save"),
     "nota_accesso": Testo("Dati e polizze sono di prova.", "Details and policies are sample data."),
     "assistente": Testo("Assistente", "Assistant"),
     "assistente_nome": Testo("Assistente Velaria", "Velaria Assistant"),
@@ -366,6 +385,13 @@ TESTI: dict[str, Testo] = {
     ),
     "conferma_togli": Testo("Togliere la polizza n. {numero}?", "Remove policy no. {numero}?"),
     "json_non_valido": Testo("JSON non valido: {errore}", "Invalid JSON: {errore}"),
+    "conferma_elimina": Testo(
+        "Eliminare {nome} e le sue polizze?", "Delete {nome} and their policies?"
+    ),
+    "conferma_elimina_tutti": Testo(
+        "Eliminare tutti gli utenti ({quanti}), con le loro polizze? Non si può annullare.",
+        "Delete all users ({quanti}) and their policies? This cannot be undone.",
+    ),
     "utenti_caricati": Testo(
         "Fatto. Utenti creati: {creati}; sostituiti: {sostituiti}.",
         "Done. Users created: {creati}; replaced: {sostituiti}.",
@@ -418,4 +444,6 @@ DEGLI_SCRIPT = (
     "conferma_togli",
     "json_non_valido",
     "utenti_caricati",
+    "conferma_elimina",
+    "conferma_elimina_tutti",
 )

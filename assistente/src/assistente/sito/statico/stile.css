@@ -597,7 +597,7 @@ a.numero:hover { background: rgb(255 255 255 / .1); }
 
 .accedi-chat { margin-top: 10px; }
 
-/* --- Documenti: l'elenco per area e un documento ------------------------------------ */
+/* --- Documenti e FAQ: l'elenco per area (o categoria) e un documento (o una domanda) --- */
 
 .area-documenti {
   display: inline-flex; align-items: center; gap: 6px; align-self: flex-start;
@@ -606,16 +606,17 @@ a.numero:hover { background: rgb(255 255 255 / .1); }
 .area-documenti .icona { width: 16px; height: 16px; }
 .area-documenti:hover { text-decoration: underline; }
 
-/* Il collegamento a tutti i documenti, accanto al titolo della sezione dei prodotti */
+/* I collegamenti a tutti i documenti e alle FAQ, accanto al titolo delle sezioni dei prodotti e
+   dei contatti */
 .sezione-testa { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 14px 24px; }
-.tutti-documenti {
+.tutti-documenti, .tutte-faq {
   display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 999px;
   border: 1px solid var(--bordo); background: var(--superficie); box-shadow: var(--ombra);
   color: var(--testo); font-size: .95rem; font-weight: 700; text-decoration: none;
   transition: background .15s;
 }
-.tutti-documenti:hover { background: var(--superficie-2); }
-.tutti-documenti .icona { width: 18px; height: 18px; color: var(--primario); }
+.tutti-documenti:hover, .tutte-faq:hover { background: var(--superficie-2); }
+.tutti-documenti .icona, .tutte-faq .icona { width: 18px; height: 18px; color: var(--primario); }
 
 .documento-pagina { padding-top: 48px; }
 .documenti h1, .documento-pagina h1 { font-size: clamp(1.9rem, 2vw + 1rem, 2.6rem); font-weight: 800; }
@@ -700,6 +701,8 @@ a.numero:hover { background: rgb(255 255 255 / .1); }
 
 .amministrazione-testa { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
 .amministrazione-corpo { display: grid; gap: 24px; padding: 40px 0 88px; }
+/* Le schede non si allargano oltre lo schermo: la tabella scorre dentro la sua */
+.amministrazione-corpo > * { min-width: 0; }
 .amministrazione h2 { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; font-size: 1.3rem; }
 .a-accesso { width: min(420px, 100%); }
 .a-colonne { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
@@ -715,10 +718,32 @@ a.numero:hover { background: rgb(255 255 255 / .1); }
   background: var(--sfondo); border: 1px solid var(--bordo);
   font-family: ui-monospace, "SFMono-Regular", Menlo, monospace; font-size: .8rem; line-height: 1.5;
 }
-.a-tabella { overflow-x: auto; }
+/* relative: anche l'etichetta nascosta «Azioni» (assoluta) resta dentro e scorre con la tabella */
+.a-tabella { position: relative; overflow-x: auto; }
 .a-tabella table { width: 100%; border-collapse: collapse; font-size: .9rem; }
 .a-tabella th, .a-tabella td { padding: 9px 12px; border-bottom: 1px solid var(--bordo); text-align: left; white-space: nowrap; }
 .a-tabella th { color: var(--tenue); font-size: .74rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.a-tabella .a-azioni-riga { padding-block: 4px; text-align: right; }
+/* Titolo e pulsante sulla stessa riga: «Utenti» ed «Elimina tutti», «Polizze» e «Aggiungi» */
+.a-titolo { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 18px; }
+.a-titolo h2, .a-titolo h3 { margin: 0; }
+.a-pulsante {
+  display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px;
+  border: 0; border-radius: 999px; background: none; cursor: pointer;
+  color: var(--tenue); font: inherit; font-size: .82rem; font-weight: 600; transition: background .15s, color .15s;
+}
+.a-pulsante:hover { background: var(--superficie-2); color: var(--testo); }
+.a-pulsante.a-pericolo:hover { background: var(--errore); color: var(--errore-testo); }
+.a-pulsante .icona { width: 15px; height: 15px; }
+/* La finestra «Modifica»: più larga, per i campi affiancati e le polizze */
+.a-finestra { width: min(720px, 100vw - 32px); }
+.a-finestra h3 { font-size: 1.05rem; }
+.a-finestra .a-titolo { margin: 6px 0 0; }
+.a-polizze { display: grid; gap: 12px; }
+.a-polizza { display: grid; gap: 10px; min-width: 0; margin: 0; padding: 16px; border: 1px solid var(--bordo); border-radius: 14px; }
+/* Accanto alle garanzie, più alte, il premio resta della sua altezza */
+.a-polizza .campi-affiancati { align-items: start; }
+.a-polizza .a-pulsante { justify-self: end; }
 
 /* --- Schermi piccoli ----------------------------------------------------------------- */
 
@@ -729,8 +754,9 @@ a.numero:hover { background: rgb(255 255 255 / .1); }
   .aree, .vantaggi { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* Sotto questa larghezza le cinque voci del menu non stanno più nella testata */
-@media (max-width: 900px) {
+/* Sotto questa larghezza le sei voci del menu non stanno più nella testata (in italiano, con
+   «Accedi», fino a 924px; il resto è per un nome lungo dopo l'accesso) */
+@media (max-width: 960px) {
   .testata nav { display: none; }
   .testata-riga { justify-content: space-between; }
 }

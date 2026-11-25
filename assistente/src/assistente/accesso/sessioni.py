@@ -60,10 +60,10 @@ class Sessioni:
         self._aperte[token] = utente.id
         return token
 
-    def utente(self, token: str | None) -> Utente | None:
+    async def utente(self, token: str | None) -> Utente | None:
         """L'utente com'è adesso nell'anagrafe (con le polizze aggiunte nel frattempo)."""
         id_utente = self._aperte.get(token) if token else None
-        return self.anagrafe.utente(id_utente) if id_utente is not None else None
+        return await self.anagrafe.utente(id_utente) if id_utente is not None else None
 
     def chiudi(self, token: str | None):
         if token:
@@ -83,8 +83,8 @@ class AccessoConPin:
         self._sessioni = sessioni
         self.token: str | None = None
 
-    def entra(self, pin: str) -> Utente | None:
-        utente = self._sessioni.anagrafe.da_pin(pin)
+    async def entra(self, pin: str) -> Utente | None:
+        utente = await self._sessioni.anagrafe.da_pin(pin)
         if utente:
             self.chiudi()
             self.token = self._sessioni.apri(utente)

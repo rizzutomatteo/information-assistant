@@ -4,7 +4,7 @@
 #   docker compose up -d --build      avvia (la prima volta costruisce l'immagine: qualche minuto)
 #   apri http://localhost:8002
 #   docker compose logs -f sito       log
-#   docker compose down               ferma (gli utenti restano nel volume «dati»)
+#   docker compose down               ferma (gli utenti restano nel volume «database»)
 #
 # Funzionano ovunque chat, documenti, registrazione, accesso e polizze. Le chiamate dal browser:
 # su Linux, aprendo il sito dalla stessa macchina, l'audio arriva diretto al container; altrimenti
@@ -24,6 +24,7 @@ services:
     environment:
       ASSISTENTE_API_URL: http://finta-api:8001
       ASSISTENTE_PORTA: "8002"
+      ASSISTENTE_DATABASE: postgresql://assistente:${DATABASE_PASSWORD:-assistente}@database:5432/assistente
       # Facoltativi, nel file .env: la password della pagina /a, «Accedi con Google» (il client
       # deve avere tra le origini autorizzate l'indirizzo da cui si apre il sito), Whisper su Groq
       ASSISTENTE_AMMINISTRAZIONE_PASSWORD: ${AMMINISTRAZIONE_PASSWORD:-}
@@ -36,14 +37,39 @@ services:
       VOCE_TURN_TOKEN: ${CLOUDFLARE_TURN_KEY_TOKEN:-}
       # I modelli sono nell'immagine: niente controlli né download
       HF_HUB_OFFLINE: "1"
-    volumes:
-      # Utenti e polizze: restano tra un avvio e l'altro
-      - dati:/dati
-    depends_on: [finta-api]
+    depends_on:
+      finta-api:
+        condition: service_started
+      database:
+        condition: service_healthy
     mem_limit: 2500m
     restart: unless-stopped
     read_only: true
     tmpfs: ["/tmp"]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+
+  # Utenti e polizze (accesso/utenti.py). Nessuna porta aperta: lo raggiunge solo il sito, dalla
+  # rete di Compose. I dati restano nel volume «database» tra un avvio e l'altro
+  database:
+    image: postgres:18.7-alpine
+    environment:
+      POSTGRES_USER: assistente
+      POSTGRES_DB: assistente
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-assistente}
+    volumes:
+      - database:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD", "pg_isready", "-h", "127.0.0.1", "-U", "assistente", "-d", "assistente"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+    # L'utente postgres dell'immagine: gli basta il volume, senza privilegi da root
+    user: "70:70"
+    mem_limit: 300m
+    restart: unless-stopped
+    read_only: true
+    tmpfs: ["/tmp", "/var/run/postgresql:uid=70,gid=70"]
     cap_drop: [ALL]
     security_opt: ["no-new-privileges:true"]
 
@@ -65,4 +91,4 @@ services:
     security_opt: ["no-new-privileges:true"]
 
 volumes:
-  dati:
+  database:

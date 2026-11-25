@@ -1,30 +1,30 @@
-"""Gli utenti della pagina dimostrativa e le loro polizze, in un file SQLite.
+"""Gli utenti della pagina dimostrativa e le loro polizze, in PostgreSQL.
 
-Le due copie del sito usano lo stesso file (ASSISTENTE_UTENTI), così chi aggiunge una polizza su
-una la ritrova sull'altra. Senza file gli utenti stanno in memoria e si perdono quando il server
-riparte.
+Le due copie del sito usano lo stesso database (ASSISTENTE_DATABASE), così chi aggiunge una
+polizza su una la ritrova sull'altra.
 
 Si entra in tre modi (rotte.py): con utente e password, di chi si è registrato o degli utenti di
 prova; con Google, come l'utente che ha la stessa email (se non c'è, si crea con i dati di prova);
 al telefono con il PIN, che per questo è diverso per ognuno. Gli utenti di prova si caricano da
-/a incollando un JSON nel formato di FileUtenti, come esempio_utenti.json (amministrazione.py).
-Al primo avvio c'è solo Mario Rossi, con il PIN 123456 e senza password: serve alle prove al
-telefono.
+/a incollando un JSON nel formato di FileUtenti, come esempio_utenti.json, e lì si modificano o si
+eliminano (amministrazione.py). Al primo avvio c'è solo Mario Rossi, con il PIN 123456 e senza
+password: serve alle prove al telefono.
 
 Le password non si salvano: si salva la loro impronta scrypt, con un sale diverso per ognuna.
 """
 
 import hashlib
 import hmac
-import json
 import secrets
-import sqlite3
 from dataclasses import asdict, dataclass
 from datetime import date
 from decimal import Decimal
-from pathlib import Path
 
 from loguru import logger
+from psycopg import AsyncConnection
+from psycopg.errors import UniqueViolation
+from psycopg.rows import dict_row
+from psycopg_pool import AsyncConnectionPool
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 # I prodotti che si possono avere in polizza, con l'area a cui appartengono (icona e colore)
@@ -91,6 +91,21 @@ class Utente:
     def profilo(self) -> dict:
         """I dati da dare alla pagina dopo l'accesso."""
         return {k: v for k, v in asdict(self).items() if k not in ("id", "polizze")}
+
+    def nel_json(self) -> dict:
+        """L'utente nel formato del JSON di /a, senza password: per modificarlo a mano."""
+        polizze = [
+            {
+                "prodotto": p.prodotto,
+                "numero": p.numero,
+                "oggetto": p.oggetto,
+                "scadenza": p.scadenza.isoformat(),
+                "premio": str(p.premio),
+                "garanzie": list(p.garanzie),
+            }
+            for p in self.polizze
+        ]
+        return self.profilo() | {"polizze": polizze}
 
     @property
     def nome_completo(self) -> str:
@@ -221,6 +236,14 @@ class UtenteDati(BaseModel):
     polizze: list[PolizzaDati] = Field(default_factory=list, max_length=50)
 
 
+class ModificaUtente(UtenteDati):
+    """Un utente cambiato a mano in /a. Il nome utente può mancare (chi entra solo con Google);
+    senza password nuova resta quella di prima, senza PIN quello di prima."""
+
+    utente: str = Field(default="", pattern=f"^$|{NOME_UTENTE}")
+    password: str | None = Field(default=None, min_length=8, max_length=200)
+
+
 class FileUtenti(BaseModel):
     """Il JSON da incollare in /a: {"utenti": [...]}."""
 
@@ -265,7 +288,9 @@ def password_giusta(password: str, impronta: str | None) -> bool:
 
 TABELLE = """
 CREATE TABLE IF NOT EXISTS utenti (
-    id INTEGER PRIMARY KEY,
+    -- IDENTITY: i numeri vanno solo avanti. L'id di un utente eliminato non passa a uno nuovo,
+    -- che altrimenti erediterebbe le sessioni ancora aperte (in memoria, nelle due copie del sito)
+    id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     utente TEXT UNIQUE,
     email TEXT UNIQUE,
     password TEXT,
@@ -277,125 +302,158 @@ CREATE TABLE IF NOT EXISTS utenti (
     indirizzo TEXT NOT NULL DEFAULT ''
 );
 CREATE TABLE IF NOT EXISTS polizze (
-    id INTEGER PRIMARY KEY,
+    id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     utente_id INTEGER NOT NULL REFERENCES utenti(id) ON DELETE CASCADE,
     prodotto TEXT NOT NULL,
     numero TEXT NOT NULL,
     oggetto TEXT NOT NULL,
-    scadenza TEXT NOT NULL,
-    premio TEXT NOT NULL,
-    garanzie TEXT NOT NULL
+    scadenza DATE NOT NULL,
+    premio NUMERIC(10, 2) NOT NULL,
+    garanzie TEXT[] NOT NULL
 );
+CREATE INDEX IF NOT EXISTS polizze_utente ON polizze (utente_id);
 """
+# Il numero del blocco che tiene una sola copia del sito alla volta a preparare le tabelle
+BLOCCO_TABELLE = 20261125
+SENZA_DATI = {"codice_fiscale": "", "telefono": "", "indirizzo": ""}
+
+
+async def _tutte(c: AsyncConnection, sql: str, *valori) -> list[dict]:
+    return await (await c.execute(sql, valori)).fetchall()
+
+
+async def _una(c: AsyncConnection, sql: str, *valori) -> dict | None:
+    return await (await c.execute(sql, valori)).fetchone()
 
 
 class Anagrafe:
-    """Gli utenti e le loro polizze. Le operazioni sono brevi e si fanno nel ciclo degli eventi;
-    le impronte delle password si calcolano fuori (impronta_password, password_giusta)."""
+    """Gli utenti e le loro polizze, in PostgreSQL. Ogni metodo è una transazione: tutto o
+    niente. Le impronte delle password si calcolano fuori dal ciclo degli eventi
+    (impronta_password, password_giusta)."""
 
-    def __init__(self, file: Path | None):
-        if file:
-            file.parent.mkdir(parents=True, exist_ok=True)
-        self._db = sqlite3.connect(file or ":memory:", check_same_thread=False)
-        self._db.row_factory = sqlite3.Row
-        self._db.execute("PRAGMA foreign_keys = ON")
-        # Le due copie del sito scrivono nello stesso file: chi trova il file occupato aspetta
-        self._db.execute("PRAGMA busy_timeout = 5000")
-        if file:
-            self._db.execute("PRAGMA journal_mode = WAL")
-        self._db.executescript(TABELLE)
-        try:
-            with self._db:
-                if not self._db.execute("SELECT 1 FROM utenti LIMIT 1").fetchone():
-                    self._nuovo(
-                        "mario.rossi", "", None, PIN_DEMO, "Mario", "Rossi", POLIZZE_DI_PROVA
-                    )
-        except sqlite3.IntegrityError:
-            # Al primo avvio le due copie del sito partono insieme: l'altra l'ha appena creato
-            pass
-        logger.info(f"Utenti: {file or 'in memoria (si perdono quando il server riparte)'}")
+    def __init__(self, indirizzo: str):
+        self._indirizzo = indirizzo  # postgresql://utente:password@host:porta/database
+        self._pool: AsyncConnectionPool | None = None
 
-    def utente(self, id_utente: int) -> Utente | None:
-        riga = self._db.execute("SELECT * FROM utenti WHERE id = ?", (id_utente,)).fetchone()
-        return self._utente(riga) if riga else None
+    async def apri(self):
+        """All'avvio del server: le connessioni, le tabelle e, la prima volta, Mario Rossi. Se è
+        già aperta (i test la aprono prima di darla al server) non fa nulla."""
+        if self._pool:
+            return
+        if not self._indirizzo:
+            raise RuntimeError("manca ASSISTENTE_DATABASE, l'indirizzo di PostgreSQL")
+        pool = AsyncConnectionPool(
+            self._indirizzo,
+            min_size=1,
+            max_size=4,
+            kwargs={"row_factory": dict_row},
+            # Una connessione caduta (PostgreSQL riavviato) si scarta prima di usarla
+            check=AsyncConnectionPool.check_connection,
+            open=False,
+        )
+        await pool.open(wait=True)
+        self._pool = pool
+        async with pool.connection() as c:
+            # Le due copie del sito partono insieme: una prepara le tabelle, l'altra aspetta
+            await c.execute("SELECT pg_advisory_xact_lock(%s)", (BLOCCO_TABELLE,))
+            await c.execute(TABELLE)
+            # Solo se la tabella non ha mai avuto utenti: dopo «Elimina tutti» resta vuota
+            mai = await _una(
+                c,
+                "SELECT pg_sequence_last_value(pg_get_serial_sequence('utenti', 'id')) IS NULL"
+                " AS mai",
+            )
+            if mai["mai"]:
+                await self._nuovo(
+                    c, "mario.rossi", "", None, PIN_DEMO, "Mario", "Rossi", POLIZZE_DI_PROVA
+                )
+        logger.info("Utenti: PostgreSQL")
 
-    def da_pin(self, pin: str) -> Utente | None:
-        riga = self._db.execute("SELECT * FROM utenti WHERE pin = ?", (pin,)).fetchone()
-        return self._utente(riga) if riga else None
+    async def chiudi(self):
+        if self._pool:
+            await self._pool.close()
 
-    def impronta(self, nome_utente: str) -> tuple[int, str] | None:
+    async def utente(self, id_utente: int) -> Utente | None:
+        async with self._pool.connection() as c:
+            return await self._uno(c, "id = %s", id_utente)
+
+    async def da_pin(self, pin: str) -> Utente | None:
+        async with self._pool.connection() as c:
+            return await self._uno(c, "pin = %s", pin)
+
+    async def impronta(self, nome_utente: str) -> tuple[int, str] | None:
         """L'id e l'impronta della password di chi entra con questo nome, se c'è."""
-        riga = self._db.execute(
-            "SELECT id, password FROM utenti WHERE utente = ? AND password IS NOT NULL",
-            (nome_utente.strip().lower(),),
-        ).fetchone()
+        async with self._pool.connection() as c:
+            riga = await _una(
+                c,
+                "SELECT id, password FROM utenti WHERE utente = %s AND password IS NOT NULL",
+                nome_utente.strip().lower(),
+            )
         return (riga["id"], riga["password"]) if riga else None
 
-    def da_google(self, email: str, nome: str, cognome: str) -> Utente:
+    async def da_google(self, email: str, nome: str, cognome: str) -> Utente:
         """L'utente con questa email; la prima volta lo si crea, con dati e polizze di prova."""
-        riga = self._db.execute("SELECT id FROM utenti WHERE email = ?", (email,)).fetchone()
-        if riga:
-            return self.utente(riga["id"])
-        with self._db:
-            nuovo = self._nuovo(
-                None, email, None, self._pin_libero(), nome, cognome, POLIZZE_DI_PROVA
-            )
-        return self.utente(nuovo)
+        async with self._pool.connection() as c:
+            if utente := await self._uno(c, "email = %s", email):
+                return utente
+            pin = await self._pin_libero(c)
+            nuovo = await self._nuovo(c, None, email, None, pin, nome, cognome, POLIZZE_DI_PROVA)
+            return await self._uno(c, "id = %s", nuovo)
 
-    def registra(self, dati: Registrazione, impronta: str) -> Utente:
+    async def registra(self, dati: Registrazione, impronta: str) -> Utente:
         """Un account nuovo, senza polizze: se le aggiunge l'utente. Conflitto se il nome
         utente o l'email sono già usati."""
         try:
-            with self._db:
-                self._libero("utente", dati.utente, None)
+            async with self._pool.connection() as c:
+                await self._libero(c, "utente", dati.utente, None)
                 if dati.email:
-                    self._libero("email", dati.email, None)
-                nuovo = self._nuovo(
+                    await self._libero(c, "email", dati.email, None)
+                nuovo = await self._nuovo(
+                    c,
                     dati.utente,
                     dati.email,
                     impronta,
-                    self._pin_libero(),
+                    await self._pin_libero(c),
                     dati.nome,
                     dati.cognome,
                     [],
-                    {"codice_fiscale": "", "telefono": "", "indirizzo": ""},
+                    SENZA_DATI,
                 )
-        except sqlite3.IntegrityError:
+                return await self._uno(c, "id = %s", nuovo)
+        except UniqueViolation:
             # Lo stesso nome registrato nello stesso istante dall'altra copia del sito
             raise Conflitto("utente", f"«utente» {dati.utente} è già usato") from None
-        return self.utente(nuovo)
 
-    def aggiungi_polizza(self, id_utente: int, polizza: Polizza) -> int:
-        with self._db:
-            return self._polizza(id_utente, polizza)
+    async def aggiungi_polizza(self, id_utente: int, polizza: Polizza) -> int:
+        async with self._pool.connection() as c:
+            return await self._polizza(c, id_utente, polizza)
 
-    def togli_polizza(self, id_utente: int, id_polizza: int) -> bool:
-        with self._db:
-            cursore = self._db.execute(
-                "DELETE FROM polizze WHERE id = ? AND utente_id = ?", (id_polizza, id_utente)
+    async def togli_polizza(self, id_utente: int, id_polizza: int) -> bool:
+        async with self._pool.connection() as c:
+            cursore = await c.execute(
+                "DELETE FROM polizze WHERE id = %s AND utente_id = %s", (id_polizza, id_utente)
             )
         return cursore.rowcount > 0
 
-    def carica(self, utenti: list[UtenteDati], impronte: dict[str, str]) -> tuple[int, int]:
+    async def carica(self, utenti: list[UtenteDati], impronte: dict[str, str]) -> tuple[int, int]:
         """Crea gli utenti del JSON, o li sostituisce se il nome c'è già (polizze comprese).
         impronte: nome utente → impronta della password. Tutto o niente: (creati, sostituiti)."""
         creati = sostituiti = 0
-        with self._db:
+        async with self._pool.connection() as c:
             for u in utenti:
-                vecchio = self._db.execute(
-                    "SELECT id, pin FROM utenti WHERE utente = ?", (u.utente,)
-                ).fetchone()
+                vecchio = await _una(c, "SELECT id, pin FROM utenti WHERE utente = %s", u.utente)
                 id_vecchio = vecchio["id"] if vecchio else None
-                pin = u.pin_telefono or (vecchio["pin"] if vecchio else self._pin_libero())
-                self._libero("pin", pin, id_vecchio)
+                pin = u.pin_telefono or (vecchio["pin"] if vecchio else await self._pin_libero(c))
+                await self._libero(c, "pin", pin, id_vecchio)
                 if u.email:
-                    self._libero("email", u.email, id_vecchio)
+                    await self._libero(c, "email", u.email, id_vecchio)
                 if vecchio:
-                    self._db.execute("DELETE FROM utenti WHERE id = ?", (id_vecchio,))
+                    await c.execute("DELETE FROM utenti WHERE id = %s", (id_vecchio,))
                     sostituiti += 1
                 else:
                     creati += 1
-                self._nuovo(
+                await self._nuovo(
+                    c,
                     u.utente,
                     u.email,
                     impronte[u.utente],
@@ -411,88 +469,149 @@ class Anagrafe:
                 )
         return creati, sostituiti
 
-    def elenco(self) -> list[Utente]:
-        righe = self._db.execute("SELECT * FROM utenti ORDER BY cognome, nome, id").fetchall()
-        return [self._utente(r) for r in righe]
+    async def modifica(
+        self, id_utente: int, dati: ModificaUtente, impronta: str | None
+    ) -> Utente | None:
+        """Cambia dati e polizze di un utente; id e sessioni restano. impronta: della password
+        nuova, None per tenere quella di prima. None se l'utente non c'è; Conflitto se nome
+        utente, email o PIN sono di un altro."""
+        async with self._pool.connection() as c:
+            vecchio = await _una(c, "SELECT pin FROM utenti WHERE id = %s", id_utente)
+            if not vecchio:
+                return None
+            pin = dati.pin_telefono or vecchio["pin"]
+            for campo, valore in (("utente", dati.utente), ("email", dati.email), ("pin", pin)):
+                if valore:
+                    await self._libero(c, campo, valore, id_utente)
+            await c.execute(
+                "UPDATE utenti SET utente = %s, email = %s, password = COALESCE(%s, password),"
+                " pin = %s, nome = %s, cognome = %s, codice_fiscale = %s, telefono = %s,"
+                " indirizzo = %s WHERE id = %s",
+                (
+                    dati.utente or None,
+                    dati.email or None,
+                    impronta,
+                    pin,
+                    dati.nome,
+                    dati.cognome,
+                    dati.codice_fiscale,
+                    dati.telefono,
+                    dati.indirizzo,
+                    id_utente,
+                ),
+            )
+            await c.execute("DELETE FROM polizze WHERE utente_id = %s", (id_utente,))
+            for polizza in dati.polizze:
+                await self._polizza(c, id_utente, polizza.polizza())
+            return await self._uno(c, "id = %s", id_utente)
 
-    def chiudi(self):
-        self._db.close()
+    async def elimina(self, id_utente: int) -> bool:
+        """Con le sue polizze. Le sue sessioni aperte non trovano più nessuno."""
+        async with self._pool.connection() as c:
+            cursore = await c.execute("DELETE FROM utenti WHERE id = %s", (id_utente,))
+        return cursore.rowcount > 0
 
-    def _libero(self, campo: str, valore: str, tranne: int | None):
-        riga = self._db.execute(
-            f"SELECT utente, email FROM utenti WHERE {campo} = ? AND id IS NOT ?", (valore, tranne)
-        ).fetchone()
+    async def elimina_tutti(self) -> int:
+        async with self._pool.connection() as c:
+            cursore = await c.execute("DELETE FROM utenti")
+        return cursore.rowcount
+
+    async def elenco(self) -> list[Utente]:
+        async with self._pool.connection() as c:
+            return await self._utenti(c, "TRUE")
+
+    async def _libero(self, c: AsyncConnection, campo: str, valore: str, tranne: int | None):
+        # campo è uno dei nomi di colonna scritti qui, mai un dato che arriva da fuori
+        riga = await _una(
+            c,
+            f"SELECT utente, email FROM utenti WHERE {campo} = %s AND id IS DISTINCT FROM %s",
+            valore,
+            tranne,
+        )
         if riga:
             chi = riga["utente"] or riga["email"]
             raise Conflitto(campo, f"«{campo}» {valore} è già di un altro utente ({chi})")
 
-    def _pin_libero(self) -> str:
+    async def _pin_libero(self, c: AsyncConnection) -> str:
         while True:
             pin = f"{secrets.randbelow(10**6):06d}"
-            if not self._db.execute("SELECT 1 FROM utenti WHERE pin = ?", (pin,)).fetchone():
+            if not await _una(c, "SELECT 1 FROM utenti WHERE pin = %s", pin):
                 return pin
 
-    def _nuovo(self, nome_utente, email, impronta, pin, nome, cognome, polizze, dati=None) -> int:
+    async def _nuovo(
+        self, c, nome_utente, email, impronta, pin, nome, cognome, polizze, dati=None
+    ) -> int:
         dati = DATI_DI_PROVA if dati is None else dati
-        cursore = self._db.execute(
+        riga = await _una(
+            c,
             "INSERT INTO utenti (utente, email, password, pin, nome, cognome, codice_fiscale,"
-            " telefono, indirizzo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            (
-                nome_utente,
-                email or None,
-                impronta,
-                pin,
-                nome,
-                cognome,
-                dati["codice_fiscale"],
-                dati["telefono"],
-                dati["indirizzo"],
-            ),
+            " telefono, indirizzo) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING id",
+            nome_utente,
+            email or None,
+            impronta,
+            pin,
+            nome,
+            cognome,
+            dati["codice_fiscale"],
+            dati["telefono"],
+            dati["indirizzo"],
         )
         for polizza in polizze:
-            self._polizza(cursore.lastrowid, polizza)
-        return cursore.lastrowid
+            await self._polizza(c, riga["id"], polizza)
+        return riga["id"]
 
-    def _polizza(self, id_utente: int, p: Polizza) -> int:
-        cursore = self._db.execute(
-            "INSERT INTO polizze (utente_id, prodotto, numero, oggetto, scadenza, premio, garanzie)"
-            " VALUES (?, ?, ?, ?, ?, ?, ?)",
-            (
-                id_utente,
-                p.prodotto,
-                p.numero,
-                p.oggetto,
-                p.scadenza.isoformat(),
-                str(p.premio),
-                json.dumps(list(p.garanzie), ensure_ascii=False),
-            ),
+    async def _polizza(self, c: AsyncConnection, id_utente: int, p: Polizza) -> int:
+        riga = await _una(
+            c,
+            "INSERT INTO polizze (utente_id, prodotto, numero, oggetto, scadenza, premio,"
+            " garanzie) VALUES (%s, %s, %s, %s, %s, %s, %s) RETURNING id",
+            id_utente,
+            p.prodotto,
+            p.numero,
+            p.oggetto,
+            p.scadenza,
+            p.premio,
+            list(p.garanzie),
         )
-        return cursore.lastrowid
+        return riga["id"]
 
-    def _utente(self, riga: sqlite3.Row) -> Utente:
-        polizze = self._db.execute(
-            "SELECT * FROM polizze WHERE utente_id = ? ORDER BY id", (riga["id"],)
-        ).fetchall()
-        return Utente(
-            id=riga["id"],
-            utente=riga["utente"] or "",
-            email=riga["email"] or "",
-            pin_telefono=riga["pin"],
-            nome=riga["nome"],
-            cognome=riga["cognome"],
-            codice_fiscale=riga["codice_fiscale"],
-            telefono=riga["telefono"],
-            indirizzo=riga["indirizzo"],
-            polizze=tuple(
+    async def _uno(self, c: AsyncConnection, condizione: str, valore) -> Utente | None:
+        utenti = await self._utenti(c, condizione, valore)
+        return utenti[0] if utenti else None
+
+    async def _utenti(self, c: AsyncConnection, condizione: str, *valori) -> list[Utente]:
+        """Gli utenti che rispettano la condizione (scritta qui, con i valori a parte), con le
+        loro polizze: due domande al database in tutto, quanti che siano gli utenti."""
+        righe = await _tutte(
+            c, f"SELECT * FROM utenti WHERE {condizione} ORDER BY cognome, nome, id", *valori
+        )
+        polizze: dict[int, list[Polizza]] = {r["id"]: [] for r in righe}
+        for p in await _tutte(
+            c, "SELECT * FROM polizze WHERE utente_id = ANY(%s) ORDER BY id", list(polizze)
+        ):
+            polizze[p["utente_id"]].append(
                 Polizza(
                     prodotto=p["prodotto"],
                     numero=p["numero"],
                     oggetto=p["oggetto"],
-                    scadenza=date.fromisoformat(p["scadenza"]),
-                    premio=Decimal(p["premio"]),
-                    garanzie=tuple(json.loads(p["garanzie"])),
+                    scadenza=p["scadenza"],
+                    premio=p["premio"],
+                    garanzie=tuple(p["garanzie"]),
                     id=p["id"],
                 )
-                for p in polizze
-            ),
-        )
+            )
+        return [
+            Utente(
+                id=r["id"],
+                utente=r["utente"] or "",
+                email=r["email"] or "",
+                pin_telefono=r["pin"],
+                nome=r["nome"],
+                cognome=r["cognome"],
+                codice_fiscale=r["codice_fiscale"],
+                telefono=r["telefono"],
+                indirizzo=r["indirizzo"],
+                polizze=tuple(polizze[r["id"]]),
+            )
+            for r in righe
+        ]

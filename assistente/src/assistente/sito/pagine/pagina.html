@@ -255,7 +255,12 @@
   <section id="contatti" class="sezione">
     <div class="contenitore">
       <p class="sopratitolo">{{ t.contatti_sopra }}</p>
-      <h2>{{ t.contatti_titolo }}</h2>
+      <div class="sezione-testa">
+        <h2>{{ t.contatti_titolo }}</h2>
+        <a class="tutte-faq" href="faq">
+          <svg class="icona" aria-hidden="true"><use href="#i-domanda"/></svg><span>{{ t.faq_titolo }}</span><svg class="icona" aria-hidden="true"><use href="#i-freccia"/></svg>
+        </a>
+      </div>
       <div class="contatti">
         <div class="contatto">
           <h3>{{ t.clienti }}</h3>

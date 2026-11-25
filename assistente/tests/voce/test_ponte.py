@@ -189,14 +189,15 @@ def _tasti(sequenza):
     return [InputDTMFFrame(button=KeypadEntry(t)) for t in sequenza]
 
 
-def _al_telefono(client):
-    accesso = AccessoConPin(Sessioni(Anagrafe(None)))
+def _al_telefono(client, anagrafe=None):
+    """anagrafe: per i test in cui il PIN si controlla davvero."""
+    accesso = AccessoConPin(Sessioni(anagrafe or Anagrafe("")))
     return Assistente(client, "s1", canale="telefono", chat=False, accesso_pin=accesso), accesso
 
 
-async def test_pin_giusto_rifa_la_domanda_con_il_token():
+async def test_pin_giusto_rifa_la_domanda_con_il_token(anagrafe):
     client = ClientConAccesso()
-    assistente, accesso = _al_telefono(client)
+    assistente, accesso = _al_telefono(client, anagrafe)
     frames = [_trascrizione("Quando scade la mia polizza?"), SleepFrame(0.2)]
     frames += _tasti(PIN_DEMO + "#") + [SleepFrame(0.3)]
     giu, _ = await run_test(assistente, frames_to_send=frames)
@@ -215,8 +216,8 @@ async def test_pin_giusto_rifa_la_domanda_con_il_token():
     assert not any(isinstance(f, InputDTMFFrame) for f in giu)
 
 
-async def test_pin_sbagliato_tre_volte():
-    assistente, accesso = _al_telefono(ClientConAccesso())
+async def test_pin_sbagliato_tre_volte(anagrafe):
+    assistente, accesso = _al_telefono(ClientConAccesso(), anagrafe)
     frames = [_trascrizione("Voglio fare l'accesso"), SleepFrame(0.2)]
     frames += _tasti("1#2#3#4#") + [SleepFrame(0.2)]
     giu, _ = await run_test(assistente, frames_to_send=frames)
@@ -225,8 +226,8 @@ async def test_pin_sbagliato_tre_volte():
     assert accesso.token is None
 
 
-async def test_asterisco_ricomincia_il_pin():
-    assistente, accesso = _al_telefono(ClientConAccesso())
+async def test_asterisco_ricomincia_il_pin(anagrafe):
+    assistente, accesso = _al_telefono(ClientConAccesso(), anagrafe)
     frames = [_trascrizione("Voglio fare l'accesso"), SleepFrame(0.2)]
     frames += _tasti("99*" + PIN_DEMO + "#") + [SleepFrame(0.3)]
     giu, _ = await run_test(assistente, frames_to_send=frames)

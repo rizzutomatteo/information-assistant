@@ -14,7 +14,7 @@ from pipecat.frames.frames import (
 from starlette.websockets import WebSocketDisconnect
 
 from assistente.accesso.sessioni import AccessoConPin, Sessioni
-from assistente.accesso.utenti import PIN_DEMO, Anagrafe
+from assistente.accesso.utenti import PIN_DEMO
 from assistente.config import Impostazioni
 from assistente.server import crea_app
 from assistente.voce.telefono import PEZZO, SerializzatoreAsterisk, credenziali_valide
@@ -79,8 +79,9 @@ async def test_eventi_e_messaggi_per_la_chat_si_ignorano(serializzatore):
 
 
 @pytest.mark.parametrize("intestazione", [None, _basic("asterisk", "sbagliato")])
-def test_telefono_rifiuta_chi_non_e_asterisk(intestazione):
-    app = crea_app(Impostazioni(telefono_segreto="s3greto"), precarica=False)
+def test_telefono_rifiuta_chi_non_e_asterisk(intestazione, indirizzo_db):
+    # TestClient avvia il server come in produzione: anche il database
+    app = crea_app(Impostazioni(telefono_segreto="s3greto", database=indirizzo_db), precarica=False)
     intestazioni = {"Authorization": intestazione} if intestazione else {}
     with TestClient(app) as client, pytest.raises(WebSocketDisconnect) as errore:
         with client.websocket_connect("/telefono", headers=intestazioni):
@@ -88,8 +89,9 @@ def test_telefono_rifiuta_chi_non_e_asterisk(intestazione):
     assert errore.value.code == 1008
 
 
-def test_telefono_occupato_quando_le_linee_sono_piene():
-    app = crea_app(Impostazioni(telefono_segreto="s3greto", chiamate_max=0), precarica=False)
+def test_telefono_occupato_quando_le_linee_sono_piene(indirizzo_db):
+    imp = Impostazioni(telefono_segreto="s3greto", chiamate_max=0, database=indirizzo_db)
+    app = crea_app(imp, precarica=False)
     with TestClient(app) as client, pytest.raises(WebSocketDisconnect) as errore:
         with client.websocket_connect(
             "/telefono", headers={"Authorization": _basic("asterisk", "s3greto")}
@@ -98,13 +100,13 @@ def test_telefono_occupato_quando_le_linee_sono_piene():
     assert errore.value.code == 1013
 
 
-def test_accesso_con_pin_apre_e_chiude_la_sessione():
-    sessioni = Sessioni(Anagrafe(None))
+async def test_accesso_con_pin_apre_e_chiude_la_sessione(anagrafe):
+    sessioni = Sessioni(anagrafe)
     accesso = AccessoConPin(sessioni)
-    assert accesso.entra("000000") is None and accesso.token is None
+    assert await accesso.entra("000000") is None and accesso.token is None
     # Al primo avvio c'è Mario Rossi, con il PIN delle prove al telefono
-    assert accesso.entra(PIN_DEMO).nome_completo == "Mario Rossi"
+    assert (await accesso.entra(PIN_DEMO)).nome_completo == "Mario Rossi"
     token = accesso.token
-    assert sessioni.utente(token).pin_telefono == PIN_DEMO
+    assert (await sessioni.utente(token)).pin_telefono == PIN_DEMO
     accesso.chiudi()
-    assert sessioni.utente(token) is None
+    assert await sessioni.utente(token) is None

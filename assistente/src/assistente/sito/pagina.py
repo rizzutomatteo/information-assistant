@@ -4,7 +4,9 @@
     pagine/pagina.html     la home page: prodotti, assistente, area riservata
     pagine/documenti.html  l'elenco dei documenti, per area (documenti.py)
     pagine/documento.html  un documento
-    pagine/amministrazione.html  la pagina /a, per caricare gli utenti di prova
+    pagine/faq.html        le domande frequenti, per categoria (faq.py)
+    pagine/domanda.html    una domanda frequente con la sua risposta
+    pagine/amministrazione.html  la pagina /a, per caricare, modificare ed eliminare gli utenti
     pagine/messaggio.html  un messaggio della conversazione (chat e chiamata)
 
 I testi, nelle due lingue, stanno in testi.py. Ciò che dipende da chi apre la pagina lo mette il
@@ -27,14 +29,15 @@ from markupsafe import Markup, escape
 from assistente.accesso.utenti import PRODOTTI, Utente
 from assistente.config import LINGUE, Lingua
 from assistente.sito.documenti import AREE, Archivio, Documento
+from assistente.sito.faq import Faq, RaccoltaFaq
 from assistente.sito.testi import DEGLI_SCRIPT, TESTI
 
 PAGINE = Path(__file__).parent / "pagine"
 VOCE_ELENCO = re.compile(r"^\s*([-*•]|\d+[.)])\s+")
 GRASSETTO = re.compile(r"\*\*(.+?)\*\*")
-# I link delle risposte e delle citazioni: verso altri siti o verso i documenti di questo
-# (/documenti/<area>/<nome>#pagina-N, documenti.py)
-LINK = re.compile(r"\[([^\]]+)\]\(((?:https?://|/documenti/)[^)\s]+)\)")
+# I link delle risposte e delle citazioni: verso altri siti o verso i documenti e le FAQ di
+# questo (/documenti/<area>/<nome>#pagina-N, documenti.py; /faq/<id>, faq.py)
+LINK = re.compile(r"\[([^\]]+)\]\(((?:https?://|/documenti/|/faq/)[^)\s]+)\)")
 MESSAGGI = ("utente", "risposta", "errore")
 
 
@@ -112,6 +115,16 @@ def pagina_documento(lingua: Lingua, documento: Documento, html: Markup) -> str:
     return _fai("documento.html", lingua, radice="../../", documento=documento, html=html)
 
 
+def pagina_faq(lingua: Lingua, raccolta: RaccoltaFaq) -> str:
+    """Le domande frequenti, su /faq."""
+    return _fai("faq.html", lingua, categorie=raccolta.per_categoria())
+
+
+def pagina_domanda(lingua: Lingua, faq: Faq, html: Markup) -> str:
+    """Una domanda frequente, su /faq/<id>: una cartella sotto la radice."""
+    return _fai("domanda.html", lingua, radice="../", faq=faq, html=html)
+
+
 def pagina_amministrazione(
     lingua: Lingua, entrato: bool, utenti: list[Utente], esempio: str
 ) -> str:
@@ -122,6 +135,8 @@ def pagina_amministrazione(
         lingua,
         entrato=entrato,
         utenti=utenti,
+        # Per la finestra «Modifica»: i dati di ogni utente, per id
+        da_modificare={u.id: u.nel_json() for u in utenti},
         esempio=esempio,
         testi_script={nome: getattr(t, nome) for nome in DEGLI_SCRIPT},
     )
