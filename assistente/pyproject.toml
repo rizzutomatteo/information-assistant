@@ -1,0 +1,52 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "assistente-velaria"
+version = "0.1.0"
+description = "L'assistente assicurativo di Velaria: sito dimostrativo con chat, accesso, documenti e canale voce (chiamate dal browser e telefonate), davanti all'API del RAG"
+readme = "README.md"
+requires-python = ">=3.11"
+# Versioni compatibili; quelle con cui è stato provato sono in requirements.txt
+dependencies = [
+    "pipecat-ai[webrtc,silero,whisper]>=1.16,<2",
+    "piper-tts>=1.8,<2",
+    "num2words>=0.5.14",
+    "fastapi>=0.115",
+    "jinja2>=3.1",
+    "markdown>=3.5",
+    "uvicorn>=0.30",
+    "httpx>=0.27",
+    "PyJWT[crypto]>=2.8",
+    "python-dotenv>=1",
+    "sherpa-onnx>=2,<3",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8", "pytest-asyncio>=0.24", "ruff>=0.6"]
+
+# I comandi, disponibili dopo l'installazione (pip install -e .)
+[project.scripts]
+assistente = "assistente.server:main"
+finta-api = "assistente.rag.finta:main"
+prova-chiamata = "assistente.voce.prova:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"assistente.sito" = ["statico/*", "statico/font/*", "pagine/*"]
+"assistente.accesso" = ["esempio_utenti.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]

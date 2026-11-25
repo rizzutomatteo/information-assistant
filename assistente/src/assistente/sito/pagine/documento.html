@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{# Un documento (pagina.py, documenti.py): il suo Markdown in HTML, con le ancore delle pagine
+   (#pagina-N) e dei titoli. I documenti sono in italiano, anche nella pagina inglese #}
+
+{% block titolo %}{{ documento.titolo_completo }} · Velaria{% endblock %}
+{% block descrizione %}{{ documento.titolo_completo }}{% endblock %}
+
+{% block contenuto %}
+<main id="contenuto" class="sezione documento-pagina">
+  <div class="contenitore">
+    <nav class="briciole" aria-label="{{ t.briciole }}">
+      <a href="{{ radice }}documenti">{{ t.documenti }}</a>
+      <span aria-hidden="true">/</span>
+      <a href="{{ radice }}documenti#{{ documento.area }}">{{ t[AREE[documento.area] ~ "_titolo"] }}</a>
+    </nav>
+    <h1 lang="it">{{ documento.titolo }}{% if documento.prodotto %} <span class="documento-prodotto">· {{ documento.prodotto }}</span>{% endif %}</h1>
+    <article class="documento" lang="it">
+      {{ html }}
+    </article>
+  </div>
+</main>
+{% endblock %}

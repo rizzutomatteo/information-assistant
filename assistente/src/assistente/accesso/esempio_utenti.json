@@ -1,0 +1,29 @@
+{
+  "utenti": [
+    {
+      "utente": "giulia.verdi",
+      "password": "una-password-lunga",
+      "nome": "Giulia",
+      "cognome": "Verdi",
+      "email": "giulia.verdi@example.com",
+      "codice_fiscale": "VRDGLI90A41A000X",
+      "telefono": "+39 000 000 0004",
+      "indirizzo": "Via Esempio, 2 – 00000 Città",
+      "pin_telefono": "246810",
+      "polizze": [
+        {
+          "prodotto": "Velaria Auto",
+          "numero": "0000000101",
+          "oggetto": "Autovettura targata AB000CD",
+          "scadenza": "2027-09-30",
+          "premio": 520.0,
+          "garanzie": [
+            "Responsabilità civile",
+            "Furto e Incendio",
+            "Cristalli"
+          ]
+        }
+      ]
+    }
+  ]
+}

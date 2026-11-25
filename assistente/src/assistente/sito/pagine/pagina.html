@@ -1,0 +1,422 @@
+{% extends "base.html" %}
+{# La home page, nella lingua scelta (pagina.py). utente: chi ha fatto l'accesso, o niente;
+   google: il client ID di Google; registra: se la voce delle chiamate si registra per le prove #}
+
+{% block script %}
+<script src="statico/accesso.js" defer></script>
+<script src="statico/assistente.js" defer></script>
+{% endblock %}
+
+{% block azioni %}
+      <button id="pulsante-accedi" class="bottone bottone-piccolo bottone-secondario" type="button" data-accedi{% if utente %} hidden{% endif %}>
+        <svg class="icona" aria-hidden="true"><use href="#i-utente"/></svg><span>{{ t.accedi }}</span>
+      </button>
+      <a id="pulsante-area" class="utente" href="#area"{% if not utente %} hidden{% endif %}>
+        {% if utente %}
+        <span class="iniziali" aria-hidden="true">{{ utente.iniziali }}</span>
+        <span><span class="solo-lettori">{{ t.area_di }} </span><span>{{ utente.nome }}</span></span>
+        {% endif %}
+      </a>
+{% endblock %}
+
+{% block contenuto %}
+<main id="contenuto">
+  <!-- Solo per chi ha fatto l'accesso -->
+  <section id="area" class="riservata" aria-labelledby="area-titolo"{% if not utente %} hidden{% endif %}>
+    {% if utente %}
+    <div class="contenitore">
+      <div class="riservata-testa">
+        <div>
+          <p class="sopratitolo">{{ t.area }}</p>
+          <h2 id="area-titolo"><span>{{ t.area_ciao }}</span> <span>{{ utente.nome }}</span></h2>
+          <p class="riservata-sotto">{{ t.area_sotto }}</p>
+        </div>
+        <button id="esci" class="bottone bottone-piccolo bottone-secondario" type="button">
+          <svg class="icona" aria-hidden="true"><use href="#i-esci"/></svg><span>{{ t.esci }}</span>
+        </button>
+      </div>
+      <div class="riservata-griglia">
+        <article class="scheda dati-personali">
+          <h3>{{ t.dati }}</h3>
+          <dl>
+            <div><dt>{{ t.dati_nome }}</dt><dd>{{ utente.nome_completo }}</dd></div>
+            <div><dt>{{ t.dati_cf }}</dt><dd>{{ utente.codice_fiscale or "—" }}</dd></div>
+            <div><dt>{{ t.dati_email }}</dt><dd>{{ utente.email or "—" }}</dd></div>
+            <div><dt>{{ t.dati_telefono }}</dt><dd>{{ utente.telefono or "—" }}</dd></div>
+            <div><dt>{{ t.dati_indirizzo }}</dt><dd>{{ utente.indirizzo or "—" }}</dd></div>
+            <div><dt>{{ t.dati_pin }}</dt><dd class="pin">{{ utente.pin_telefono }}</dd></div>
+          </dl>
+          <p class="nota-pin">{{ t.nota_pin }}</p>
+        </article>
+        <div class="polizze">
+          <div class="polizze-testa">
+            <h3>{{ t.polizze }}</h3>
+            <button class="bottone bottone-piccolo bottone-secondario" type="button" data-nuova-polizza>
+              <svg class="icona" aria-hidden="true"><use href="#i-piu"/></svg><span>{{ t.aggiungi_polizza }}</span>
+            </button>
+          </div>
+          <div id="polizze" class="polizze-elenco">
+            {% for polizza in utente.polizze %}
+            <article class="scheda polizza polizza-{{ polizza.tipo }}">
+              <div class="polizza-testa">
+                <span class="polizza-icona"><svg aria-hidden="true"><use href="#i-{{ polizza.tipo }}"/></svg></span>
+                <div>
+                  <h4>{{ polizza.prodotto }}</h4>
+                  <p><span>{{ t.polizza_n }}</span> <span>{{ polizza.numero }}</span></p>
+                </div>
+                <span class="attiva">{{ t.polizza_attiva }}</span>
+              </div>
+              <p class="polizza-oggetto">{{ polizza.oggetto }}</p>
+              <dl class="polizza-cifre">
+                <div><dt>{{ t.polizza_scadenza }}</dt><dd>{{ polizza.scadenza_testo }}</dd></div>
+                <div><dt>{{ t.polizza_premio }}</dt><dd>{{ polizza.premio_testo }}</dd></div>
+              </dl>
+              {% if polizza.garanzie %}
+              <ul class="prodotti" aria-label="{{ t.polizza_garanzie }}">
+                {% for garanzia in polizza.garanzie %}
+                <li>{{ garanzia }}</li>
+                {% endfor %}
+              </ul>
+              {% endif %}
+              <button class="togli-polizza" type="button" data-togli-polizza="{{ polizza.id }}" data-numero="{{ polizza.numero }}">
+                <svg class="icona" aria-hidden="true"><use href="#i-cestino"/></svg><span>{{ t.togli_polizza }}</span>
+              </button>
+            </article>
+            {% else %}
+            <p class="polizze-vuote">{{ t.nessuna_polizza }}</p>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+  </section>
+
+  <section class="eroe">
+    <div class="contenitore eroe-griglia">
+      <div class="eroe-testo">
+        <p class="sopratitolo">{{ t.eroe_sopra }}</p>
+        <h1>{{ t.eroe_titolo }}</h1>
+        <p class="introduzione">{{ t.eroe_intro }}</p>
+        <div class="azioni">
+          <button class="bottone" type="button" data-apri-assistente>
+            <svg class="icona" aria-hidden="true"><use href="#i-chat"/></svg><span>{{ t.scrivi_assistente }}</span>
+          </button>
+          <!-- Il numero vero: risponde lo stesso assistente (centralino/, README «Il numero di telefono») -->
+          <a class="chiama-numero" href="tel:+3907331450210">
+            <span class="chiama-icona"><svg class="icona" aria-hidden="true"><use href="#i-telefono"/></svg></span>
+            <span class="chiama-testo">
+              <span>{{ t.chiama_etichetta }}</span>
+              <strong>{{ t.numero_assistente }}</strong>
+            </span>
+          </a>
+        </div>
+        <ul class="punti">
+          <li>{{ t.punto_sinistri }}</li>
+          <li>{{ t.punto_soccorso }}</li>
+        </ul>
+      </div>
+
+      <div class="eroe-visuale" aria-hidden="true">
+        <svg class="mare" viewBox="0 0 520 560" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="grad-cielo" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#0b1f3a"/><stop offset=".62" stop-color="#0f4c6e"/><stop offset="1" stop-color="#178bb0"/>
+            </linearGradient>
+            <radialGradient id="grad-sole"><stop offset="0" stop-color="#ffb199"/><stop offset="1" stop-color="#ff7a59" stop-opacity="0"/></radialGradient>
+            <linearGradient id="grad-randa" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#bfe9f3"/>
+            </linearGradient>
+          </defs>
+          <rect width="520" height="560" fill="url(#grad-cielo)"/>
+          <circle cx="388" cy="150" r="120" fill="url(#grad-sole)" opacity=".55"/>
+          <circle cx="388" cy="150" r="46" fill="#ff8a65"/>
+          <path d="M262 92c-48 74-76 158-82 250h82z" fill="url(#grad-randa)"/>
+          <path d="M282 140c44 52 70 118 76 202h-76z" fill="#ff7a59"/>
+          <path d="M150 362h236c-16 26-42 40-72 40H222c-30 0-56-14-72-40z" fill="#e8f6fb"/>
+          <path d="M0 420c60-18 120-18 180 0s120 18 180 0 120-18 160 0v140H0z" fill="#ffffff" opacity=".08"/>
+          <path d="M0 458c60-16 120-16 180 0s120 16 180 0 120-16 160 0v102H0z" fill="#ffffff" opacity=".1"/>
+          <path d="M0 500c60-14 120-14 180 0s120 14 180 0 120-14 160 0v60H0z" fill="#ffffff" opacity=".12"/>
+        </svg>
+        <div class="anteprima">
+          <div class="anteprima-testa">
+            <svg><use href="#marchio"/></svg>
+            <div><strong>{{ t.anteprima_nome }}</strong><span>{{ t.anteprima_stato }}</span></div>
+          </div>
+          <p class="bolla bolla-bot">{{ t.anteprima_bot }}</p>
+          <p class="bolla bolla-tu">{{ t.anteprima_tu }}</p>
+          <div class="anteprima-voce"><span class="onde"><i></i><i></i><i></i><i></i><i></i></span><span>{{ t.anteprima_ascolto }}</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="prodotti" class="sezione">
+    <div class="contenitore">
+      <p class="sopratitolo">{{ t.prodotti_sopra }}</p>
+      <div class="sezione-testa">
+        <h2>{{ t.prodotti_titolo }}</h2>
+        <a class="tutti-documenti" href="documenti">
+          <svg class="icona" aria-hidden="true"><use href="#i-documento"/></svg><span>{{ t.tutti_documenti }}</span><svg class="icona" aria-hidden="true"><use href="#i-freccia"/></svg>
+        </a>
+      </div>
+      <div class="aree">
+        <article class="area area-auto">
+          <span class="area-icona"><svg aria-hidden="true"><use href="#i-auto"/></svg></span>
+          <h3>{{ t.auto_titolo }}</h3>
+          <p>{{ t.auto_testo }}</p>
+          <ul class="prodotti">
+            <li>Velaria Auto</li><li>Velaria Moto</li><li>Velaria Furgoni&amp;Van</li>
+            <li>Velaria Altri Veicoli</li><li>Velaria Natanti</li><li>Velaria Monopattini Elettrici</li>
+          </ul>
+          <a class="area-documenti" href="documenti#auto_e_altri_veicoli"><span>{{ t.documenti }}</span><svg class="icona" aria-hidden="true"><use href="#i-freccia"/></svg></a>
+        </article>
+        <article class="area area-casa">
+          <span class="area-icona"><svg aria-hidden="true"><use href="#i-casa"/></svg></span>
+          <h3>{{ t.casa_titolo }}</h3>
+          <p>{{ t.casa_testo }}</p>
+          <ul class="prodotti"><li>Casa Velaria</li><li>Mutuo Velaria</li><li>Velaria Viaggi</li></ul>
+          <a class="area-documenti" href="documenti#casa_e_famiglia"><span>{{ t.documenti }}</span><svg class="icona" aria-hidden="true"><use href="#i-freccia"/></svg></a>
+        </article>
+        <article class="area area-vita">
+          <span class="area-icona"><svg aria-hidden="true"><use href="#i-vita"/></svg></span>
+          <h3>{{ t.vita_titolo }}</h3>
+          <p>{{ t.vita_testo }}</p>
+          <ul class="prodotti">
+            <li>Assicurazione Vita Velaria</li><li>Casomai formula su misura</li><li>Piano Risparmio Velaria</li>
+          </ul>
+          <a class="area-documenti" href="documenti#vita_e_risparmio"><span>{{ t.documenti }}</span><svg class="icona" aria-hidden="true"><use href="#i-freccia"/></svg></a>
+        </article>
+        <article class="area area-previdenza">
+          <span class="area-icona"><svg aria-hidden="true"><use href="#i-previdenza"/></svg></span>
+          <h3>{{ t.previdenza_titolo }}</h3>
+          <p>{{ t.previdenza_testo }}</p>
+          <ul class="prodotti"><li>Pensione Integrativa Velaria</li></ul>
+          <a class="area-documenti" href="documenti#previdenza"><span>{{ t.documenti }}</span><svg class="icona" aria-hidden="true"><use href="#i-freccia"/></svg></a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="assistente-info" class="sezione sezione-tinta">
+    <div class="contenitore">
+      <p class="sopratitolo">{{ t.assistente_sopra }}</p>
+      <h2>{{ t.assistente_titolo }}</h2>
+      <div class="vantaggi">
+        <div class="vantaggio">
+          <span class="vantaggio-icona"><svg aria-hidden="true"><use href="#i-chat"/></svg></span>
+          <h3>{{ t.scrivi_titolo }}</h3>
+          <p>{{ t.scrivi_testo }}</p>
+        </div>
+        <div class="vantaggio">
+          <span class="vantaggio-icona"><svg aria-hidden="true"><use href="#i-microfono"/></svg></span>
+          <h3>{{ t.parla_titolo }}</h3>
+          <p>{{ t.parla_testo }}</p>
+        </div>
+        <div class="vantaggio">
+          <span class="vantaggio-icona"><svg aria-hidden="true"><use href="#i-telefono"/></svg></span>
+          <h3>{{ t.chiama_titolo }}</h3>
+          <p>{{ t.chiama_testo }}</p>
+        </div>
+        <div class="vantaggio">
+          <span class="vantaggio-icona"><svg aria-hidden="true"><use href="#i-lucchetto"/></svg></span>
+          <h3>{{ t.privato_titolo }}</h3>
+          <p>{{ t.privato_registra if registra else t.privato_testo }}</p>
+        </div>
+      </div>
+      <button class="bottone" type="button" data-apri-assistente>
+        <span>{{ t.prova_assistente }}</span><svg class="icona" aria-hidden="true"><use href="#i-freccia"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <section id="sinistri" class="sezione sezione-scura">
+    <div class="contenitore sinistri-griglia">
+      <div>
+        <p class="sopratitolo">{{ t.sinistri_sopra }}</p>
+        <h2>{{ t.sinistri_titolo }}</h2>
+        <ol class="passi">
+          <li>{{ t.passo_sicurezza }}</li>
+          <li>{{ t.passo_documenta }}</li>
+          <li>{{ t.passo_modulo }}</li>
+          <li>{{ t.passo_denuncia }}</li>
+        </ol>
+        <p class="nota-sinistri">{{ t.nota_sinistri }}</p>
+      </div>
+      <div class="numeri">
+        <a class="numero" href="tel:+3907331450210">
+          <svg class="icona" aria-hidden="true"><use href="#i-telefono"/></svg>
+          <span>{{ t.assistente_telefono }}</span><strong>{{ t.numero_assistente }}</strong><small>{{ t.orario_assistente }}</small>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="contatti" class="sezione">
+    <div class="contenitore">
+      <p class="sopratitolo">{{ t.contatti_sopra }}</p>
+      <h2>{{ t.contatti_titolo }}</h2>
+      <div class="contatti">
+        <div class="contatto">
+          <h3>{{ t.clienti }}</h3>
+          <p><a class="numero-contatto" href="tel:+3907331450210"><strong>{{ t.numero_assistente }}</strong></a></p>
+          <p>{{ t.orario_assistente }}</p>
+          <p>info@example.com</p>
+        </div>
+        <div class="contatto">
+          <h3>{{ t.reclami }}</h3>
+          <p>{{ t.reclami_ufficio }}</p>
+          <p>reclami@example.com</p>
+          <p>{{ t.reclami_risposta }}</p>
+        </div>
+        <div class="contatto">
+          <h3>{{ t.sede }}</h3>
+          <p>Via Esempio, 1 – 00000 Città</p>
+          <p>{{ t.pec }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock %}
+
+{% block fondo %}
+<!-- L'accesso: utente e password, oppure Google (accesso.js) -->
+<dialog id="finestra-accesso" class="finestra" aria-labelledby="accesso-titolo">
+  <div class="modulo-accesso">
+    <button class="bottone-icona chiudi-finestra" type="button" data-chiudi-finestra aria-label="{{ t.chiudi }}">
+      <svg class="icona" aria-hidden="true"><use href="#i-chiudi"/></svg>
+    </button>
+    <svg class="finestra-marchio" aria-hidden="true"><use href="#marchio"/></svg>
+    <h2 id="accesso-titolo">{{ t.accesso_titolo }}</h2>
+    <p class="finestra-sotto">{{ t.accesso_sotto }}</p>
+    <div class="schede" role="tablist" aria-label="{{ t.accesso_titolo }}">
+      <button id="scheda-entra" class="scheda-pulsante" type="button" role="tab" aria-selected="true" aria-controls="modulo-password" data-scheda="modulo-password">{{ t.accedi }}</button>
+      <button id="scheda-registrati" class="scheda-pulsante" type="button" role="tab" aria-selected="false" aria-controls="modulo-registrazione" data-scheda="modulo-registrazione">{{ t.registrati }}</button>
+    </div>
+    <form id="modulo-password" class="campi" role="tabpanel" aria-labelledby="scheda-entra">
+      <label class="campo"><span>{{ t.campo_utente }}</span>
+        <input name="utente" autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="60" required>
+      </label>
+      <label class="campo"><span>{{ t.campo_password }}</span>
+        <input name="password" type="password" autocomplete="current-password" maxlength="200" required>
+      </label>
+      <button class="bottone" type="submit">{{ t.accedi }}</button>
+    </form>
+    <form id="modulo-registrazione" class="campi" role="tabpanel" aria-labelledby="scheda-registrati" hidden>
+      <div class="campi-affiancati">
+        <label class="campo"><span>{{ t.campo_nome }}</span>
+          <input name="nome" autocomplete="given-name" maxlength="60" required>
+        </label>
+        <label class="campo"><span>{{ t.campo_cognome }}</span>
+          <input name="cognome" autocomplete="family-name" maxlength="60">
+        </label>
+      </div>
+      <label class="campo"><span>{{ t.campo_email }}</span>
+        <input name="email" type="email" autocomplete="email" maxlength="120">
+      </label>
+      <label class="campo"><span>{{ t.campo_utente_nuovo }}</span>
+        <input name="utente" autocomplete="username" autocapitalize="none" spellcheck="false" minlength="3" maxlength="40" pattern="[A-Za-z0-9][A-Za-z0-9._\-]{2,39}" required>
+      </label>
+      <label class="campo"><span>{{ t.campo_password_nuova }}</span>
+        <input name="password" type="password" autocomplete="new-password" minlength="8" maxlength="200" required>
+      </label>
+      <button class="bottone" type="submit">{{ t.crea_account }}</button>
+    </form>
+    {% if google %}
+    <p class="oppure"><span>{{ t.oppure }}</span></p>
+    <!-- Si attiva quando il client di Google è pronto (accesso.js) -->
+    <button id="pulsante-google" class="bottone bottone-secondario bottone-google" type="button" data-client="{{ google }}" disabled>
+      <svg viewBox="0 0 48 48" aria-hidden="true">
+        <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+        <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+        <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+        <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+      </svg>
+      <span>{{ t.accedi_google }}</span>
+    </button>
+    {% endif %}
+    <p id="errore-accesso" class="errore-accesso" role="alert" hidden></p>
+    <p class="nota-accesso">{{ t.nota_accesso }}</p>
+  </div>
+</dialog>
+
+<!-- Una polizza nuova, per chi è entrato (accesso.js) -->
+<dialog id="finestra-polizza" class="finestra" aria-labelledby="polizza-titolo">
+  <form id="modulo-polizza" class="modulo-accesso campi">
+    <button class="bottone-icona chiudi-finestra" type="button" data-chiudi-finestra aria-label="{{ t.chiudi }}">
+      <svg class="icona" aria-hidden="true"><use href="#i-chiudi"/></svg>
+    </button>
+    <h2 id="polizza-titolo">{{ t.aggiungi_polizza }}</h2>
+    <label class="campo"><span>{{ t.campo_prodotto }}</span>
+      <select name="prodotto" required>
+        {% for area in AREE.values() %}
+        <optgroup label="{{ t[area ~ '_titolo'] }}">
+          {% for nome, dove in PRODOTTI.items() if dove == area %}
+          <option>{{ nome }}</option>
+          {% endfor %}
+        </optgroup>
+        {% endfor %}
+      </select>
+    </label>
+    <div class="campi-affiancati">
+      <label class="campo"><span>{{ t.campo_numero }}</span><input name="numero" maxlength="30" required></label>
+      <label class="campo"><span>{{ t.polizza_scadenza }}</span><input name="scadenza" type="date" required></label>
+    </div>
+    <label class="campo"><span>{{ t.campo_oggetto }}</span><input name="oggetto" maxlength="120" required></label>
+    <label class="campo"><span>{{ t.campo_premio }}</span><input name="premio" type="number" min="0" max="1000000" step="0.01" required></label>
+    <label class="campo"><span>{{ t.campo_garanzie }}</span><textarea name="garanzie" rows="3"></textarea></label>
+    <p id="errore-polizza" class="errore-accesso" role="alert" hidden></p>
+    <button class="bottone" type="submit">{{ t.salva_polizza }}</button>
+  </form>
+</dialog>
+
+<!-- L'assistente: la chat scritta e la chiamata a voce (assistente.js) -->
+<button id="lanciatore" class="lanciatore" type="button" aria-controls="assistente" aria-expanded="false">
+  <svg class="icona" aria-hidden="true"><use href="#i-chat"/></svg><span>{{ t.assistente }}</span>
+</button>
+
+<section id="assistente" class="assistente" role="dialog" aria-labelledby="assistente-titolo" hidden>
+  <header class="assistente-testa">
+    <svg class="assistente-avatar" aria-hidden="true"><use href="#marchio"/></svg>
+    <div>
+      <h2 id="assistente-titolo">{{ t.assistente_nome }}</h2>
+      <p>{{ t.assistente_automatico }}</p>
+    </div>
+    <button class="bottone-icona" type="button" data-chiudi aria-label="{{ t.chiudi_assistente }}">
+      <svg class="icona" aria-hidden="true"><use href="#i-chiudi"/></svg>
+    </button>
+  </header>
+
+  <div id="messaggi" class="messaggi" role="log" aria-label="{{ t.conversazione }}" tabindex="0">
+    <div class="messaggio da-assistente">
+      <p>{{ t.benvenuto }}</p>
+    </div>
+  </div>
+  <p id="assistente-stato" class="assistente-stato" role="status" hidden></p>
+
+  <div id="chiamata" class="chiamata" hidden>
+    <span class="onde" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+    <span id="chiamata-stato" class="chiamata-stato" role="status">{{ t.collego }}</span>
+    <button class="riattacca" type="button" data-riattacca>
+      <svg class="icona" aria-hidden="true"><use href="#i-riattacca"/></svg><span>{{ t.riattacca }}</span>
+    </button>
+  </div>
+
+  <form id="scrivi" class="scrivi">
+    <label class="solo-lettori" for="domanda">{{ t.tua_domanda }}</label>
+    <textarea id="domanda" rows="1" maxlength="1000" placeholder="{{ t.scrivi_domanda }}" autocomplete="off"></textarea>
+    <button class="bottone-icona microfono" type="button" data-chiama aria-pressed="false" aria-label="{{ t.parla_assistente }}">
+      <svg class="icona" aria-hidden="true"><use href="#i-microfono"/></svg>
+    </button>
+    <button id="invia" class="bottone-icona invia" type="submit" aria-label="{{ t.invia }}">
+      <svg class="icona" aria-hidden="true"><use href="#i-invia"/></svg>
+    </button>
+  </form>
+  <p class="assistente-nota">{{ t.nota_registra if registra else t.assistente_nota }}</p>
+</section>
+<audio id="audio" autoplay></audio>
+
+<!-- I testi degli script, nella lingua della pagina -->
+<script type="application/json" id="testi-script">{{ testi_script | tojson }}</script>
+{% endblock %}

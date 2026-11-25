@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mappa del canale voce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap">
+<style>
+  /* Layout: una colonna larga — i filtri dei percorsi, i passi del percorso scelto, la mappa, poi linguaggi e tecnologie */
+  :root {
+    --bg: #f3f6f9;
+    --surface: #ffffff;
+    --fg: #0b1b2e;
+    --muted: #536176;
+    --line: #d4dde8;
+    --dati: #0c6a88;
+    --audio: #cf4d2a;
+    --vps: #e8f0f5;
+    --vps-line: #b4c7d6;
+    --chip: #e2eaf1;
+    --tessera: #ffffff;
+    --ombra: rgba(11, 27, 46, .35);
+    --ombra-lieve: rgba(11, 27, 46, .06);
+    --punti: rgba(11, 27, 46, .08);
+    --acceso: #0b1b2e;
+    --su-acceso: #ffffff;
+    --f-testo: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #07111d; --surface: #0e1b2c; --fg: #e4ecf5; --muted: #9db0c6; --line: #263a52;
+      --dati: #4cc0dc; --audio: #ff8a65; --vps: #0b1828; --vps-line: #2b4560; --chip: #16273b;
+      --tessera: #eef3f7; --ombra: rgba(0, 0, 0, .7); --ombra-lieve: rgba(0, 0, 0, .3);
+      --punti: rgba(228, 236, 245, .06); --acceso: #e4ecf5; --su-acceso: #07111d;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #07111d; --surface: #0e1b2c; --fg: #e4ecf5; --muted: #9db0c6; --line: #263a52;
+    --dati: #4cc0dc; --audio: #ff8a65; --vps: #0b1828; --vps-line: #2b4560; --chip: #16273b;
+    --tessera: #eef3f7; --ombra: rgba(0, 0, 0, .7); --ombra-lieve: rgba(0, 0, 0, .3);
+    --punti: rgba(228, 236, 245, .06); --acceso: #e4ecf5; --su-acceso: #07111d;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background-color: var(--bg); color: var(--fg);
+    /* Una griglia di puntini appena visibile: il foglio su cui è disegnata la mappa */
+    background-image: radial-gradient(var(--punti) 1.2px, transparent 1.4px);
+    background-size: 22px 22px;
+    font: 16px/1.6 var(--f-testo);
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 40px 64px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .pagina { max-width: 1240px; margin: 0 auto; display: grid; gap: 28px; }
+  h2 { margin: 0; line-height: 1.15; letter-spacing: -.02em; text-wrap: balance; }
+  p { margin: 0; }
+
+  .comandi { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 24px; }
+  .percorsi {
+    display: inline-flex; flex-wrap: wrap; gap: 4px; padding: 5px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 1px 2px var(--ombra-lieve);
+  }
+  .percorsi button {
+    display: inline-flex; align-items: center; gap: 9px;
+    font: 600 .92rem var(--f-testo); color: var(--muted); cursor: pointer;
+    padding: 9px 16px; border-radius: 13px; border: 0; background: transparent;
+    transition: background .2s, color .2s, box-shadow .2s;
+  }
+  .percorsi svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .percorsi button:hover { color: var(--fg); background: var(--chip); }
+  .percorsi button[aria-pressed="true"] { color: var(--su-acceso); background: var(--acceso); box-shadow: 0 8px 18px -10px var(--ombra); }
+  .percorsi button:focus-visible { outline: 3px solid var(--dati); outline-offset: 2px; }
+  /* Sul telefono tre colonne uguali, l'icona sopra il nome */
+  @media (max-width: 640px) {
+    .percorsi { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; }
+    .percorsi button { flex-direction: column; gap: 4px; padding: 9px 6px; font-size: .78rem; line-height: 1.25; text-align: center; }
+  }
+
+
+  .mappa { margin: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 18px; display: grid; gap: 12px; }
+  .scorri { overflow-x: auto; }
+  .mappa svg { display: block; width: 100%; min-width: 860px; height: auto; }
+
+  /* La mappa: colori dai token, così vale in tutti e due i temi */
+  .vps { fill: var(--vps); stroke: var(--vps-line); stroke-width: 1.5; }
+  .vps-et { fill: var(--muted); font: 800 12px var(--f-testo); letter-spacing: .12em; }
+  .n-box { fill: var(--surface); stroke: var(--line); stroke-width: 1.5; filter: drop-shadow(0 1px 1.5px var(--ombra-lieve)); }
+  /* I servizi esterni (operatore e trascrizione nel cloud) hanno il bordo tratteggiato */
+  .n-esterno { stroke-dasharray: 5 4; }
+  .n-forte { stroke: var(--dati); stroke-width: 2; fill: color-mix(in srgb, var(--dati) 5%, var(--surface)); }
+  .n-titolo-forte { font-size: 17px; }
+  .n-divisore { stroke: var(--line); stroke-width: 1; }
+  .passo-n { fill: color-mix(in srgb, var(--dati) 16%, var(--surface)); }
+  .passo-c { fill: var(--dati); font: 700 11px var(--f-mono); }
+  .n-titolo { fill: var(--fg); font: 700 16px var(--f-testo); }
+  .n-sub { fill: var(--muted); font: 500 13px var(--f-testo); }
+  .n-voce { fill: var(--fg); font: 500 14px var(--f-testo); }
+  .n-punto { fill: var(--dati); }
+  .n-mono { fill: var(--fg); font: 400 12.5px var(--f-mono); }
+  .n-mono-tenue { fill: var(--muted); font: 400 12px var(--f-mono); }
+  .n-numero { fill: var(--audio); font: 600 15px var(--f-mono); }
+  .n-sezione { fill: var(--dati); font: 800 11px var(--f-testo); letter-spacing: .12em; }
+  .pillola { fill: var(--surface); stroke: var(--line); stroke-width: 1; }
+  .binario { stroke: var(--line); stroke-width: 2; }
+  .e-dati { stroke: var(--dati); stroke-width: 2; fill: none; }
+  .e-audio { stroke: var(--audio); stroke-width: 4; fill: none; }
+  .p-dati { fill: var(--dati); }
+  .p-audio { fill: var(--audio); }
+  .et-dati { fill: var(--dati); font: 600 12.5px var(--f-testo); }
+  .et-dati-mono { fill: var(--dati); font: 600 12.5px var(--f-mono); }
+  .et-audio { fill: var(--audio); font: 600 12.5px var(--f-testo); }
+  .et-audio-mono { fill: var(--audio); font: 600 12.5px var(--f-mono); }
+  .et-sub { fill: var(--muted); font: 500 12px var(--f-testo); }
+
+  [data-percorsi] { transition: opacity .25s; }
+  .spento { opacity: .13; }
+
+  /* I passi di un percorso: una fila di schede, il colore in cima dice se passano dati o audio, come i fili della mappa */
+  /* Lo spazio dei passi è sempre alto quanto il percorso più lungo (lo misura lo script): cambiando
+     percorso la mappa sotto non si sposta */
+  .passi-scheda { position: relative; display: flex; flex-direction: column; }
+  .passi-scheda > :not(.misura) { flex: 1; }
+  .passi-scheda [hidden] { display: none; }
+  .misura { position: absolute; inset: 0 0 auto 0; visibility: hidden; pointer-events: none; }
+  .solo-lettori { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .passi { counter-reset: passo; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 18px; margin: 0; padding: 0; list-style: none; }
+  .passo {
+    --tinta: var(--dati);
+    counter-increment: passo; position: relative; display: grid; gap: 3px; align-content: start;
+    padding: 12px 14px 14px; background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--tinta); border-radius: 14px;
+    box-shadow: 0 1px 2px var(--ombra-lieve);
+  }
+  .passo[data-tipo="audio"] { --tinta: var(--audio); }
+  .passo::before {
+    content: counter(passo, decimal-leading-zero); justify-self: start; margin-bottom: 6px;
+    padding: 2px 7px; border-radius: 7px; color: var(--tinta); font: 700 .74rem var(--f-mono);
+    background: color-mix(in srgb, var(--tinta) 13%, transparent);
+  }
+  .passo.vuoto { background: transparent; border: 1.5px dashed var(--line); box-shadow: none; }
+  .passo.vuoto::before { color: var(--muted); background: none; opacity: .55; }
+  .passo:not(:last-child)::after {
+    content: ""; position: absolute; top: 50%; right: -14px; width: 8px; height: 8px;
+    border-top: 2px solid var(--vps-line); border-right: 2px solid var(--vps-line); transform: translateY(-50%) rotate(45deg);
+  }
+  .chi { color: var(--muted); font: 800 .68rem var(--f-testo); letter-spacing: .12em; text-transform: uppercase; }
+  .fa { font-weight: 800; font-size: 1.02rem; line-height: 1.25; text-wrap: balance; }
+  /* Sul telefono una colonna di righe compatte: il numero a sinistra, il resto accanto */
+  @media (max-width: 900px) {
+    .passi { grid-auto-flow: row; gap: 12px; }
+    .passo { grid-template-columns: 24px minmax(0, 1fr); column-gap: 10px; padding: 10px 12px; }
+    .passo::before { grid-row: 1 / span 2; margin: 2px 0 0; }
+    .passo > span { grid-column: 2; }
+    .passo:not(:last-child)::after { top: auto; right: auto; left: 17px; bottom: -10px; transform: rotate(135deg); }
+    .passo.vuoto { display: none; }
+    .passo:has(+ .vuoto)::after { display: none; }
+  }
+  code { font: .88em var(--f-mono); background: var(--chip); padding: 1px 6px; border-radius: 6px; overflow-wrap: anywhere; }
+
+  /* Linguaggi e tecnologie: i linguaggi in un pannello a celle, le tecnologie come una pila di strati, dal browser alla VPS */
+  .fatto { display: grid; gap: 28px; }
+  .gruppo { display: grid; gap: 12px; }
+  .gruppo h3 { margin: 0; color: var(--muted); font-size: .76rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+
+  /* Il logo sta su una tessera chiara anche nel tema scuro: molti marchi sono scuri e sparirebbero */
+  .logo {
+    grid-row: span 2; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px;
+    background: var(--tessera); box-shadow: inset 0 0 0 1px var(--line), 0 1px 2px var(--ombra-lieve);
+  }
+  .logo img { width: 28px; height: 28px; object-fit: contain; }
+
+  .linguaggi { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
+  .linguaggi li {
+    display: flex; align-items: center; gap: 12px; min-width: 0; padding: 12px 14px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 1px 2px var(--ombra-lieve);
+  }
+  .linguaggi li:hover { border-color: var(--vps-line); }
+  .linguaggi .logo { flex: none; width: 38px; height: 38px; border-radius: 10px; }
+  .linguaggi .logo img { width: 24px; height: 24px; }
+  .linguaggi strong { display: grid; min-width: 0; font-size: .95rem; font-weight: 700; line-height: 1.25; }
+  .estensione { color: var(--dati); font: 500 .76rem var(--f-mono); }
+
+  .pila { display: grid; gap: 26px; }
+  .strato { display: grid; gap: 12px; }
+  .strato h4 { margin: 0; display: flex; align-items: center; gap: 14px; font-size: 1.05rem; font-weight: 800; letter-spacing: -.01em; }
+  .strato h4::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+
+  /* Sei colonne: gli strati più pieni, Server e Infrastruttura, stanno su una riga sola */
+  .tessere { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
+  .tessera {
+    display: grid; gap: 4px; align-content: start; min-width: 0;
+    padding: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 18px;
+  }
+  .tessera .logo { grid-row: auto; margin-bottom: 10px; }
+  .tessera:hover { border-color: var(--vps-line); }
+  .nome { font-weight: 700; line-height: 1.3; display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px; }
+  .versione { color: var(--dati); font: 500 .74rem var(--f-mono); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .ruolo { color: var(--muted); font-size: .84rem; line-height: 1.35; }
+
+  @media (max-width: 1100px) { .tessere, .linguaggi { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 640px) { .tessere, .linguaggi { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+  @media (prefers-reduced-motion: reduce) { [data-percorsi] { transition: none; } }
+</style>
+</head>
+<body>
+
+<div class="pagina">
+  <div class="comandi">
+    <div class="percorsi" role="group" aria-label="Percorsi">
+      <button type="button" id="p-chat" data-percorso="chat" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.4L3 20.5l1.6-5.2A8.4 8.4 0 1 1 21 11.5Z"/></svg>Domanda scritta</button>
+      <button type="button" id="p-voce" data-percorso="voce" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg>Chiamata dal sito</button>
+      <button type="button" id="p-telefono" data-percorso="telefono" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.5 16.4v3a2 2 0 0 1-2.2 2A19.6 19.6 0 0 1 2.6 4.7 2 2 0 0 1 4.6 2.5h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1l-1.2 1.2a16 16 0 0 0 6.1 6.1l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg>Telefonata</button>
+    </div>
+  </div>
+
+  <section class="passi-scheda" id="passi-scheda" aria-live="polite">
+    <h2 class="solo-lettori" id="percorso-titolo"></h2>
+    <ol class="passi" id="passi"></ol>
+  </section>
+
+  <figure class="mappa">
+    <div class="scorri">
+      <svg id="mappa" viewBox="0 126 1330 503" role="img"
+        aria-label="Il browser passa da Caddy al server della voce, che per ogni domanda chiama il RAG assicurazione. L'audio delle chiamate dal sito va diretto dal browser al server. Le telefonate arrivano da Ehiweb al centralino Asterisk e da lì al server della voce.">
+        <defs>
+          <marker id="punta-dati" viewBox="0 0 10 10" refX="10" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse">
+            <path class="p-dati" d="M0 0L10 5L0 10z"/>
+          </marker>
+          <marker id="punta-audio" viewBox="0 0 10 10" refX="10" refY="5" markerUnits="userSpaceOnUse" markerWidth="14" markerHeight="14" orient="auto-start-reverse">
+            <path class="p-audio" d="M0 0L10 5L0 10z"/>
+          </marker>
+        </defs>
+
+        <!-- La VPS: tutto ciò che sta dentro gira sul server del progetto -->
+        <rect class="vps" x="520" y="140" width="790" height="475" rx="24"/>
+        <text class="vps-et" x="544" y="170">VPS ORACLE · CONTAINER DOCKER</text>
+
+        <!-- Nodi -->
+        <g data-percorsi="chat voce">
+          <rect class="n-box" x="20" y="160" width="220" height="160" rx="14"/>
+          <text class="n-titolo" x="36" y="190">Browser</text>
+          <!-- Anche dentro i riquadri, ogni voce dice in quali percorsi conta -->
+          <g data-percorsi="chat"><circle class="n-punto" cx="40" cy="219" r="3"/><text class="n-voce" x="52" y="224">Chat scritta</text></g>
+          <g data-percorsi="voce"><circle class="n-punto" cx="40" cy="243" r="3"/><text class="n-voce" x="52" y="248">Microfono (WebRTC)</text></g>
+        </g>
+
+        <g data-percorsi="telefono">
+          <rect class="n-box" x="20" y="527" width="220" height="76" rx="14"/>
+          <text class="n-titolo" x="36" y="557">Telefono</text>
+          <text class="n-numero" x="36" y="586">0733 145 0210</text>
+        </g>
+
+        <g data-percorsi="telefono">
+          <rect class="n-box n-esterno" x="300" y="527" width="180" height="76" rx="14"/>
+          <text class="n-titolo" x="316" y="557">Ehiweb</text>
+          <text class="n-mono" x="316" y="586">sip.vivavox.it</text>
+        </g>
+
+        <g data-percorsi="chat voce">
+          <rect class="n-box" x="550" y="210" width="170" height="64" rx="14"/>
+          <text class="n-titolo" x="566" y="247">Caddy</text>
+        </g>
+
+        <g data-percorsi="chat voce telefono">
+          <rect class="n-box n-forte" x="760" y="180" width="280" height="286" rx="16"/>
+          <text class="n-titolo n-titolo-forte" x="780" y="214">Server della voce</text>
+          <line class="n-divisore" x1="780" y1="230" x2="1020" y2="230"/>
+          <!-- I cinque passi di ogni frase, numerati e legati da un binario -->
+          <g data-percorsi="voce telefono">
+            <line class="binario" x1="795" y1="260" x2="795" y2="428"/>
+            <rect class="pillola" x="776" y="244" width="248" height="32" rx="16"/>
+            <circle class="passo-n" cx="795" cy="260" r="10"/>
+            <text class="passo-c" x="795" y="264" text-anchor="middle">1</text>
+            <text class="n-voce" x="814" y="265">Silero VAD · fine della frase</text>
+            <rect class="pillola" x="776" y="286" width="248" height="32" rx="16"/>
+            <circle class="passo-n" cx="795" cy="302" r="10"/>
+            <text class="passo-c" x="795" y="306" text-anchor="middle">2</text>
+            <text class="n-voce" x="814" y="307">Impronta</text>
+            <rect class="pillola" x="776" y="328" width="248" height="32" rx="16"/>
+            <circle class="passo-n" cx="795" cy="344" r="10"/>
+            <text class="passo-c" x="795" y="348" text-anchor="middle">3</text>
+            <text class="n-voce" x="814" y="349">Trascrizione · voce → testo</text>
+            <rect class="pillola" x="776" y="370" width="248" height="32" rx="16"/>
+            <circle class="passo-n" cx="795" cy="386" r="10"/>
+            <text class="passo-c" x="795" y="390" text-anchor="middle">4</text>
+            <text class="n-voce" x="814" y="391">Assistente</text>
+            <rect class="pillola" x="776" y="412" width="248" height="32" rx="16"/>
+            <circle class="passo-n" cx="795" cy="428" r="10"/>
+            <text class="passo-c" x="795" y="432" text-anchor="middle">5</text>
+            <text class="n-voce" x="814" y="433">Piper · testo → voce</text>
+          </g>
+        </g>
+
+        <!-- I due servizi che trascrivono, fuori dalla VPS: Groq per il sito, Azure per il telefono -->
+        <g data-percorsi="voce">
+          <rect class="n-box n-esterno" x="300" y="316" width="170" height="56" rx="14"/>
+          <text class="n-titolo" x="316" y="349">Groq</text>
+        </g>
+        <g data-percorsi="telefono">
+          <rect class="n-box n-esterno" x="300" y="400" width="170" height="56" rx="14"/>
+          <text class="n-titolo" x="316" y="433">Azure</text>
+        </g>
+
+        <g data-percorsi="chat voce telefono">
+          <rect class="n-box" x="1100" y="358" width="196" height="56" rx="14"/>
+          <text class="n-titolo" x="1116" y="391">RAG assicurazione</text>
+        </g>
+
+        <g data-percorsi="telefono">
+          <rect class="n-box" x="780" y="537" width="260" height="56" rx="14"/>
+          <text class="n-titolo" x="798" y="570">Centralino · Asterisk</text>
+        </g>
+
+        <!-- Fili: i dati partono da chi apre la connessione; l'audio va nei due sensi -->
+        <g data-percorsi="chat voce">
+          <line class="e-dati" x1="240" y1="242" x2="550" y2="242" marker-end="url(#punta-dati)"/>
+          <text class="et-dati" x="395" y="231" text-anchor="middle">HTTPS</text>
+        </g>
+        <g data-percorsi="chat voce">
+          <line class="e-dati" x1="720" y1="242" x2="760" y2="242" marker-end="url(#punta-dati)"/>
+          <text class="et-dati" x="740" y="231" text-anchor="middle">HTTP</text>
+        </g>
+        <g data-percorsi="voce">
+          <line class="e-audio" x1="240" y1="300" x2="760" y2="300" marker-start="url(#punta-audio)" marker-end="url(#punta-audio)"/>
+          <text class="et-audio" x="400" y="289" text-anchor="middle">audio WebRTC · UDP 8098-8101</text>
+        </g>
+        <g data-percorsi="voce">
+          <line class="e-dati" x1="760" y1="344" x2="470" y2="344" marker-end="url(#punta-dati)"/>
+          <text class="et-dati" x="660" y="333" text-anchor="middle">frase → testo</text>
+        </g>
+        <g data-percorsi="telefono">
+          <path class="e-dati" d="M760 344H560V428H470" marker-end="url(#punta-dati)"/>
+          <text class="et-dati" x="660" y="333" text-anchor="middle">frase → testo</text>
+        </g>
+        <g data-percorsi="chat voce telefono">
+          <line class="e-dati" x1="1040" y1="386" x2="1100" y2="386" marker-end="url(#punta-dati)"/>
+          <text class="et-dati-mono" x="1070" y="375" text-anchor="middle">/turno</text>
+          <text class="et-sub" x="1070" y="405" text-anchor="middle">SSE</text>
+        </g>
+        <g data-percorsi="telefono">
+          <line class="e-dati" x1="240" y1="565" x2="300" y2="565" marker-end="url(#punta-dati)"/>
+          <text class="et-dati" x="270" y="554" text-anchor="middle">chiama</text>
+        </g>
+        <g data-percorsi="telefono">
+          <line class="e-audio" x1="480" y1="565" x2="780" y2="565" marker-start="url(#punta-audio)" marker-end="url(#punta-audio)"/>
+          <text class="et-audio" x="630" y="554" text-anchor="middle">SIP + audio (G.711)</text>
+        </g>
+        <g data-percorsi="telefono">
+          <line class="e-audio" x1="910" y1="537" x2="910" y2="466" marker-start="url(#punta-audio)" marker-end="url(#punta-audio)"/>
+          <text class="et-audio-mono" x="922" y="497">WebSocket /telefono</text>
+          <text class="et-sub" x="922" y="514">PCM 16 kHz e tasti del PIN</text>
+        </g>
+      </svg>
+    </div>
+  </figure>
+
+
+  <section class="fatto" aria-label="Linguaggi e tecnologie">
+    <div class="gruppo">
+      <h3>Linguaggi</h3>
+      <ul class="linguaggi">
+        <li><span class="logo"><img src="loghi/python.svg" alt=""></span><strong>Python 3.12<span class="estensione">.py</span></strong></li>
+        <li><span class="logo"><img src="loghi/javascript.svg" alt=""></span><strong>JavaScript<span class="estensione">.js</span></strong></li>
+        <li><span class="logo"><img src="loghi/html.svg" alt=""></span><strong>HTML<span class="estensione">.html</span></strong></li>
+        <li><span class="logo"><img src="loghi/css.svg" alt=""></span><strong>CSS<span class="estensione">.css</span></strong></li>
+        <li><span class="logo"><img src="loghi/asterisk.svg" alt=""></span><strong>Asterisk<span class="estensione">.conf</span></strong></li>
+        <li><span class="logo"><img src="loghi/shell.svg" alt=""></span><strong>Shell<span class="estensione">.sh</span></strong></li>
+      </ul>
+    </div>
+
+    <div class="gruppo">
+      <h3>Tecnologie</h3>
+      <div class="pila">
+      <section class="strato">
+        <h4>Interfaccia</h4>
+        <ul class="tessere">
+          <li class="tessera"><span class="logo"><img src="loghi/webrtc.svg" alt=""></span><span class="nome">WebRTC</span><span class="ruolo">audio della chiamata</span></li>
+          <li class="tessera"><span class="logo"><img src="loghi/sse.svg" alt=""></span><span class="nome">Server-Sent Events</span><span class="ruolo">risposta che arriva man mano</span></li>
+          <li class="tessera"><span class="logo"><img src="loghi/sessionstorage.svg" alt=""></span><span class="nome">sessionStorage</span><span class="ruolo">una conversazione tra chat e voce</span></li>
+        </ul>
+      </section>
+      <section class="strato">
+        <h4>Server</h4>
+        <ul class="tessere">
+          <li class="tessera"><span class="logo"><img src="loghi/fastapi.svg" alt=""></span><span class="nome">FastAPI<span class="versione">0.162</span></span><span class="ruolo">richieste della pagina</span></li>
+          <li class="tessera"><span class="logo"><img src="loghi/uvicorn.png" alt=""></span><span class="nome">Uvicorn<span class="versione">0.54</span></span><span class="ruolo">fa girare FastAPI</span></li>
+          <li class="tessera"><span class="logo"><img src="loghi/pipecat.png" alt=""></span><span class="nome">Pipecat<span class="versione">1.16</span></span><span class="ruolo">catena dell'audio</span></li>
+          <li class="tessera"><span class="logo"><img src="loghi/aiortc.png" alt=""></span><span class="nome">aiortc<span class="versione">1.16</span></span><span class="ruolo">WebRTC sul server</span></li>
+          <li class="tessera"><span class="logo"><img src="loghi/httpx.png" alt=""></span><span class="nome">httpx<span class="versione">0.28</span></span><span class="ruolo">chiamate all'API</span></li>
+        </ul>
+      </section>
+      <section class="strato">
+        <h4>Intelligenza artificiale</h4>
+        <ul class="tessere">
+          <li class="tessera"><span class="logo"><img src="loghi/silero.svg" alt=""></span><span class="nome">Silero VAD</span><span class="ruolo">capisce quando hai finito</span></li>
+          <li class="tessera"><span class="logo"><img src="loghi/sherpa-onnx.png" alt=""></span><span class="nome">sherpa-onnx<span class="versione">2.0</span></span><span class="ruolo">impronta della voce</span></li>
+          <li class="tessera"><span class="logo"><img src="loghi/groq.png" alt=""></span><span class="nome">Groq<span class="versione">large-v3</span></span><span class="ruolo">voce → testo, dal sito</span></li>
+          <li class="tessera"><span class="logo"><img src="loghi/azure.svg" alt=""></span><span class="nome">Azure Speech<span class="versione">F0</span></span><span class="ruolo">voce → testo, al telefono</span></li>
+          <li class="tessera"><span class="logo"><img src="loghi/faster-whisper.png" alt=""></span><span class="nome">faster-whisper<span class="versione">1.2</span></span><span class="ruolo">voce → testo, di riserva</span></li>
+          <li class="tessera"><span class="logo"><img src="loghi/piper.png" alt=""></span><span class="nome">Piper<span class="versione">1.8</span></span><span class="ruolo">testo → voce</span></li>
+          <li class="tessera"><span class="logo"><img src="loghi/onnx.svg" alt=""></span><span class="nome">ONNX Runtime<span class="versione">1.31</span></span><span class="ruolo">motore di Piper e Silero</span></li>
+          <li class="tessera"><span class="logo"><img src="loghi/ctranslate2.png" alt=""></span><span class="nome">CTranslate2<span class="versione">4.9</span></span><span class="ruolo">motore di Whisper</span></li>
+        </ul>
+      </section>
+      <section class="strato">
+        <h4>Telefonia</h4>
+        <ul class="tessere">
+          <li class="tessera"><span class="logo"><img src="loghi/asterisk.svg" alt=""></span><span class="nome">Asterisk<span class="versione">22.12 LTS</span></span><span class="ruolo">il centralino</span></li>
+          <li class="tessera"><span class="logo"><img src="loghi/pjsip.png" alt=""></span><span class="nome">PJSIP</span><span class="ruolo">SIP con l'operatore</span></li>
+          <li class="tessera"><span class="logo"><img src="loghi/websocket.svg" alt=""></span><span class="nome">chan_websocket</span><span class="ruolo">audio al server della voce</span></li>
+          <li class="tessera"><span class="logo"><img src="loghi/ehiweb.png" alt=""></span><span class="nome">Ehiweb VivaVox</span><span class="ruolo">il numero 0733 145 0210</span></li>
+        </ul>
+      </section>
+      <section class="strato">
+        <h4>Infrastruttura</h4>
+        <ul class="tessere">
+          <li class="tessera"><span class="logo"><img src="loghi/docker.svg" alt=""></span><span class="nome">Docker Compose<span class="versione">29.9 · 5.6</span></span><span class="ruolo">voce e centralino</span></li>
+          <li class="tessera"><span class="logo"><img src="loghi/caddy.svg" alt=""></span><span class="nome">Caddy<span class="versione">2.11</span></span><span class="ruolo">HTTPS davanti al sito</span></li>
+          <li class="tessera"><span class="logo"><img src="loghi/letsencrypt.svg" alt=""></span><span class="nome">Let's Encrypt</span><span class="ruolo">certificati gratuiti</span></li>
+          <li class="tessera"><span class="logo"><img src="loghi/oracle.svg" alt=""></span><span class="nome">Oracle Cloud</span><span class="ruolo">VPS Ampere, 24 GB</span></li>
+          <li class="tessera"><span class="logo"><img src="loghi/ubuntu.svg" alt=""></span><span class="nome">Ubuntu<span class="versione">24.04</span></span><span class="ruolo">sistema operativo</span></li>
+        </ul>
+      </section>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+  // Ogni passo: chi agisce, cosa fa in poche parole, e se passano dati o audio
+  const passo = (chi, fa, tipo = "dati") => ({ chi, fa, tipo });
+
+  const PERCORSI = {
+    tutto: {
+      titolo: "Tutti i fili",
+      passi: [],
+    },
+    chat: {
+      titolo: "Una domanda scritta",
+      passi: [
+        passo("Pagina", "Invia la domanda"),
+        passo("Caddy", "Apre la porta"),
+        passo("Server", "Chiede all'API"),
+        passo("API", "Risponde a pezzi"),
+        passo("Chat", "Mostra tutto"),
+      ],
+    },
+    voce: {
+      titolo: "Una chiamata dal sito",
+      passi: [
+        passo("Pagina", "Apre la chiamata"),
+        passo("Browser ⇄ server", "Audio diretto", "audio"),
+        passo("Silero · impronta", "Ascolta e isola", "audio"),
+        passo("Groq", "Voce → testo"),
+        passo("API", "Trova la risposta"),
+        passo("Piper", "La legge", "audio"),
+      ],
+    },
+    telefono: {
+      titolo: "Una telefonata",
+      passi: [
+        passo("Telefono", "Chiami", "audio"),
+        passo("Ehiweb → Asterisk", "Passa la chiamata", "audio"),
+        passo("Asterisk → server", "Audio al server", "audio"),
+        passo("Azure", "Voce → testo"),
+        passo("Assistente", "Trova la risposta"),
+        passo("Piper", "Ti risponde", "audio"),
+      ],
+    },
+  };
+
+  const pulsanti = document.querySelectorAll("[data-percorso]");
+  const elementi = document.querySelectorAll("#mappa [data-percorsi]");
+  const titolo = document.getElementById("percorso-titolo");
+  const schedaPassi = document.getElementById("passi-scheda");
+  const passi = document.getElementById("passi");
+  const MAX_PASSI = Math.max(...Object.values(PERCORSI).map((p) => p.passi.length));
+
+  // Le schede del percorso, poi caselle vuote fino al percorso più lungo: la fila ha sempre la
+  // stessa forma, anche quando nessun percorso è scelto
+  function riempi(lista, elenco) {
+    const vuote = Array.from({ length: MAX_PASSI - elenco.length }, () => {
+      const li = document.createElement("li");
+      li.className = "passo vuoto";
+      li.setAttribute("aria-hidden", "true");
+      return li;
+    });
+    lista.replaceChildren(...elenco.map(scheda), ...vuote);
+  }
+
+  function scheda(p) {
+    const li = document.createElement("li");
+    li.className = "passo";
+    li.dataset.tipo = p.tipo;
+    const riga = (classe, testo) => {
+      const el = document.createElement("span");
+      el.className = classe;
+      el.textContent = testo;
+      return el;
+    };
+    li.append(riga("chi", p.chi), riga("fa", p.fa));
+    return li;
+  }
+
+  function mostra(nome) {
+    const percorso = PERCORSI[nome];
+    pulsanti.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.percorso === nome)));
+    elementi.forEach((el) => {
+      const usa = el.dataset.percorsi.split(" ").includes(nome);
+      el.classList.toggle("spento", nome !== "tutto" && !usa);
+    });
+    titolo.textContent = percorso.titolo;
+    riempi(passi, percorso.passi);
+  }
+
+  // Le schede in fila sono alte quanto la più alta del percorso: si provano tutti i percorsi in
+  // una copia invisibile, alla larghezza di adesso. In colonna (telefono) non serve: la mappa è
+  // comunque più sotto
+  function riservaSpazio() {
+    schedaPassi.style.minHeight = "";
+    if (!getComputedStyle(passi).gridAutoFlow.startsWith("column")) return;
+    const misura = passi.cloneNode(false);
+    misura.removeAttribute("id");
+    misura.hidden = false;
+    misura.classList.add("misura");
+    schedaPassi.append(misura);
+    let alto = 0;
+    for (const p of Object.values(PERCORSI)) {
+      riempi(misura, p.passi);
+      alto = Math.max(alto, misura.getBoundingClientRect().height);
+    }
+    misura.remove();
+    schedaPassi.style.minHeight = `${Math.ceil(alto)}px`;
+  }
+
+  // Un percorso alla volta; ripremendo quello acceso si torna a vedere tutto
+  pulsanti.forEach((b) =>
+    b.addEventListener("click", () =>
+      mostra(b.getAttribute("aria-pressed") === "true" ? "tutto" : b.dataset.percorso),
+    ),
+  );
+  let larghezza = 0;
+  new ResizeObserver(([voce]) => {
+    if (Math.round(voce.contentRect.width) === larghezza) return;
+    larghezza = Math.round(voce.contentRect.width);
+    riservaSpazio();
+  }).observe(schedaPassi);
+  document.fonts.ready.then(riservaSpazio);
+  mostra("tutto");
+</script>
+</body>
+</html>

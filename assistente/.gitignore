@@ -1,0 +1,23 @@
+# Ambiente Python
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+
+# Il canale voce: modelli scaricati (si riscaricano da soli) e registrazioni delle prove
+voce/modelli/
+voce/prove/
+voce/registrazioni/
+
+# Utenti e polizze del sito (impronte delle password comprese)
+dati/
+
+.env
+
+# Fuori dal repository: la tesi, e la cartella del Drive del gruppo (due file hanno i nomi reali)
+tesi/
+documenti_drive/

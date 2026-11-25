@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{# L'elenco dei documenti, diviso nelle aree dei prodotti (pagina.py, documenti.py). aree: per ogni
+   area la cartella e i suoi documenti #}
+
+{% block titolo %}{{ t.documenti }} · Velaria{% endblock %}
+{% block descrizione %}{{ t.documenti_descrizione }}{% endblock %}
+
+{% block contenuto %}
+<main id="contenuto" class="documenti">
+  <section class="documenti-testa">
+    <div class="contenitore">
+      <h1>{{ t.documenti }}</h1>
+      <nav class="documenti-salti" aria-label="{{ t.documenti_aree }}">
+        {% for area, documenti in aree %}
+        <a class="area-{{ AREE[area] }}" href="#{{ area }}">
+          <svg class="icona" aria-hidden="true"><use href="#i-{{ AREE[area] }}"/></svg>
+          <span>{{ t[AREE[area] ~ "_titolo"] }}</span>
+          <span class="conta">{{ documenti | length }}</span>
+        </a>
+        {% endfor %}
+      </nav>
+    </div>
+  </section>
+
+  <div class="contenitore documenti-aree">
+    {% for area, documenti in aree %}
+    {% set tipo = AREE[area] %}
+    <section id="{{ area }}" class="documenti-area area-{{ tipo }}" aria-labelledby="titolo-{{ area }}">
+      <h2 id="titolo-{{ area }}">
+        <span class="area-icona"><svg aria-hidden="true"><use href="#i-{{ tipo }}"/></svg></span>
+        <span>{{ t[tipo ~ "_titolo"] }}</span>
+      </h2>
+      <ul class="documenti-elenco" lang="it">
+        {% for documento in documenti %}
+        <li>
+          <a href="{{ radice }}{{ documento.indirizzo }}">
+            <svg class="icona" aria-hidden="true"><use href="#i-documento"/></svg>
+            <span>{{ documento.titolo }}{% if documento.prodotto %} <span class="documento-prodotto">· {{ documento.prodotto }}</span>{% endif %}</span>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+    {% endfor %}
+  </div>
+</main>
+{% endblock %}

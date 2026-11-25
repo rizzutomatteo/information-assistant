@@ -1,0 +1,140 @@
+# L'assistente assicurativo sulla VPS del progetto (per provarlo altrove c'è docker-compose.yml):
+# il sito di Velaria con la chat, l'accesso e la voce, in due copie che usano la stessa immagine
+# e gli stessi utenti:
+# - «privata», solo dalla tailnet: un proxy davanti fa HTTPS e controlla chi entra, poi passa a
+#   127.0.0.1:8002;
+# - «pubblica», da internet, attraverso il tunnel di Cloudflare («tunnel»).
+# Intorno: la finta API dell'assistente («finta-api») e il centralino delle telefonate.
+# Gli indirizzi della VPS e i segreti stanno nel file .env (vedi .env.example, «VPS»); lì
+# COMPOSE_FILE=docker-compose.vps.yml fa usare questo file anche senza -f:
+#
+#   docker compose up -d --build      avvia (o aggiorna dopo una modifica al codice)
+#   docker compose logs -f privata    log
+#   docker compose down               ferma
+#
+# Con l'API vera dell'assistente, ASSISTENTE_API_URL punta a lei e «finta-api» non serve più.
+name: assicurazioni
+
+# Ciò che le due copie del sito hanno in comune
+x-sito: &sito
+  image: assistente:1
+  # WebRTC: l'audio va e viene in UDP direttamente dal server, non passa da Caddy né dal tunnel
+  network_mode: host
+  # Misurato: 0,6 GB a riposo, circa 1 GB in chiamata; un tetto evita sorprese agli altri servizi
+  mem_limit: 2500m
+  restart: unless-stopped
+  read_only: true
+  tmpfs: ["/tmp"]
+  # Utenti e polizze: lo stesso file SQLite per le due copie, che così restano allineate
+  volumes:
+    - ./dati:/dati
+  cap_drop: [ALL]
+  security_opt: ["no-new-privileges:true"]
+
+x-ambiente: &ambiente
+  ASSISTENTE_API_URL: http://127.0.0.1:8001
+  ASSISTENTE_HOST: 127.0.0.1
+  VOCE_CHIAMATE_MAX: "2"
+  # «Accedi con Google»: il client OAuth del sito, nel file .env. Il client ID non è un segreto
+  # (sta anche nella pagina), il client secret sì
+  ASSISTENTE_GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+  ASSISTENTE_GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-}
+  # Whisper large-v3 su Groq, con il modello locale come riserva (groq.py). La chiave è nel
+  # file .env; senza, si trascrive solo in locale
+  VOCE_GROQ_CHIAVE: ${GROQ_API_KEY:-}
+  # I modelli sono nell'immagine (in sola lettura): niente controlli né download
+  HF_HUB_OFFLINE: "1"
+  ASSISTENTE_UTENTI: /dati/utenti.sqlite
+  # La password della pagina /a, per caricare gli utenti di prova: nel file .env
+  ASSISTENTE_AMMINISTRAZIONE_PASSWORD: ${AMMINISTRAZIONE_PASSWORD:-}
+
+services:
+  privata:
+    <<: *sito
+    build: .
+    environment:
+      <<: *ambiente
+      ASSISTENTE_PORTA: "8002"
+      # Solo l'indirizzo Tailscale, e porte UDP fisse: nella tailnet il telefono può usare solo le
+      # porte aperte nelle regole (pannello di Tailscale, Access controls)
+      VOCE_INDIRIZZI: ${IP_TAILNET:?serve IP_TAILNET nel file .env}
+      VOCE_PORTE_UDP: 8098-8101
+      # Il segreto con cui il centralino si presenta a /telefono (vuoto: niente telefonate)
+      VOCE_TELEFONO_SEGRETO: ${TELEFONO_SEGRETO:-}
+      # Azure Speech, il primo al telefono (azure.py). Chiave e area sono nel file .env; senza,
+      # al telefono si comincia da Groq
+      VOCE_AZURE_CHIAVE: ${AZURE_SPEECH_KEY:-}
+      VOCE_AZURE_AREA: ${AZURE_SPEECH_REGION:-}
+      VOCE_REGISTRAZIONI: /registrazioni
+    volumes:
+      - ./dati:/dati
+      - ./voce/registrazioni:/registrazioni
+
+  # La copia per internet. Ci arriva solo il tunnel di Cloudflare; l'audio passa dal TURN di
+  # Cloudflare (turn.py), perché il firewall del cloud non lascia entrare UDP da fuori.
+  # Niente telefonate (il numero arriva a «privata») e niente registro delle frasi
+  pubblica:
+    <<: *sito
+    environment:
+      <<: *ambiente
+      ASSISTENTE_PORTA: "8003"
+      # L'indirizzo privato della VPS, che il cloud traduce in quello pubblico: con lo STUN il
+      # server lo scopre e lo offre al browser. Se la rete del browser lo permette, l'audio va
+      # diretto: la VPS scrive per prima, e il firewall lascia passare le risposte
+      VOCE_INDIRIZZI: ${IP_PRIVATO:?serve IP_PRIVATO nel file .env}
+      VOCE_ICE: stun:stun.cloudflare.com:3478
+      # La chiave del TURN (Cloudflare, Realtime → TURN), nel file .env; senza, solo STUN
+      VOCE_TURN_CHIAVE: ${CLOUDFLARE_TURN_KEY_ID:-}
+      VOCE_TURN_TOKEN: ${CLOUDFLARE_TURN_KEY_TOKEN:-}
+
+  # Il tunnel verso «pubblica»: parte dalla VPS verso Cloudflare, nessuna porta aperta da
+  # internet. Nome e instradamento li configura strumenti/cloudflare_pubblica.py; il token è nel file .env
+  tunnel:
+    image: cloudflare/cloudflared:2026.10.7
+    command: tunnel --no-autoupdate run
+    network_mode: host
+    environment:
+      TUNNEL_TOKEN: ${CLOUDFLARE_TUNNEL_TOKEN:-}
+    mem_limit: 200m
+    restart: unless-stopped
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+
+  # Il centralino delle telefonate (voce/centralino/ e README, «Il numero di telefono»). Password e
+  # dati dell'operatore stanno nel file .env, che non va nel repository
+  centralino:
+    build: voce/centralino
+    image: centralino:1
+    network_mode: host
+    environment:
+      # SIP solo sulla tailnet; il numero vero ha un suo trasporto verso internet
+      TELEFONO_IP: ${IP_TAILNET:?serve IP_TAILNET nel file .env}
+      TELEFONO_SEGRETO: ${TELEFONO_SEGRETO:-}
+      TELEFONO_PASSWORD_PROVA: ${TELEFONO_PASSWORD_PROVA:-}
+      OPERATORE_SERVER: ${OPERATORE_SERVER:-}
+      OPERATORE_UTENTE: ${OPERATORE_UTENTE:-}
+      OPERATORE_PASSWORD: ${OPERATORE_PASSWORD:-}
+      OPERATORE_IP_PUBBLICO: ${OPERATORE_IP_PUBBLICO:-}
+    mem_limit: 300m
+    restart: unless-stopped
+    read_only: true
+    # Asterisk scrive solo qui (configurazione pronta, log, database delle registrazioni)
+    tmpfs: ["/run/centralino:uid=900,gid=900,mode=0750", "/tmp"]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+
+  # Fa le veci dell'API dell'assistente finché quella vera non esiste (vedi README)
+  finta-api:
+    image: assistente:1
+    command: ["finta-api"]
+    network_mode: host
+    environment:
+      FINTA_API_HOST: 127.0.0.1
+      FINTA_API_PORTA: "8001"
+    mem_limit: 300m
+    restart: unless-stopped
+    read_only: true
+    tmpfs: ["/tmp"]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
