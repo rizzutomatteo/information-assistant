@@ -13,6 +13,7 @@ from assistente.accesso.utenti import (
     Anagrafe,
     Conflitto,
     FileUtenti,
+    ModificaUtente,
     Polizza,
     Registrazione,
     impronta_password,
@@ -34,62 +35,61 @@ def _file(**cambi) -> dict:
     return dati
 
 
-def _carica(anagrafe: Anagrafe, dati: dict) -> tuple[int, int]:
+async def _carica(anagrafe: Anagrafe, dati: dict) -> tuple[int, int]:
     utenti = FileUtenti.model_validate(dati).utenti
-    return anagrafe.carica(utenti, {u.utente: impronta_password(u.password) for u in utenti})
+    impronte = {u.utente: impronta_password(u.password) for u in utenti}
+    return await anagrafe.carica(utenti, impronte)
 
 
 def test_lo_stampino_della_pagina_a_e_valido():
     assert FileUtenti.model_validate(STAMPINO).utenti[0].utente == "giulia.verdi"
 
 
-def test_al_primo_avvio_c_e_solo_mario_rossi(tmp_path):
-    anagrafe = Anagrafe(tmp_path / "utenti.sqlite")
-    (mario,) = anagrafe.elenco()
+async def test_al_primo_avvio_c_e_solo_mario_rossi(anagrafe):
+    (mario,) = await anagrafe.elenco()
     assert (mario.nome_completo, mario.pin_telefono, len(mario.polizze)) == (
         "Mario Rossi",
         PIN_DEMO,
         2,
     )
     # Senza password: con utente e password non si entra
-    assert anagrafe.impronta("mario.rossi") is None
+    assert await anagrafe.impronta("mario.rossi") is None
 
 
-def test_le_due_copie_del_sito_vedono_gli_stessi_utenti(tmp_path):
-    privata, pubblica = Anagrafe(tmp_path / "u.sqlite"), Anagrafe(tmp_path / "u.sqlite")
-    _carica(privata, STAMPINO)
-    giulia = pubblica.da_pin("246810")
-    assert giulia.nome_completo == "Giulia Verdi" and len(pubblica.elenco()) == 2
-    pubblica.aggiungi_polizza(giulia.id, giulia.polizze[0])
-    assert len(privata.da_pin("246810").polizze) == 2
+async def test_le_due_copie_del_sito_vedono_gli_stessi_utenti(anagrafe, indirizzo_db):
+    privata, pubblica = anagrafe, Anagrafe(indirizzo_db)
+    await pubblica.apri()
+    await _carica(privata, STAMPINO)
+    giulia = await pubblica.da_pin("246810")
+    assert giulia.nome_completo == "Giulia Verdi" and len(await pubblica.elenco()) == 2
+    await pubblica.aggiungi_polizza(giulia.id, giulia.polizze[0])
+    assert len((await privata.da_pin("246810")).polizze) == 2
+    await pubblica.chiudi()
 
 
-def test_caricare_crea_e_poi_sostituisce():
-    anagrafe = Anagrafe(None)
-    assert _carica(anagrafe, STAMPINO) == (1, 0)
-    assert _carica(anagrafe, _file(nome="Giulia Maria", polizze=[])) == (0, 1)
-    giulia = anagrafe.da_pin("246810")
+async def test_caricare_crea_e_poi_sostituisce(anagrafe):
+    assert await _carica(anagrafe, STAMPINO) == (1, 0)
+    assert await _carica(anagrafe, _file(nome="Giulia Maria", polizze=[])) == (0, 1)
+    giulia = await anagrafe.da_pin("246810")
     assert giulia.nome == "Giulia Maria" and giulia.polizze == ()
 
 
-def test_il_pin_si_sceglie_se_manca_e_resta_quando_si_sostituisce():
-    anagrafe = Anagrafe(None)
-    _carica(anagrafe, _file(pin_telefono=None))
-    (pin,) = [u.pin_telefono for u in anagrafe.elenco() if u.utente == "giulia.verdi"]
+async def test_il_pin_si_sceglie_se_manca_e_resta_quando_si_sostituisce(anagrafe):
+    await _carica(anagrafe, _file(pin_telefono=None))
+    (pin,) = [u.pin_telefono for u in await anagrafe.elenco() if u.utente == "giulia.verdi"]
     assert len(pin) == 6 and pin != PIN_DEMO
-    _carica(anagrafe, _file(pin_telefono=None, nome="Giulia Maria"))
-    assert anagrafe.da_pin(pin).nome == "Giulia Maria"
+    await _carica(anagrafe, _file(pin_telefono=None, nome="Giulia Maria"))
+    assert (await anagrafe.da_pin(pin)).nome == "Giulia Maria"
 
 
-def test_pin_ed_email_di_un_altro_utente_non_si_possono_usare():
-    anagrafe = Anagrafe(None)
+async def test_pin_ed_email_di_un_altro_utente_non_si_possono_usare(anagrafe):
     with pytest.raises(Conflitto, match="mario.rossi"):
-        _carica(anagrafe, _file(pin_telefono=PIN_DEMO))
-    anagrafe.da_google("anna@example.com", "Anna", "Bianchi")
+        await _carica(anagrafe, _file(pin_telefono=PIN_DEMO))
+    await anagrafe.da_google("anna@example.com", "Anna", "Bianchi")
     with pytest.raises(Conflitto):
-        _carica(anagrafe, _file(email="anna@example.com"))
+        await _carica(anagrafe, _file(email="anna@example.com"))
     # Tutto o niente: nessun utente nuovo
-    assert len(anagrafe.elenco()) == 2
+    assert len(await anagrafe.elenco()) == 2
 
 
 @pytest.mark.parametrize(
@@ -124,25 +124,74 @@ def test_password():
     assert not password_giusta("una-password-lunga", None)
 
 
-def test_google_la_prima_volta_crea_l_utente_con_i_dati_di_prova():
-    anagrafe = Anagrafe(None)
-    anna = anagrafe.da_google("anna@example.com", "Anna", "Bianchi")
+async def test_google_la_prima_volta_crea_l_utente_con_i_dati_di_prova(anagrafe):
+    anna = await anagrafe.da_google("anna@example.com", "Anna", "Bianchi")
     assert len(anna.polizze) == 2 and anna.pin_telefono != PIN_DEMO
-    assert anagrafe.da_google("anna@example.com", "Anna", "Bianchi").id == anna.id
+    assert (await anagrafe.da_google("anna@example.com", "Anna", "Bianchi")).id == anna.id
 
 
-def test_polizze_aggiunte_e_tolte_solo_dal_loro_utente():
-    anagrafe = Anagrafe(None)
-    mario = anagrafe.da_pin(PIN_DEMO)
-    anna = anagrafe.da_google("anna@example.com", "Anna", "Bianchi")
+async def test_polizze_aggiunte_e_tolte_solo_dal_loro_utente(anagrafe):
+    mario = await anagrafe.da_pin(PIN_DEMO)
+    anna = await anagrafe.da_google("anna@example.com", "Anna", "Bianchi")
     nuova = Polizza(
         "Velaria Moto", "77", "Moto targata AA00000", date(2028, 1, 31), Decimal("99.5"), ()
     )
-    id_polizza = anagrafe.aggiungi_polizza(mario.id, nuova)
-    assert anagrafe.utente(mario.id).polizze[-1].premio_testo == "€ 99,50"
-    assert not anagrafe.togli_polizza(anna.id, id_polizza)
-    assert anagrafe.togli_polizza(mario.id, id_polizza)
-    assert len(anagrafe.utente(mario.id).polizze) == 2
+    id_polizza = await anagrafe.aggiungi_polizza(mario.id, nuova)
+    assert (await anagrafe.utente(mario.id)).polizze[-1].premio_testo == "€ 99,50"
+    assert not await anagrafe.togli_polizza(anna.id, id_polizza)
+    assert await anagrafe.togli_polizza(mario.id, id_polizza)
+    assert len((await anagrafe.utente(mario.id)).polizze) == 2
+
+
+def _modifica(utente, **cambi) -> ModificaUtente:
+    """I dati di un utente come li manda la finestra «Modifica», con qualche campo cambiato."""
+    return ModificaUtente.model_validate(utente.nel_json() | cambi)
+
+
+async def test_modifica_a_mano_cambia_dati_e_polizze_ma_non_id_e_password(anagrafe):
+    await _carica(anagrafe, STAMPINO)
+    giulia = await anagrafe.da_pin("246810")
+    polizza = {**giulia.nel_json()["polizze"][0], "premio": "99.90", "garanzie": []}
+    cambiata = await anagrafe.modifica(
+        giulia.id, _modifica(giulia, nome="Giulia Maria", polizze=[polizza, polizza]), None
+    )
+    assert (cambiata.id, cambiata.nome, len(cambiata.polizze)) == (giulia.id, "Giulia Maria", 2)
+    assert cambiata.polizze[0].premio_testo == "€ 99,90" and cambiata.polizze[0].garanzie == ()
+    assert password_giusta("una-password-lunga", (await anagrafe.impronta("giulia.verdi"))[1])
+
+    await anagrafe.modifica(giulia.id, _modifica(giulia, password="nuova-password"), "nuova")
+    assert (await anagrafe.impronta("giulia.verdi"))[1] == "nuova"
+
+
+async def test_modifica_con_pin_di_un_altro_o_utente_che_non_c_e(anagrafe):
+    anna = await anagrafe.da_google("anna@example.com", "Anna", "Bianchi")
+    with pytest.raises(Conflitto, match="mario.rossi"):
+        await anagrafe.modifica(anna.id, _modifica(anna, pin_telefono=PIN_DEMO), None)
+    assert (await anagrafe.utente(anna.id)).pin_telefono == anna.pin_telefono
+    assert await anagrafe.modifica(999, _modifica(anna), None) is None
+
+
+async def test_si_modifica_anche_chi_entra_solo_con_google(anagrafe):
+    anna = await anagrafe.da_google("anna@example.com", "Anna", "Bianchi")
+    cambiata = await anagrafe.modifica(anna.id, _modifica(anna, cognome="Neri"), None)
+    assert cambiata.cognome == "Neri"
+    with pytest.raises(ValueError):
+        _modifica(anna, password="corta")
+
+
+async def test_gli_eliminati_non_lasciano_il_posto_a_nessuno(anagrafe, indirizzo_db):
+    anna = await anagrafe.da_google("anna@example.com", "Anna", "Bianchi")
+    assert await anagrafe.elimina(anna.id) and not await anagrafe.elimina(anna.id)
+    # Le sessioni di Anna puntano al suo id: un utente nuovo non deve prenderlo
+    assert (await anagrafe.da_google("bea@example.com", "Bea", "Gialli")).id > anna.id
+    assert await anagrafe.elimina_tutti() == 2 and await anagrafe.elenco() == []
+    # Le polizze se ne vanno con i loro utenti
+    assert await anagrafe.togli_polizza(1, 1) is False
+    # Riavviando, Mario Rossi non torna: c'è solo al primo avvio
+    riaperta = Anagrafe(indirizzo_db)
+    await riaperta.apri()
+    assert await riaperta.elenco() == []
+    await riaperta.chiudi()
 
 
 def test_importi_e_date_all_italiana():
@@ -155,22 +204,20 @@ def _nuova(**cambi) -> Registrazione:
     return Registrazione.model_validate(dati)
 
 
-def test_registrazione_crea_un_account_senza_polizze():
-    anagrafe = Anagrafe(None)
-    luca = anagrafe.registra(_nuova(), impronta_password("una-password-lunga"))
+async def test_registrazione_crea_un_account_senza_polizze(anagrafe):
+    luca = await anagrafe.registra(_nuova(), impronta_password("una-password-lunga"))
     # Il nome utente si salva in minuscolo; niente dati di prova né polizze: le aggiunge lui
     assert (luca.utente, luca.polizze, luca.codice_fiscale) == ("luca.neri", (), "")
-    assert luca.pin_telefono != PIN_DEMO and anagrafe.impronta("LUCA.NERI")[0] == luca.id
+    assert luca.pin_telefono != PIN_DEMO and (await anagrafe.impronta("LUCA.NERI"))[0] == luca.id
 
 
-def test_registrazione_con_nome_o_email_gia_usati():
-    anagrafe = Anagrafe(None)
+async def test_registrazione_con_nome_o_email_gia_usati(anagrafe):
     with pytest.raises(Conflitto) as conflitto:
-        anagrafe.registra(_nuova(utente="mario.rossi"), "impronta")
+        await anagrafe.registra(_nuova(utente="mario.rossi"), "impronta")
     assert conflitto.value.campo == "utente"
-    anagrafe.registra(_nuova(email="luca@example.com"), "impronta")
+    await anagrafe.registra(_nuova(email="luca@example.com"), "impronta")
     with pytest.raises(Conflitto) as conflitto:
-        anagrafe.registra(_nuova(utente="luca2", email="luca@example.com"), "impronta")
+        await anagrafe.registra(_nuova(utente="luca2", email="luca@example.com"), "impronta")
     assert conflitto.value.campo == "email"
 
 
@@ -193,11 +240,12 @@ def test_limite():
 # --- Dal sito: registrazione, accesso con password, polizze, pagina /a ---------------------
 
 
-def _server(password_a: str = PASSWORD_A) -> httpx.AsyncClient:
+def _server(anagrafe: Anagrafe, password_a: str = PASSWORD_A) -> httpx.AsyncClient:
     app = crea_app(
         Impostazioni(amministrazione_password=password_a),
         precarica=False,
         client=ClientAssistente("http://127.0.0.1:9"),
+        anagrafe=anagrafe,
     )
     return httpx.AsyncClient(transport=httpx.ASGITransport(app=app), base_url="https://voce")
 
@@ -207,15 +255,15 @@ async def _carica_dal_sito(server: httpx.AsyncClient, dati: dict) -> httpx.Respo
     return await server.post("/api/a/utenti", json=dati)
 
 
-async def test_senza_password_di_amministrazione_la_pagina_a_non_c_e():
-    async with _server(password_a="") as server:
+async def test_senza_password_di_amministrazione_la_pagina_a_non_c_e(anagrafe):
+    async with _server(anagrafe, password_a="") as server:
         assert (await server.get("/a")).status_code == 404
         risposta = await server.post("/api/a/accesso", json={"password": "x"})
         assert risposta.status_code == 404
 
 
-async def test_pagina_a_prima_la_password_poi_il_json():
-    async with _server() as server:
+async def test_pagina_a_prima_la_password_poi_il_json(anagrafe):
+    async with _server(anagrafe) as server:
         pagina = (await server.get("/a")).text
         assert 'id="a-accesso"' in pagina and 'id="a-utenti"' not in pagina
         assert (await server.post("/api/a/utenti", json=STAMPINO)).status_code == 401
@@ -230,8 +278,8 @@ async def test_pagina_a_prima_la_password_poi_il_json():
         assert pagina.count("una-password-lunga") == 1
 
 
-async def test_pagina_a_json_sbagliato_o_in_conflitto():
-    async with _server() as server:
+async def test_pagina_a_json_sbagliato_o_in_conflitto(anagrafe):
+    async with _server(anagrafe) as server:
         sbagliato = await _carica_dal_sito(server, _file(pin_telefono="12"))
         assert sbagliato.status_code == 422
         assert sbagliato.json()["detail"][0]["loc"][-1] == "pin_telefono"
@@ -239,8 +287,36 @@ async def test_pagina_a_json_sbagliato_o_in_conflitto():
         assert conflitto.status_code == 409 and "mario.rossi" in conflitto.json()["detail"]
 
 
-async def test_troppe_password_sbagliate():
-    async with _server() as server:
+async def test_pagina_a_modifica_ed_elimina(anagrafe):
+    async with _server(anagrafe) as server:
+        modifica = {"nome": "Mario", "cognome": "Bianchi", "utente": "mario.rossi"}
+        assert (await server.put("/api/a/utenti/1", json=modifica)).status_code == 401
+        assert (await server.delete("/api/a/utenti/1")).status_code == 401
+        assert (await server.delete("/api/a/utenti")).status_code == 401
+
+        await _carica_dal_sito(server, STAMPINO)
+        pagina = (await server.get("/a")).text
+        assert 'data-modifica="1"' in pagina and 'id="a-elimina-tutti"' in pagina
+        assert (await server.put("/api/a/utenti/1", json=modifica)).status_code == 204
+        assert "<td>Mario Bianchi</td>" in (await server.get("/a")).text
+        assert (await server.put("/api/a/utenti/99", json=modifica)).status_code == 404
+        doppio = await server.put("/api/a/utenti/1", json={**modifica, "utente": "giulia.verdi"})
+        assert doppio.status_code == 409
+
+        giulia = {"utente": "giulia.verdi", "password": "una-password-lunga"}
+        assert (await server.post("/api/accesso/password", json=giulia)).status_code == 200
+        assert (await server.delete("/api/a/utenti/2")).status_code == 204
+        # Giulia è stata eliminata mentre era dentro: la sua sessione non trova più nessuno
+        assert 'id="esci"' not in (await server.get("/")).text
+        assert (await server.delete("/api/a/utenti/2")).status_code == 404
+
+        assert (await server.delete("/api/a/utenti")).json() == {"eliminati": 1}
+        pagina = (await server.get("/a")).text
+        assert "data-modifica=" not in pagina and 'id="a-elimina-tutti"' not in pagina
+
+
+async def test_troppe_password_sbagliate(anagrafe):
+    async with _server(anagrafe) as server:
         for _ in range(5):
             await server.post("/api/a/accesso", json={"password": "no"})
         giusta = await server.post("/api/a/accesso", json={"password": PASSWORD_A})
@@ -251,8 +327,8 @@ async def test_troppe_password_sbagliate():
         assert risposta.status_code == 429
 
 
-async def test_utente_e_password_poi_polizze_aggiunte_e_tolte():
-    async with _server() as server:
+async def test_utente_e_password_poi_polizze_aggiunte_e_tolte(anagrafe):
+    async with _server(anagrafe) as server:
         await _carica_dal_sito(server, STAMPINO)
         sbagliata = {"utente": "giulia.verdi", "password": "sbagliata"}
         assert (await server.post("/api/accesso/password", json=sbagliata)).status_code == 401
@@ -285,8 +361,8 @@ async def test_utente_e_password_poi_polizze_aggiunte_e_tolte():
         assert (await server.post("/api/polizze", json=nuova)).status_code == 401
 
 
-async def test_registrazione_dal_sito_poi_dentro():
-    async with _server() as server:
+async def test_registrazione_dal_sito_poi_dentro(anagrafe):
+    async with _server(anagrafe) as server:
         nuovo = {"nome": "Luca", "utente": "luca.neri", "password": "una-password-lunga"}
         risposta = await server.post("/api/registrazione", json=nuovo)
         assert risposta.status_code == 201 and risposta.json()["utente"] == "luca.neri"

@@ -295,7 +295,7 @@ class Assistente(FrameProcessor):
 
     async def _controlla_pin(self, pin: str):
         # Nel log solo l'esito, mai le cifre
-        utente = self._accesso_pin.entra(pin)
+        utente = await self._accesso_pin.entra(pin)
         if utente:
             logger.info(f"{self}: riconosciuto con il PIN")
             self._pin, self._token = None, self._accesso_pin.token

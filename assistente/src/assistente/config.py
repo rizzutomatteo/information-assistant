@@ -65,11 +65,12 @@ class Impostazioni:
     # Il client OAuth di Google per «Accedi con Google» (accesso/google.py); vuoti: niente Google
     google_client_id: str = ""
     google_client_secret: str = ""
-    # I documenti da leggere nel sito, <area>/<nome>.md (sito/documenti.py)
+    # I documenti da leggere nel sito, <area>/<nome>.md (sito/documenti.py), e le FAQ, faq.json
+    # (sito/faq.py)
     documenti: Path = CARTELLA_PROGETTO / "documenti"
-    # Il file SQLite degli utenti e delle polizze (accesso/utenti.py), lo stesso per le due copie
-    # del sito; None: in memoria, si perdono quando il server riparte
-    utenti: Path | None = None
+    # Il database PostgreSQL degli utenti e delle polizze (accesso/utenti.py), lo stesso per le
+    # due copie del sito: postgresql://utente:password@host:porta/database
+    database: str = ""
     # La password della pagina /a (accesso/amministrazione.py); vuota: la pagina non c'è
     amministrazione_password: str = ""
     log: str = "INFO"
@@ -149,7 +150,7 @@ class Impostazioni:
                 "ASSISTENTE_GOOGLE_CLIENT_SECRET", base.google_client_secret
             ),
             documenti=Path(os.environ.get("ASSISTENTE_DOCUMENTI", base.documenti)),
-            utenti=Path(v) if (v := os.environ.get("ASSISTENTE_UTENTI")) else None,
+            database=os.environ.get("ASSISTENTE_DATABASE", base.database),
             amministrazione_password=os.environ.get(
                 "ASSISTENTE_AMMINISTRAZIONE_PASSWORD", base.amministrazione_password
             ),

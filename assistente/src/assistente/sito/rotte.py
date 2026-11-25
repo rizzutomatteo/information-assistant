@@ -4,7 +4,9 @@ GET  /            la home page della compagnia (fittizia) con l'assistente, scri
                   nella lingua scelta (pagina.py); ?lingua=en la cambia
 GET  /documenti   l'elenco dei documenti, per area; /documenti/<area>/<nome> un documento
                   (documenti.py)
-GET  /a           la pagina per caricare gli utenti di prova (accesso/amministrazione.py)
+GET  /faq         le domande frequenti, per categoria; /faq/<id> una domanda (faq.py)
+GET  /a           la pagina degli utenti di prova: caricarli, modificarli, eliminarli
+                  (accesso/amministrazione.py)
 GET  /statico/…   CSS, JavaScript e caratteri della pagina
 POST /api/chat    una domanda scritta → la domanda e gli eventi dell'API dell'assistente
                   (Server-Sent Events), con i messaggi già pronti per la pagina
@@ -25,11 +27,14 @@ from assistente.accesso.sessioni import Sessioni
 from assistente.config import LINGUE, Lingua
 from assistente.rag.client import ClientAssistente, ErroreAPI, evento_sse
 from assistente.sito.documenti import Archivio
+from assistente.sito.faq import RaccoltaFaq
 from assistente.sito.pagina import (
     pagina,
     pagina_amministrazione,
     pagina_documenti,
     pagina_documento,
+    pagina_domanda,
+    pagina_faq,
     per_la_pagina,
     testo,
 )
@@ -78,6 +83,7 @@ def cambia_lingua(lingua: str, indietro: str) -> RedirectResponse:
 def router_sito(
     sessioni: Sessioni,
     archivio: Archivio,
+    raccolta: RaccoltaFaq,
     amministrazione: Amministrazione,
     client: ClientAssistente,
     google: str,
@@ -94,7 +100,7 @@ def router_sito(
             return cambia_lingua(lingua, "./")
         html = pagina(
             lingua_scelta(richiesta),
-            sessioni.utente(sessioni.token(richiesta)),
+            await sessioni.utente(sessioni.token(richiesta)),
             google,
             registra=registra,
         )
@@ -110,7 +116,7 @@ def router_sito(
         html = pagina_amministrazione(
             lingua_scelta(richiesta),
             entrato,
-            anagrafe.elenco() if entrato else [],
+            await anagrafe.elenco() if entrato else [],
             ESEMPIO.read_text(encoding="utf-8"),
         )
         return HTMLResponse(html, headers=SOLO_PER_TE)
@@ -134,6 +140,23 @@ def router_sito(
         # degli eventi, che intanto porta avanti l'audio delle chiamate
         contenuto = await asyncio.to_thread(archivio.html, trovato)
         html = pagina_documento(lingua_scelta(richiesta), trovato, contenuto)
+        return HTMLResponse(html, headers=SOLO_PER_TE)
+
+    @router.get("/faq", include_in_schema=False)
+    async def faq(richiesta: Request, lingua: str | None = None):
+        if lingua is not None:
+            return cambia_lingua(lingua, "faq")
+        html = pagina_faq(lingua_scelta(richiesta), raccolta)
+        return HTMLResponse(html, headers=SOLO_PER_TE)
+
+    @router.get("/faq/{id}", include_in_schema=False)
+    async def domanda(richiesta: Request, id: str, lingua: str | None = None):
+        trovata = raccolta.trova(id)
+        if trovata is None:
+            raise HTTPException(404, "Domanda non trovata")
+        if lingua is not None:
+            return cambia_lingua(lingua, id)
+        html = pagina_domanda(lingua_scelta(richiesta), trovata, raccolta.html(trovata))
         return HTMLResponse(html, headers=SOLO_PER_TE)
 
     @router.post("/api/chat")

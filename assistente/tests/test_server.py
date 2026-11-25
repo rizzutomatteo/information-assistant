@@ -9,6 +9,7 @@ from cryptography.hazmat.primitives.asymmetric import rsa
 
 from assistente.accesso.google import TOKEN_GOOGLE, AccessoGoogle
 from assistente.accesso.sessioni import COOKIE
+from assistente.accesso.utenti import Anagrafe
 from assistente.config import Impostazioni
 from assistente.rag.client import ClientAssistente, leggi_sse
 from assistente.rag.finta import TESTI as TESTI_API
@@ -64,8 +65,11 @@ def _accesso(token: str | None = None) -> dict:
     return {"codice": token or _token()}
 
 
-def _server(client: ClientAssistente | None = None, google: bool = True) -> httpx.AsyncClient:
-    """Il server della voce (senza modelli) davanti alla finta API, tutto in memoria.
+def _server(
+    client: ClientAssistente | None = None, google: bool = True, anagrafe: Anagrafe | None = None
+) -> httpx.AsyncClient:
+    """Il server della voce (senza modelli) davanti alla finta API. anagrafe: per i test in cui
+    si entra davvero; senza, il database non si apre.
 
     In HTTPS perché il cookie dell'accesso è «Secure»: su HTTP il client non lo rimanda.
     """
@@ -76,7 +80,9 @@ def _server(client: ClientAssistente | None = None, google: bool = True) -> http
     if google:
         http = httpx.AsyncClient(transport=httpx.MockTransport(_google_finto))
         accesso = AccessoGoogle(CLIENT_ID, CLIENT_SECRET, chiavi=ChiaviFinte(), http=http)
-    app = crea_app(Impostazioni(), precarica=False, client=client, google=accesso)
+    app = crea_app(
+        Impostazioni(), precarica=False, client=client, google=accesso, anagrafe=anagrafe
+    )
     return httpx.AsyncClient(transport=httpx.ASGITransport(app=app), base_url="https://voce")
 
 
@@ -208,8 +214,8 @@ async def test_accesso_senza_google_configurato():
         assert (await server.post("/api/accesso", json=_accesso())).status_code == 503
 
 
-async def test_accesso_dati_polizze_e_uscita():
-    async with _server() as server:
+async def test_accesso_dati_polizze_e_uscita(anagrafe):
+    async with _server(anagrafe=anagrafe) as server:
         risposta = await server.post("/api/accesso", json=_accesso())
         assert risposta.status_code == 200
         intestazione = risposta.headers["set-cookie"].lower()
@@ -228,8 +234,8 @@ async def test_accesso_dati_polizze_e_uscita():
         assert not await _dentro(server)
 
 
-async def test_la_chat_passa_l_accesso_all_api():
-    async with _server() as server:
+async def test_la_chat_passa_l_accesso_all_api(anagrafe):
+    async with _server(anagrafe=anagrafe) as server:
         ospite = await _chat(server, "Voglio fare l'accesso")
         assert ospite[-1].dati["testo"] == TESTI_API["it"]["serve_accesso"]["chat"]
         assert ospite[-1].dati["accesso"] is True

@@ -27,12 +27,8 @@ from assistente.voce.servizi import carica_modelli; carica_modelli(Impostazioni.
 COPY documenti ./documenti
 ENV ASSISTENTE_DOCUMENTI=/app/documenti
 
-# Utenti e polizze in /dati: con un volume di Docker la cartella ne prende proprietario e permessi,
-# quindi l'archivio si crea da solo su qualsiasi macchina
-ENV ASSISTENTE_UTENTI=/dati/utenti.sqlite
-
 # Mai come root
-RUN useradd --system --home /app assistente && mkdir /dati && chown -R assistente /modelli /dati
+RUN useradd --system --home /app assistente && chown -R assistente /modelli
 USER assistente
 
 EXPOSE 8002

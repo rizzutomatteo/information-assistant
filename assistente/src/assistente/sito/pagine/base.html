@@ -1,7 +1,7 @@
 <!doctype html>
 {# Ciò che hanno tutte le pagine del sito (pagina.py): testata, icone, piede. t: i testi nella
-   lingua scelta (testi.py); radice: la strada dalla pagina alla radice del sito («./», o «../../»
-   per un documento), perché gli indirizzi sono relativi #}
+   lingua scelta (testi.py); radice: la strada dalla pagina alla radice del sito («./», «../» per
+   una domanda frequente, «../../» per un documento), perché gli indirizzi sono relativi #}
 <html lang="{{ lingua }}">
 <head>
 <meta charset="utf-8">
@@ -43,8 +43,11 @@
   <symbol id="i-freccia" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
   <symbol id="i-utente" viewBox="0 0 24 24"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></symbol>
   <symbol id="i-documento" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></symbol>
+  <symbol id="i-domanda" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></symbol>
+  <symbol id="i-avviso" viewBox="0 0 24 24"><path d="m21.7 18-8-14a2 2 0 0 0-3.4 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.7-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol>
   <symbol id="i-piu" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="M12 5v14"/></symbol>
   <symbol id="i-cestino" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></symbol>
+  <symbol id="i-matita" viewBox="0 0 24 24"><path d="M21.2 6.8a2.8 2.8 0 0 0-4-4L3.8 16.2a2 2 0 0 0-.5.8L2 22l5-1.3a2 2 0 0 0 .8-.5Z"/><path d="m15 5 4 4"/></symbol>
   <symbol id="i-esci" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></symbol>
   <!-- Le bandiere delle lingue, a tutta altezza: il cerchio le ritaglia al centro -->
   <symbol id="bandiera-it" viewBox="0 0 3 2" preserveAspectRatio="xMidYMid slice">
@@ -72,6 +75,7 @@
       <ul>
         <li><a href="{{ radice }}#prodotti">{{ t.menu_prodotti }}</a></li>
         <li><a href="{{ radice }}documenti">{{ t.documenti }}</a></li>
+        <li><a href="{{ radice }}faq">{{ t.faq }}</a></li>
         <li><a href="{{ radice }}#assistente-info">{{ t.menu_assistente }}</a></li>
         <li><a href="{{ radice }}#sinistri">{{ t.menu_sinistri }}</a></li>
         <li><a href="{{ radice }}#contatti">{{ t.menu_contatti }}</a></li>

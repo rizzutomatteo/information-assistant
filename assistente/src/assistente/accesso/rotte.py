@@ -55,8 +55,8 @@ def router_accesso(sessioni: Sessioni, google: AccessoGoogle | None) -> APIRoute
         metti_cookie(risposta, COOKIE, sessioni.apri(utente))
         return utente.profilo()
 
-    def chi_e_entrato(richiesta: Request) -> Utente:
-        utente = sessioni.utente(sessioni.token(richiesta))
+    async def chi_e_entrato(richiesta: Request) -> Utente:
+        utente = await sessioni.utente(sessioni.token(richiesta))
         if utente is None:
             raise HTTPException(401, "Serve l'accesso.")
         return utente
@@ -67,7 +67,7 @@ def router_accesso(sessioni: Sessioni, google: AccessoGoogle | None) -> APIRoute
             raise HTTPException(429, "Troppe registrazioni: riprova più tardi.")
         impronta = await run_in_threadpool(impronta_password, corpo.password)
         try:
-            utente = anagrafe.registra(corpo, impronta)
+            utente = await anagrafe.registra(corpo, impronta)
         except Conflitto as e:
             # Il campo già usato, perché la pagina dica quale
             raise HTTPException(409, {"campo": e.campo, "messaggio": str(e)}) from None
@@ -79,11 +79,11 @@ def router_accesso(sessioni: Sessioni, google: AccessoGoogle | None) -> APIRoute
         chi = corpo.utente.strip().lower()
         if sbagliate.superato(chi):
             raise HTTPException(429, "Troppi tentativi: riprova tra qualche minuto.")
-        trovato = anagrafe.impronta(chi)
+        trovato = await anagrafe.impronta(chi)
         giusta = await run_in_threadpool(
             password_giusta, corpo.password, trovato[1] if trovato else None
         )
-        utente = anagrafe.utente(trovato[0]) if trovato and giusta else None
+        utente = await anagrafe.utente(trovato[0]) if trovato and giusta else None
         if utente is None:
             sbagliate.conta(chi)
             raise HTTPException(401, "Utente o password sbagliati.")
@@ -97,7 +97,7 @@ def router_accesso(sessioni: Sessioni, google: AccessoGoogle | None) -> APIRoute
         identita = await google.identita_dal_codice(corpo.codice)
         if identita is None:
             raise HTTPException(401, "Accesso con Google non riuscito: riprova.")
-        return entrato(anagrafe.da_google(*identita), risposta)
+        return entrato(await anagrafe.da_google(*identita), risposta)
 
     @router.post("/uscita", status_code=204)
     async def esci(richiesta: Request, risposta: Response):
@@ -106,13 +106,13 @@ def router_accesso(sessioni: Sessioni, google: AccessoGoogle | None) -> APIRoute
 
     @router.post("/polizze", status_code=201)
     async def aggiungi_polizza(corpo: PolizzaDati, richiesta: Request):
-        utente = chi_e_entrato(richiesta)
-        return {"id": anagrafe.aggiungi_polizza(utente.id, corpo.polizza())}
+        utente = await chi_e_entrato(richiesta)
+        return {"id": await anagrafe.aggiungi_polizza(utente.id, corpo.polizza())}
 
     @router.delete("/polizze/{id_polizza}", status_code=204)
     async def togli_polizza(id_polizza: int, richiesta: Request):
-        utente = chi_e_entrato(richiesta)
-        if not anagrafe.togli_polizza(utente.id, id_polizza):
+        utente = await chi_e_entrato(richiesta)
+        if not await anagrafe.togli_polizza(utente.id, id_polizza):
             raise HTTPException(404, "Polizza non trovata.")
 
     return router

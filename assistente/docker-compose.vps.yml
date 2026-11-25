@@ -4,7 +4,8 @@
 # - «privata», solo dalla tailnet: un proxy davanti fa HTTPS e controlla chi entra, poi passa a
 #   127.0.0.1:8002;
 # - «pubblica», da internet, attraverso il tunnel di Cloudflare («tunnel»).
-# Intorno: la finta API dell'assistente («finta-api») e il centralino delle telefonate.
+# Intorno: il database degli utenti («database»), la finta API dell'assistente («finta-api») e il
+# centralino delle telefonate.
 # Gli indirizzi della VPS e i segreti stanno nel file .env (vedi .env.example, «VPS»); lì
 # COMPOSE_FILE=docker-compose.vps.yml fa usare questo file anche senza -f:
 #
@@ -25,9 +26,10 @@ x-sito: &sito
   restart: unless-stopped
   read_only: true
   tmpfs: ["/tmp"]
-  # Utenti e polizze: lo stesso file SQLite per le due copie, che così restano allineate
-  volumes:
-    - ./dati:/dati
+  # Utenti e polizze: lo stesso database per le due copie, che così restano allineate
+  depends_on:
+    database:
+      condition: service_healthy
   cap_drop: [ALL]
   security_opt: ["no-new-privileges:true"]
 
@@ -44,7 +46,7 @@ x-ambiente: &ambiente
   VOCE_GROQ_CHIAVE: ${GROQ_API_KEY:-}
   # I modelli sono nell'immagine (in sola lettura): niente controlli né download
   HF_HUB_OFFLINE: "1"
-  ASSISTENTE_UTENTI: /dati/utenti.sqlite
+  ASSISTENTE_DATABASE: postgresql://assistente:${DATABASE_PASSWORD:?serve DATABASE_PASSWORD nel file .env}@127.0.0.1:5432/assistente
   # La password della pagina /a, per caricare gli utenti di prova: nel file .env
   ASSISTENTE_AMMINISTRAZIONE_PASSWORD: ${AMMINISTRAZIONE_PASSWORD:-}
 
@@ -67,7 +69,6 @@ services:
       VOCE_AZURE_AREA: ${AZURE_SPEECH_REGION:-}
       VOCE_REGISTRAZIONI: /registrazioni
     volumes:
-      - ./dati:/dati
       - ./voce/registrazioni:/registrazioni
 
   # La copia per internet. Ci arriva solo il tunnel di Cloudflare; l'audio passa dal TURN di
@@ -124,6 +125,32 @@ services:
     cap_drop: [ALL]
     security_opt: ["no-new-privileges:true"]
 
+  # Utenti e polizze (accesso/utenti.py), per le due copie del sito. Ascolta solo su 127.0.0.1; i
+  # dati stanno nel volume «database» e restano quando il container si rifà
+  database:
+    image: postgres:18.7-alpine
+    command: ["postgres", "-c", "listen_addresses=127.0.0.1"]
+    network_mode: host
+    environment:
+      POSTGRES_USER: assistente
+      POSTGRES_DB: assistente
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:?serve DATABASE_PASSWORD nel file .env}
+    volumes:
+      - database:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD", "pg_isready", "-h", "127.0.0.1", "-U", "assistente", "-d", "assistente"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+    # L'utente postgres dell'immagine: gli basta il volume, senza privilegi da root
+    user: "70:70"
+    mem_limit: 300m
+    restart: unless-stopped
+    read_only: true
+    tmpfs: ["/tmp", "/var/run/postgresql:uid=70,gid=70"]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+
   # Fa le veci dell'API dell'assistente finché quella vera non esiste (vedi README)
   finta-api:
     image: assistente:1
@@ -138,3 +165,6 @@ services:
     tmpfs: ["/tmp"]
     cap_drop: [ALL]
     security_opt: ["no-new-privileges:true"]
+
+volumes:
+  database:
