@@ -81,7 +81,7 @@ def test_senza_file(tmp_path):
 
 def test_il_file_vero():
     raccolta = RaccoltaFaq(CARTELLA_PROGETTO / "documenti")
-    assert len(raccolta) == 171
+    assert len(raccolta) == 170
     # Ogni categoria del file ha la sua icona: nessuna è finita in fondo come «nuova»
     icone = [c.icona for c, _ in raccolta.per_categoria() if c.nome]
     assert "domanda" not in icone

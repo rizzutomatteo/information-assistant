@@ -38,30 +38,6 @@ Cordiali saluti.
 
 **Velaria S.p.A.**
 
-<!-- pagina 3 -->
-
-# Indice
-
-## A. Elenco delle Garanzie
-
-## B. Definizioni
-
-Definizioni ... Pag. 1 di 16
-
-## C. Condizioni di Assicurazione
-
-Norme Comuni ... Pag. 2 di 16
-
-**SEZIONE 1** Rimborso spese mediche di ricovero a seguito di Infortunio o Malattia Improvvisa ... Pag. 8 di 16
-
-**SEZIONE 2** Assistenza in viaggio alla persona ... Pag. 9 di 16
-
-**SEZIONE 3** Responsabilità Civile ... Pag. 10 di 16
-
-**SEZIONE 4** Assistenza Legale ... Pag. 11 di 16
-
-**SEZIONE 5** Procedura per il risarcimento dei danni ... Pag. 14 di 16
-
 <!-- pagina 4 -->
 
 # A. Elenco delle Garanzie
@@ -125,57 +101,6 @@ Ti tutela per danni (materiali o fisici) causati ad altre persone durante il via
 Sezione 3
 
 Verifica in preventivo e in contratto
-
-<!-- pagina 5 -->
-
-## B. Definizioni
-
-- > **"Assicurato"**: la persona destinataria delle prestazioni assicurative espressamente riportata in contratto;
-- > **"Contraente"**: la persona che stipula il contratto di assicurazione;
-- > **"Fenice"**: Fenice Tutela Legale SPA - la Compagnia assicurativa specializzata cui Velaria ha affidato, secondo la normativa vigente, la gestione e liquidazione dei sinistri di tutela legale;
-- > **"Domicilio"**: il luogo in cui la persona fisica ha stabilito la sede principale dei suoi affari e interessi;
-- > **"Orsa Assistance Italia S.p.A."**: la compagnia che, attraverso la sua struttura organizzativa, gestisce i sinistri per la garanzia Assistenza in viaggio alla persona;
-- > **"Familiare"**: coniuge, figlio/a, fratello, sorella, genitore, suocero/a, genero, nuora;
-- > **"Franchigia"**: la somma, stabilita nel contratto, che rimane a carico dell'assicurato per ogni sinistro;
-- > **"Velaria"**: Velaria S.p.A., con sede legale in Italia;
-- > **"Indennizzo o risarcimento"**: la somma dovuta da Velaria se avviene un sinistro liquidabile a termini di polizza;
-- > **"Infortunio"**: ogni evento dovuto a causa fortuita, violenta ed esterna che produce lesioni corporali oggettivamente constatabili che causano morte, invalidità permanente o inabilità temporanea. Vengono considerati infortunio anche:
-  - • le conseguenze dei colpi di sole, di calore, di freddo e le folgorazioni;
-  - • l'assideramento e il congelamento;
-  - • le conseguenze di ingestione o assorbimento di sostanze dovuti a causa fortuita;
-  - • l'asfissia per fuga di gas o vapori;
-  - • l'annegamento;
-  - • le lesioni sofferte per legittima difesa, per dovere di solidarietà umana e in occasione di aggressioni e di atti violenti subiti, se l'assicurato non vi prende parte attiva;
-  - • le lesioni sofferte in conseguenza di imprudenze e negligenze gravi.
-- > **"Istituto di cura"**: l'ospedale pubblico, la clinica o la casa di cura (convenzionata o privata), in Italia o all'estero, regolarmente autorizzati all'assistenza ospedaliera. Sono esclusi gli stabilimenti termali, le case di convalescenza e soggiorno, le cliniche dietologiche o estetiche;
-- > **"Malattia"**: ogni alterazione dello stato di salute che non dipende da infortunio;
-- > **"Malattia cronica"**: malattia preesistente alla stipula del contratto e che ha comportato, negli ultimi 12 mesi, indagini diagnostiche, ricoveri ospedalieri o trattamenti/terapie;
-- > **"Malattia improvvisa"**: malattia che compare in forma acuta e che non è una manifestazione, anche se improvvisa, di una patologia preesistente o in atto all'inizio del viaggio;
-- > **"Malattia preesistente"**: malattia che è l'espressione o la conseguenza diretta di situazioni patologiche croniche o preesistenti alla decorrenza dell'assicurazione.
-- > **"Massimale"**: la somma fino a concorrenza della quale Velaria presta l'assicurazione;
-- > **"Polizza"**: il documento che prova la stipula del contratto di assicurazione;
-- > **"Premio"**: la somma dovuta dal contraente a Velaria a fronte delle garanzie prestate, comprensiva delle imposte e degli eventuali oneri di legge;
-- > **"Ricovero"**: la permanenza in un istituto di cura che prevede almeno un pernottamento;
-- > **"Rischio"**: la probabilità che si verifichi il sinistro;
-- > **"Sinistro"**: l'evento dannoso per il quale è prestata l'assicurazione per la garanzia "Assistenza Legale", il fatto o la violazione di norme che dà origine alla vertenza;
-- > **"Spese borsuali"**: le spese sostenute dal legale necessarie o funzionali a svolgere la sua attività;
-- > **"Terzi"**: se non altrimenti specificato, si intende qualunque soggetto, eccetto:
-  - a) contraente e assicurato;
-  - b) ogni persona che risulta dal Certificato di Stato di Famiglia dei soggetti indicati nel punto a);
-  - c) coniuge, genitori, figli, suoceri, generi e nuore dei soggetti indicati nel punto a), anche se non risultano dal rispettivo Certificato di Stato di Famiglia;
-  - d) persone che sono in rapporto di dipendenza con i soggetti indicati nel punto a);
-  - e) ogni società di cui il legale rappresentante, il socio a responsabilità illimitata o l'amministratore sia uno dei soggetti indicati nei punti a), b) o c);
-  - f) il legale rappresentante, il socio a responsabilità illimitata, l'amministratore e le persone che si trovano con loro nei rapporti di cui alle lettere b) e c), se il contraente o l'assicurato non è una persona fisica.
-- > **"Viaggio"**: in caso di viaggio in aereo, treno, pullman o nave, sono compresi:
-  - • il tragitto dalla stazione di partenza (aeroporto, porto o stazione autoferrotranviaria);
-  - • le tappe intermedie;
-  - • la destinazione finale;
-  - fino alla stazione di ritorno in Italia.
-  - In caso di viaggio in auto o altro mezzo diverso dalla nave, dall'aereo o dal pullman sono compresi:
-    - • il tragitto dal luogo di residenza o domicilio dell'assicurato;
-    - • le tappe intermedie;
-    - • la destinazione finale;
-  - fino al rientro al luogo di residenza o domicilio dell'assicurato, purché la destinazione finale si trovi a oltre 100 km dal luogo di residenza o domicilio dell'assicurato.
 
 <!-- pagina 6 -->
 
@@ -998,12 +923,6 @@ Velaria si impegna a procedere alla liquidazione, oppure a comunicare i motivi p
 9 Art. 1917 comma 3, "Assicurazione della Responsabilità Civile" del Codice Civile
 
 10 Art. 1915 "Inadempimento dell'obbligo di avviso o di salvataggio"
-
-<!-- pagina 21 -->
-
-<!-- pagina 22 -->
-
-<!-- pagina 23 -->
 
 <!-- pagina 24 -->
 

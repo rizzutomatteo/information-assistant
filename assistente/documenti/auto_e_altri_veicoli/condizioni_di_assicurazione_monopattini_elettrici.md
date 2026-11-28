@@ -46,62 +46,6 @@ Cordiali saluti.
 
 **Velaria S.p.A.**
 
-<!-- pagina 3 -->
-
-# Indice
-
-|  A. Presentazione del prodotto | 3  |
-| --- | --- |
-|  B. Definizioni | 5  |
-|  C. Condizioni di Assicurazione Monopattini elettrici | 7  |
-|  NORME COMUNI A TUTTE LE GARANZIE | 7  |
-|  > QUANDO E COME DEVO PAGARE? | 7  |
-|  Art. 1 - Come stipulare il contratto e pagare il Premio | 7  |
-|  > QUANDO COMINCIA LA COPERTURA E QUANDO FINISCE? | 7  |
-|  Art. 2 - Decorrenza | 7  |
-|  Art. 3 - Durata dell'assicurazione | 7  |
-|  Art. 4 - Proposta del rinnovo | 8  |
-|  Art. 5 - Diritto del Contraente al ripensamento | 8  |
-|  > DOVE VALE LA COPERTURA? | 8  |
-|  Art. 6 - Estensione territoriale | 8  |
-|  > CON QUALI CONDIZIONI OPERATIVE MI ASSICURO? | 8  |
-|  Art. 7 - Dichiarazioni del Contraente/Assicurato - Variazioni del Rischio | 8  |
-|  Art. 8 - Gestione del contratto | 9  |
-|  Art. 9 - Tutela del Contraente in caso di Furto del Veicolo | 11  |
-|  Art. 10 - Altre assicurazioni | 11  |
-|  Art. 11 - Legge applicabile, oneri fiscali, foro competente | 11  |
-|  Art. 12 - Rinvio alle norme di legge | 11  |
-|  Art. 13 - Area Riservata | 11  |
-|  Art. 14 - Clausola di inoperatività della copertura per sanzioni internazionali | 12  |
-|  Art. 15 - Denuncia di Sinistro | 12  |
-|  Art. 16 - Pagamenti da parte di Velaria | 12  |
-|  > COME POSSO PRESENTARE I RECLAMI E RISOLVERE LE CONTROVERSIE? | 12  |
-|  Art. 17 - Modalità di reclamo | 12  |
-|  Art. 18 - Sistemi alternativi di risoluzione delle controversie | 13  |
-|  > INFORMATIVA SUL TRATTAMENTO DEI DATI PERSONALI | 13  |
-|  Art. 19 - Informativa sul trattamento dei dati personali ai sensi degli articoli 13 e 14 del Regolamento UE n. 679/2016 del 27 aprile 2016 | 13  |
-|  SEZIONE 1 > RESPONSABILITÀ CIVILE | 16  |
-|  > CHE COSA È ASSICURATO? | 16  |
-|  Art. 1.1 - Oggetto dell'assicurazione | 16  |
-|  Art. 1.2 - Tipo di guida | 16  |
-|  > CHE COSA NON È ASSICURATO? | 16  |
-|  Art. 1.3 - Rischi esclusi | 16  |
-|  > CI SONO LIMITI DI COPERTURA? | 17  |
-|  Art. 1.4 - Esclusioni previste dal contratto | 17  |
-
-<!-- pagina 4 -->
-
-> CON QUALI CONDIZIONI OPERATIVE È PRESTATA LA GARANZIA R.C.A.? 18
-Art. 1.5 - Forma tariffaria Bonus Malus 18
-SEZIONE 2 > PROCEDURA PER IL RISARCIMENTO DEI DANNI R.C.A. 18
-> COSA FARE IN CASO DI SINISTRO? 18
-Art. 2.1 - Obbligo del Contraente o dell'Assicurato in caso di Incidente 18
-Art. 2.2 - Fondo di Garanzia Vittime della Strada 19
-Art. 2.3 - Sinistri provocati da veicoli stranieri 19
-Art. 2.4 Gestione della vertenza di danno e spese legali 20
-ALLEGATO 1 20
-Contatti Utili VI
-
 <!-- pagina 5 -->
 
 # A. Presentazione del prodotto
@@ -202,54 +146,6 @@ Il Contraente può registrarsi e accedere in modo gratuito all'Area Riservata pr
 #### Diritto del Contraente al ripensamento
 
 Il Contraente può recedere entro 14 giorni dalla data in cui ha ricevuto i documenti assicurativi.
-
-<!-- pagina 7 -->
-
-## B. Definizioni
-
-Alcune parole nelle Condizioni di Assicurazione sono riportate in *Corsivo e con Iniziale Maiuscola*. In tal caso, il loro significato è quello indicato qui sotto. Le definizioni sono parte integrante delle Condizioni di Assicurazione.
-
-- > **"Aggravamento del Rischio"**: si parla di *Aggravamento del Rischio* quando le caratteristiche iniziali del *Rischio* cambiano e fanno aumentare la probabilità di danno su cui si basa il calcolo del *Premio*.
-- > **"Aree aeroportuali"**: le aree di rullaggio (spostamento e movimento di un aeromobile a terra, cioè con le ruote a contatto con il terreno) e le altre aree interne a un aeroporto, così come determinate dalla normativa di settore.
-- > **"Assicurato"**: il soggetto il cui interesse è tutelato dall'assicurazione.
-- > **"Avente diritto"**: soggetto diverso dal *Contraente* a cui deve essere messa a disposizione l'attestazione dello stato del rischio, ovvero: *Proprietario*, usufruttuario, acquirente con patto di riservato dominio o locatario in caso di locazione finanziaria.
-- > **"Banca dati"**: la banca dati elettronica che le imprese hanno l'obbligo di alimentare con le informazioni e i dati necessari ad attestare lo stato del rischio.
-- > **"Carta di pagamento"**: carta di credito, carta di debito oppure carta prepagata.
-- > **"Certificato internazionale di assicurazione - ex Carta Verde"**: il documento che attesta che il *Veicolo* è assicurato per la responsabilità civile (R.C.A.) obbligatoria anche all'estero.
-- > **"Classe di merito Velaria"**: la classe di merito assegnata al contratto in base alle condizioni generali di assicurazione previste da *Velaria*.
-- > **"Classe universale (CU)"**: la classe di merito assegnata al contratto in base alle regole previste dal Regolamento Ivass 58/2026 e successive modifiche e integrazioni. La classe CU risulta dall'attestazione dello stato del rischio messa a disposizione da *Velaria* in occasione di ogni scadenza annuale.
-- > **"Codice della Strada"**: il Decreto Legislativo n. 285/1992 e sue successive modifiche e integrazioni.
-- > **"Codice delle Assicurazioni Private"**: il Decreto Legislativo n. 209/2005 e sue successive modifiche e integrazioni.
-- > **"Conducente"**: il *Proprietario* del *Veicolo* e le persone da lui autorizzate a guidarlo.
-- > **"CONSAP"**: Concessionaria Servizi Assicurativi Pubblici S.p.A. con sede in Roma, Via Yser, 14 - 00198, www.consap.it.
-- > **"Contraente"**: la persona fisica, Impresa o altri Enti che stipula il contratto di assicurazione.
-- > **"Decorrenza"**: la data a partire dalla quale inizia l'assicurazione.
-- > **"Franchigia"**: la somma indicata in *Polizza*, che rimane a carico dell'*Assicurato* per ogni *Sinistro*.
-- > **"Velaria"**: Velaria S.p.A., con sede legale in Italia.
-- > **"Incidente"**: il *Sinistro*, che coinvolge il *Veicolo*, non voluto, dovuto a imperizia, negligenza, inosservanza di norme e regolamenti, connesso alla circolazione stradale.
-- > **"Infortunio"**: ogni evento dovuto a causa fortuita, violenta ed esterna, derivante dall'utilizzo del *Veicolo* che produce lesioni corporali constatabili in modo obiettivo.
-- > **"IVASS"**: Istituto per la Vigilanza sulle Assicurazioni. È un ente indipendente di diritto pubblico che controlla la regolarità di quanto avviene nel mercato assicurativo.
-- > **"Massimale"**: la cifra massima indicata in *Polizza* che *Velaria* si impegna di pagare in caso di *Sinistro*.
-- > **"Modulo Blu"**: modulo di constatazione amichevole (Modello CAI) da compilare in caso di *Incidente* da Responsabilità Civile Auto (R.C.A.). Nel modulo vanno indicati i dati dei veicoli e delle persone coinvolte nel *Sinistro*, con le relative dinamiche.
-- > **"Monopattino Elettrico"**: monopattino a propulsione prevalentemente elettrica munito del contrassegno identificativo.
-- > **"PEC"**: PEC sta per Posta Elettronica Certificata, un servizio di posta elettronica che garantisce la prova dell'invio e della consegna. La PEC permette di dare a un messaggio lo stesso valore legale di una raccomandata con avviso di ricevimento.
-- > **"Polizza"**: il documento che prova la stipula del contratto di assicurazione
-- > **"Premio"**: la somma dovuta dal *Contraente* a *Velaria* a fronte delle garanzie prestate, comprensivo di imposte e eventuali oneri di legge.
-- > **"Proprietario"**: intestatario del contrassegno identificativo del *Monopattino elettrico*.
-- > **"Responsabilità paritaria"**: si ha quando la responsabilità del *Sinistro* è da attribuire in pari misura a carico dei conducenti dei veicoli coinvolti.
-
-<!-- pagina 8 -->
-
-- > **"Responsabilità principale"**: si ha quando la responsabilità del *Sinistro* è da attribuire in misura prevalente ad uno dei conducenti dei veicoli coinvolti.
-- > **"Risarcimento"**: la somma dovuta da *Velaria* o da *Struttura Organizzativa* se avviene un *Sinistro* liquidabile a termini di contratto.
-- > **"Risarcimento diretto"**: la procedura, prevista dall'Art. 149 del *Codice delle Assicurazioni Private* per le assicurazioni del ramo R.C.A., con la quale la richiesta di risarcimento è rivolta alla propria compagnia e non alla compagnia del responsabile del sinistro, attivabile quando l'incidente ha visto coinvolti solo due veicoli entrati in collisione tra loro, entrambi identificati, assicurati e immatricolati in Italia, Città del Vaticano o San Marino.
-- > **"Rischio"**: la probabilità che si verifichi il *Sinistro*.
-- > **"Risoluzione"**: lo scioglimento anticipato di un contratto per volontà delle parti o per legge.
-- > **"Rivalsa"**: il diritto di *Velaria* a recuperare dal *Contraente* e dall'*Assicurato* l'importo pagato ai terzi danneggiati nei casi in cui avrebbe avuto diritto di rifiutare o di ridurre la propria prestazione.
-- > **"Set Informativo"**: l'insieme formato dai seguenti documenti: DIP (Documento Informativo Precontrattuale), DIP Aggiuntivo (Documento Informativo Precontrattuale Aggiuntivo) e Condizioni di Assicurazione, comprensive delle definizioni e dell'informativa sulla privacy.
-- > **"Sinistro"**: l'evento dannoso per il quale *Velaria* presta l'assicurazione.
-- > **"Targa"**: il contrassegno identificativo dei *Monopattini elettrici* con le caratteristiche sono definite dal decreto del Capo del Dipartimento per i trasporti e la navigazione 27 giugno 2025, n. 210
-- > **"Veicolo"**: il veicolo assicurato, indicato in *Polizza*, identificato con la *Targa*.
 
 <!-- pagina 9 -->
 
@@ -1002,8 +898,6 @@ Tutti i dati inviati tramite il sito web Velaria sono trasmessi su protocollo ht
 |  |
 |  |
 |  |
-
-<!-- pagina 26 -->
 
 <!-- pagina 27 -->
 

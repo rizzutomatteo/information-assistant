@@ -1,0 +1,63 @@
+{
+  "documento": "vita_e_risparmio/condizioni_di_assicurazione.md",
+  "sezione": "Definizioni",
+  "pagine": {
+    "da": 5,
+    "a": 5
+  },
+  "introduzione": "I termini di seguito indicati hanno il significato qui precisato e sono sempre riportati nel testo delle Condizioni in corsivo e con lettera iniziale maiuscola.",
+  "voci": [
+    {
+      "termine": "Appendice",
+      "definizione": "Documento che forma parte integrante del contratto e che viene emesso insieme alla Polizza o in seguito."
+    },
+    {
+      "termine": "Assicurato",
+      "definizione": "Persona fisica sulla cui vita è stipulata l'assicurazione: i suoi dati anagrafici e gli eventi che si verificano durante la sua vita determinano il calcolo delle prestazioni previste dal contratto di assicurazione."
+    },
+    {
+      "termine": "Beneficiario",
+      "definizione": "Persona fisica o giuridica a cui sono pagate le prestazioni previste dal contratto di assicurazione."
+    },
+    {
+      "termine": "Contraente",
+      "definizione": "Persona fisica o giuridica che stipula il contratto di assicurazione e si impegna a versare i relativi Premi."
+    },
+    {
+      "termine": "Costi",
+      "definizione": "Oneri a carico del Contraente che gravano sui Premi versati."
+    },
+    {
+      "termine": "Data di decorrenza",
+      "definizione": "Data indicata in Polizza come data di inizio per il calcolo delle prestazioni previste dal contratto di assicurazione."
+    },
+    {
+      "termine": "Diritto di recesso",
+      "definizione": "Diritto del Contraente di far cessare gli effetti del contratto."
+    },
+    {
+      "termine": "Donatore di sangue",
+      "definizione": "Si intende chi ha effettuato almeno una donazione di sangue intero, plasma o piastrine nei 6 mesi precedenti la data della Proposta di assicurazione. L'avvenuta donazione deve essere certificata dalla struttura sanitaria o associazione riconosciuta."
+    },
+    {
+      "termine": "Fumatore",
+      "definizione": "Si intende chi ha fumato sigarette, sigari, pipa o sigarette elettroniche, anche sporadicamente, nel corso dei 24 mesi precedenti la data di sottoscrizione del Questionario Sanitario e chi ha smesso di fumare su consiglio medico a fronte di una patologia preesistente."
+    },
+    {
+      "termine": "IMC o BMI",
+      "definizione": "Indice di Massa Corporea, in inglese Body Mass Index, è il valore che si ottiene dividendo il peso corporeo (in chilogrammi) per la statura (in metri) elevata al quadrato. Tanto più l'indice è alto, tanto più la persona tende al sovrappeso con aumento dei rischi per la salute."
+    },
+    {
+      "termine": "IVASS",
+      "definizione": "Istituto per la Vigilanza sulle Assicurazioni."
+    },
+    {
+      "termine": "Network Strutture Mediche Convenzionate o Network",
+      "definizione": "L'insieme delle strutture sanitarie convenzionate (istituti di cura, ambulatori medici) a cui il Contraente può rivolgersi per il servizio VitaClinic."
+    },
+    {
+      "termine": "Polizza",
+      "definizione": "Documento che prova il contratto di assicurazione."
+    }
+  ]
+}

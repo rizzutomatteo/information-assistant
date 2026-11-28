@@ -15,58 +15,6 @@ PER CONTRATTI CHIARI E COMPRENSIBILI 2024".
 Ultimo aggiornamento
 1/10/2026
 
-<!-- pagina 2 -->
-
-# Indice
-
-|  Presentazione del prodotto | 3  |
-| --- | --- |
-|  Definizioni | 5  |
-|  Che cosa è assicurato / Quali sono le prestazioni? | 7  |
-|  Art. 1 - Oggetto del contratto | 7  |
-|  Assicurazione principale | 7  |
-|  Art. 2 - Prestazione | 7  |
-|  Coperture complementari (facoltative) | 7  |
-|  Art. 3 - Coperture complementari e norme comuni | 7  |
-|  Art. 4 - Extra Capitale per Decesso da Infortunio / Extra Capitale per Decesso da Incidente stradale | 7  |
-|  Art. 5 - Invalidità Totale Permanente | 8  |
-|  Art. 6 - Malattie Gravi | 11  |
-|  Art. 7 - Infortunio e Invalidità | 13  |
-|  Opzioni contrattuali | 16  |
-|  Art. 8 - Instant Benefit | 16  |
-|  Art. 9 - Care Program | 16  |
-|  Che cosa non è assicurato? | 18  |
-|  Art. 10 - Persone non assicurabili | 18  |
-|  Ci sono limiti di copertura? | 18  |
-|  Art. 11 - Esclusioni e limitazioni | 18  |
-|  Che obblighi ho? Quali obblighi ha l'impresa? | 22  |
-|  Art. 12 - Dichiarazioni del Contraente e dell'Assicurato | 22  |
-|  Art. 13 - Richieste di pagamento a Velaria | 23  |
-|  Quando e come devo pagare? | 24  |
-|  Art. 14 - Piano di versamento dei Premi | 24  |
-|  Art. 15 - Mezzi di versamento del Premio | 25  |
-|  Art. 16 - Interruzione del piano di versamento dei Premi: risoluzione del contratto | 25  |
-|  Art. 17 - Ripresa del piano di versamento dei Premi: riattivazione del contratto | 25  |
-|  Quando comincia la copertura e quando finisce? | 26  |
-|  Art. 18 - Durata | 26  |
-|  Art. 19 - Conclusione ed entrata in vigore dell'assicurazione | 26  |
-|  Come posso recedere dal contratto? | 26  |
-|  Art. 20 - Recesso | 26  |
-|  Quali costi devo sostenere? | 27  |
-|  Art. 21 - Costi | 27  |
-|  Sono previsti riscatti e riduzioni? ☐ Si ☑ No | 27  |
-|  Art. 22 - Riscatto e riduzione | 27  |
-|  Altre disposizioni applicabili al contratto | 27  |
-|  Art. 23 - Beneficiario | 27  |
-|  Art. 24 - Cessione, pegno e vincolo | 28  |
-|  Art. 25 - Non pignorabilità e non sequestrabilità | 28  |
-|  Art. 26 - Foro competente | 28  |
-|  Art. 27 - Clausola di inoperatività della copertura per sanzioni internazionali | 28  |
-|  Art. 28 - Rinvio alle norme di legge | 28  |
-|  Allegato 1 | 29  |
-|  Allegato 2 | 31  |
-|  Allegato 3 | 34  |
-
 <!-- pagina 3 -->
 
 # Presentazione del prodotto
@@ -132,64 +80,6 @@ Recapito telefonico: [TELEFONO]
 Nel testo delle Condizioni, Velaria S.p.A. è indicata come Velaria.
 
 © 2020 en - profesa
-
-<!-- pagina 5 -->
-
-# Definizioni
-
-I termini di seguito indicati hanno il significato qui precisato e sono sempre riportati nel testo delle Condizioni in corsivo e con lettera iniziale maiuscola.
-
-## › Appendice
-
-Documento che forma parte integrante del contratto e che viene emesso insieme alla *Polizza* o in seguito.
-
-## › Assicurato
-
-Persona fisica sulla cui vita è stipulata l'assicurazione: i suoi dati anagrafici e gli eventi che si verificano durante la sua vita determinano il calcolo delle prestazioni previste dal contratto di assicurazione.
-
-## › Beneficiario
-
-Persona fisica o giuridica a cui sono pagate le prestazioni previste dal contratto di assicurazione.
-
-## › Contraente
-
-Persona fisica o giuridica che stipula il contratto di assicurazione e si impegna a versare i relativi *Premi*.
-
-## › Costi
-
-Oneri a carico del *Contraente* che gravano sui *Premi* versati.
-
-## › Data di decorrenza
-
-Data indicata in *Polizza* come data di inizio per il calcolo delle prestazioni previste dal contratto di assicurazione.
-
-## › Diritto di recesso
-
-Diritto del *Contraente* di far cessare gli effetti del contratto.
-
-## › Donatore di sangue
-
-Si intende chi ha effettuato almeno una donazione di sangue intero, plasma o piastrine nei 6 mesi precedenti la data della *Proposta di assicurazione*. L'avvenuta donazione deve essere certificata dalla struttura sanitaria o associazione riconosciuta.
-
-## › Fumatore
-
-Si intende chi ha fumato sigarette, sigari, pipa o sigarette elettroniche, anche sporadicamente, nel corso dei 24 mesi precedenti la data di sottoscrizione del *Questionario Sanitario* e chi ha smesso di fumare su consiglio medico a fronte di una patologia preesistente.
-
-## › IMC o BMI
-
-Indice di Massa Corporea, in inglese Body Mass Index, è il valore che si ottiene dividendo il peso corporeo (in chilogrammi) per la statura (in metri) elevata al quadrato. Tanto più l'indice è alto, tanto più la persona tende al sovrappeso con aumento dei rischi per la salute.
-
-## › IVASS
-
-Istituto per la Vigilanza sulle Assicurazioni.
-
-## › Network Strutture Mediche Convenzionate o Network
-
-L'insieme delle strutture sanitarie convenzionate (istituti di cura, ambulatori medici) a cui il *Contraente* può rivolgersi per il servizio VitaClinic.
-
-## › Polizza
-
-Documento che prova il contratto di assicurazione.
 
 <!-- pagina 6 -->
 

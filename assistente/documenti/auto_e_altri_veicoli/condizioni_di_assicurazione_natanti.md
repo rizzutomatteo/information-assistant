@@ -46,75 +46,6 @@ Cordiali saluti.
 
 **Velaria S.p.A.**
 
-<!-- pagina 3 -->
-
-# Indice
-
-|  A. Presentazione del prodotto | 3  |
-| --- | --- |
-|  B. Definizioni | 5  |
-|  C. Condizioni di Assicurazione Natanti | 6  |
-|  NORME COMUNI A TUTTE LE GARANZIE | 6  |
-|  > QUANDO E COME DEVO PAGARE? | 6  |
-|  Art. 1 - Come stipulare il contratto e pagare il Premio | 6  |
-|  > QUANDO COMINCIA LA COPERTURA E QUANDO FINISCE? | 7  |
-|  Art. 2 - Decorrenza delle garanzie | 7  |
-|  Art. 3 - Durata dell'assicurazione | 7  |
-|  Art. 4 - Proposta del rinnovo | 7  |
-|  Art. 5 - Diritto del Contraente al ripensamento | 7  |
-|  > DOVE VALE LA COPERTURA? | 7  |
-|  Art. 6 - Estensione territoriale | 7  |
-|  > CON QUALI CONDIZIONI OPERATIVE MI ASSICURO? | 8  |
-|  Art. 7 - Dichiarazioni del Contraente/Assicurato - Variazioni del Rischio | 8  |
-|  Art. 8 - Gestione del contratto | 8  |
-|  Art. 9 - Tutela del Contraente in caso di furto del Natante | 9  |
-|  Art. 10 - Altre assicurazioni | 9  |
-|  Art. 11 - Legge applicabile, oneri fiscali, foro competente | 10  |
-|  Art. 12 - Rinvio alle norme di legge | 10  |
-|  Art. 13 - Area Riservata | 10  |
-|  Art. 14 - Clausola di inoperatività della copertura per sanzioni internazionali | 10  |
-|  Art. 15 - Denuncia di Sinistro | 10  |
-|  Art. 16 - Adempimento delle obbligazioni economiche da parte di Velaria | 10  |
-|  > COME POSSO PRESENTARE I RECLAMI E RISOLVERE LE CONTROVERSIE? | 10  |
-|  Art. 17 - Modalità di reclamo | 10  |
-|  Art. 18 - Sistemi alternativi di risoluzione delle controversie | 11  |
-|  > INFORMATIVA SUL TRATTAMENTO DEI DATI PERSONALI | 11  |
-|  Art. 19 - Informativa sul trattamento dei dati personali ai sensi degli articoli 13 e 14 del Regolamento UE n. 679/2016 del 27 aprile 2016 | 11  |
-|  SEZIONE 1 > RESPONSABILITA' CIVILE | 14  |
-|  > CHE COSA È ASSICURATO? | 14  |
-|  Art. 1.1 - Oggetto dell'assicurazione | 14  |
-|  > CHE COSA È ASSICURATO? | 14  |
-|  Art. 1.2 - Rischi esclusi | 14  |
-|  > CI SONO LIMITI DI COPERTURA? | 15  |
-|  Art. 1.3 - Esclusioni previste dal contratto | 15  |
-
-<!-- pagina 4 -->
-
-SEZIONE 2 > ASSISTENZA LEGALE ... 15
-> CHE COSA È ASSICURATO? ... 15
-Art. 2.1 - Oggetto dell'assicurazione ... 15
-Art. 2.2 - Gestione del Sinistro ... 16
-Art. 2.3 - Anticipi sulle spese civili e penali ... 17
-Art. 2.4 - Esiti della vertenza e recupero delle spese in sede civile ... 17
-Art. 2.5 Procedimento penale e liquidazione delle spese ... 17
-> CHE COSA NON È ASSICURATO? ... 18
-Art. 2.6 - Rischi esclusi ... 18
-> CI SONO LIMITI DI COPERTURA? ... 18
-Art. 2.7 - Esclusioni previste dal contratto ... 18
-Art. 2.8 - Arbitrato ... 18
-SEZIONE 3 > PROCEDURA PER I SINISTRI DI ASSISTENZA LEGALE ... 19
-> COSA FARE IN CASO DI SINISTRO? ... 19
-Art. 3.1 - Obbligo del Contraente o dell'Assicurato in caso di Incidente ... 19
-Art. 3.2 - Risarcimento del Trasportato ... 20
-Art. 3.3 - Fondo di Garanzia Vittime della Strada ... 20
-Art. 3.4 - Sinistri provocati da natanti stranieri ... 20
-Art. 3.5 Gestione della vertenza di danno e spese legali ... 20
-SEZIONE 4 > PROCEDURA PER L'INDENNIZZO DEI DANNI DI ASSISTENZA
-LEGALE ... 20
-> COSA FARE IN CASO DI SINISTRO? ... 20
-Art. 4.1 - Modalità per la denuncia del Sinistro ... 20
-CONTATTI UTILI ... 22
-
 <!-- pagina 5 -->
 
 # A. Presentazione del prodotto
@@ -221,40 +152,6 @@ Il Contraente può registrarsi e accedere in modo gratuito all'Area Riservata pr
 # Diritto del Contraente al ripensamento
 
 Il Contraente può recedere entro 14 giorni dalla data in cui ha ricevuto i documenti assicurativi.
-
-<!-- pagina 7 -->
-
-## B. Definizioni
-
-Alcune parole nelle Condizioni di Assicurazione sono riportate in *Corsivo e con Iniziale Maiuscola*. In tal caso, il loro significato è quello indicato qui sotto. Le definizioni sono parte integrante delle Condizioni di Assicurazione.
-
-- > **"Acque interne"**: fiumi, laghi e la porzione di mare interna alla linea di bassa marea della costa.
-- > **"Aggravamento del Rischio"**: si parla di *Aggravamento del Rischio* quando le caratteristiche iniziali del *Rischio* cambiano e fanno aumentare la probabilità di danno su cui si basa il calcolo del *Premio*.
-- > **"Assicurato"**: il soggetto il cui interesse è tutelato dall'assicurazione.
-- > **"Codice delle Assicurazioni Private"**: il Decreto Legislativo n. 209/2005 e sue successive modifiche e integrazioni.
-- > **"Codice della Nautica"**: il Decreto Legislativo 18 luglio 2005, n. 171 e sue successive modifiche e integrazioni.
-- > **"Conducente"**: il proprietario del *Natante* e le persone da lui autorizzate a guidarlo.
-- > **"CONSAP"**: Concessionaria Servizi Assicurativi Pubblici S.p.A. con sede in Roma, Via Yser, 14 – 00198, www.consap.it.
-- > **"Contraente"**: la persona fisica, Impresa o altri Enti che stipula il contratto di assicurazione.
-- > **"Fenice"**: Fenice Tutela Legale SPA - la Compagnia assicurativa specializzata cui *Velaria* ha affidato, secondo la normativa vigente, la gestione e liquidazione dei sinistri di Assistenza Legale.
-- > **"Decorrenza"**: la data a partire dalla quale inizia l'assicurazione.
-- > **"Velaria"**: Velaria S.p.A., con sede legale in Italia.
-- > **"Incidente"**: il *Sinistro*, che coinvolge il *Natante*, non voluto, dovuto a imperizia, negligenza, inosservanza di norme e regolamenti, connesso alla navigazione.
-- > **"Indennizzo"**: la somma dovuta da *Velaria* se avviene un *Sinistro* liquidabile a termini di contratto.
-- > **"Massimale"**: la cifra massima indicata in *Polizza* che *Velaria* si impegna di pagare in caso di *Sinistro*.
-- > **"Natante"**: mezzo assicurato, indicato in *Polizza*. Come natante consideriamo i seguenti mezzi ad uso privato:
-  - • unità da diporto a remi e quelle il cui scafo abbia una lunghezza pari o inferiore a 10 m, a prescindere dalla loro propulsione, come definita dal Codice della Navigazione;
-  - • motore marino amovibile;
-  - • moto d'acqua.
-- > **"Polizza"**: il documento che prova la stipula del contratto di assicurazione.
-- > **"Premio"**: la somma dovuta dal *Contraente* a *Velaria* a fronte delle garanzie prestate, comprensivo di imposte e eventuali oneri di legge.
-- > **"Risarcimento"**: la somma dovuta da *Velaria* se avviene un *Sinistro* liquidabile a termini di contratto.
-- > **"Rischio"**: la probabilità che si verifichi il *Sinistro*.
-- > **"Rivalsa"**: il diritto di *Velaria* a recuperare dal *Contraente* e dall'Assicurato l'importo pagato ai terzi danneggiati nei casi in cui avrebbe avuto diritto di rifiutare o di ridurre la propria prestazione.
-- > **"Set Informativo"**: l'insieme formato dai seguenti documenti: DIP (Documento Informativo Precontrattuale), DIP Aggiuntivo (Documento Informativo Precontrattuale Aggiuntivo) e Condizioni di Assicurazione, comprensive delle definizioni e dell'informativa sulla privacy.
-- > **"Sinistro"**: l'evento dannoso per il quale *Velaria* presta l'assicurazione. Per la garanzia "Assistenza Legale", il fatto o la violazione di norme che dà origine alla vertenza.
-- > **"Spese borsuali"**: le spese sostenute dal legale necessarie o funzionali a svolgere la sua attività.
-- > **"Trasportati"**: le persone trasportate sul *Natante* in modo conforme alla normativa in vigore.
 
 <!-- pagina 8 -->
 

@@ -38,40 +38,6 @@ Cordiali saluti.
 
 **Velaria S.p.A.**
 
-<!-- pagina 3 -->
-
-# Indice
-
-## A. Elenco delle Garanzie
-
-## B. Definizioni
-
-Definizioni ... Pag. 1 di 48
-
-## C. Condizioni di Assicurazione Autovetture
-
-|   | Norme Comuni ... Pag. 3 di 48  |
-| --- | --- |
-|  **SEZIONE 1** | Responsabilità Civile ... Pag. 11 di 48  |
-|  **SEZIONE 1 BIS** | Bonus Protetto ... Pag. 15 di 48  |
-|  **SEZIONE 2** | Furto e Incendio ... Pag. 15 di 48  |
-|  **SEZIONE 3** | Danni al veicolo (Minikasko e Kasko) ... Pag. 17 di 48  |
-|  **SEZIONE 3.1** | Tutela danni da veicoli non assicurati ... Pag. 18 di 48  |
-|  **SEZIONE 3.2** | Collisione animali selvatici ... Pag. 20 di 48  |
-|  **SEZIONE 4** | Eventi atmosferici, Atti vandalici e Cristalli ... Pag. 22 di 48  |
-|  **SEZIONE 5** | Assistenza Legale ... Pag. 23 di 48  |
-|  **SEZIONE 6A** | Assistenza Stradale Estesa ... Pag. 27 di 48  |
-|  **SEZIONE 6B** | Assistenza Stradale Top ... Pag. 29 di 48  |
-|  **SEZIONE 6C** | Assistenza Velaria Drive ... Pag. 31 di 48  |
-|   | Velaria Drive Program ... Pag. 33 di 48  |
-|  **SEZIONE 7** | Infortuni del Conducente ... Pag. 33 di 48  |
-|  **SEZIONE 7.1** | Bonus aiuto domestico ... Pag. 35 di 48  |
-|  **SEZIONE 8** | Protezione Imprevisti ... Pag. 37 di 48  |
-|  **SEZIONE 8.1** | 4 zampe a bordo ... Pag. 38 di 48  |
-|  **SEZIONE 9** | Procedura per il risarcimento dei Danni R.C. Auto ... Pag. 39 di 48  |
-|  **SEZIONE 10** | Procedura per il risarcimento dei Danni non R.C. Auto ... Pag. 41 di 48  |
-|   | Allegato 1 ... Pag. 46 di 48  |
-
 <!-- pagina 4 -->
 
 # A. Elenco delle Garanzie
@@ -176,71 +142,6 @@ e in contratto
 |  **Bonus aiuto domestico:** ti offre una diaria, in caso di infortunio del conducente, per le spese sostenute per l'assunzione di collaboratori domestici |  | Sezione 7.1 | Verifica in preventivo e in contratto  |
 |  **Protezione imprevisti:** ti protegge da tante piccole seccature: rimborsa le spese di immatricolazione in caso di furto o distruzione del veicolo, ti risarcisce per la perdita delle chiavi e della patente, o se il tuo box auto si danneggia per l'incendio del veicolo assicurato ecc. |  | Sezione 8 | Verifica in preventivo e in contratto  |
 |  **4 zampe a bordo:** protegge il tuo cane o gatto, presente a bordo del veicolo, in caso di incidente con colpa. |  | Sezione 8.1 | Verifica in preventivo e in contratto  |
-
-<!-- pagina 6 -->
-
-## B. Definizioni
-
-- > **'Accessori':** le parti complementari stabilmente fissate sul veicolo che possono essere:
-  - - di serie, se costituiscono normale dotazione del veicolo, essendo inclusi senza maggiorazione nel prezzo di listino del veicolo stesso;
-  - - optional, ogni installazione o apparecchiatura stabilmente fissata a bordo del veicolo fornita dalla casa costruttrice con supplemento al prezzo di listino del veicolo stesso;
-- > **'Animale da compagnia':** per la garanzia 4 zampe a bordo si intendono cani e gatti;
-- > **'Animali selvatici':** animali che appartengono alla fauna che vive libera sul territorio (ad esempio daini, cinghiali, lupi, volpi ecc.), esclusi gatti e cani randagi;
-- > **'Antifurto satellitare':** dispositivo che invia automaticamente, in caso di furto, le coordinate per la localizzazione del veicolo a una centrale operativa;
-- > **'Apparecchi multimediali non di serie':** radio, telefoni, lettori CD e DVD, televisori, componenti audio, navigatori satellitari e simili se sono stabilmente fissati e non sono presenti sul listino degli accessori della casa costruttrice del veicolo;
-- > **'Aree aeroportuali':** le aree di rullaggio (spostamento e movimento di un aeromobile a terra, cioè con le ruote a contatto con il terreno) e le altre aree interne a un aeroporto, così come determinate dalla normativa di settore;
-- > **'Assicurato':** soggetto destinatario delle prestazioni assicurative;
-- > **'Autovettura':** il veicolo destinato al trasporto di persone, che ha al massimo nove posti, compreso quello del conducente;
-- > **'Avente diritto':** soggetto diverso dal contraente a cui deve essere messa a disposizione l'attestazione dello stato del rischio, ovvero: proprietario, usufruttuario, acquirente con patto di riservato dominio o locatario in caso di locazione finanziaria;
-- > **'Banca dati':** la banca dati elettronica che le imprese hanno l'obbligo di alimentare con le informazioni e i dati necessari ad attestare lo stato del rischio;
-- > **'Certificato internazionale di assicurazione - ex Carta Verde':** il documento che attesta che il veicolo è assicurato per la responsabilità civile obbligatoria anche all'estero, nei paesi di cui riporta la sigla non barrata;
-- > **'Classe di merito Velaria':** la classe di merito assegnata al contratto in base alle condizioni generali di assicurazione previste da Velaria;
-- > **'Classe di merito di conversione universale (CU):** la classe di merito assegnata obbligatoriamente al contratto in base alle regole previste dal Provvedimento IVASS n. 72 del 16 aprile 2018 e successive modifiche e integrazioni. La classe CU risulta dall'attestazione dello stato del rischio messa a disposizione da Velaria in occasione di ogni scadenza annuale;
-- > **'Codice delle Assicurazioni':** il Decreto Legislativo n. 209/2005 e sue successive modificazioni e integrazioni;
-- > **'Codice della Strada':** il Decreto Legislativo n. 285/1992 e sue successive modificazioni e integrazioni;
-- > **'CONSAP':** Concessionaria Servizi Assicurativi Pubblici S.p.A. con sede in Roma, Via Yser, 14 - 00198, www.consap.it;
-- > **'Contraente':** la persona fisica, Imprese o altri Enti che stipulano il contratto di assicurazione;
-- > **'Degrado':** la riduzione del valore dei pezzi di ricambio da sostituire sull'autovettura danneggiata;
-- > **'Orsa Assistance Italia S.p.A.':** la compagnia che attraverso la sua struttura organizzativa gestisce i sinistri per le garanzie Assistenza Stradale Estesa e Top per conto di Velaria;
-- > **'EUROTAX':** la rivista specializzata della Sanguinetti Editore, che riporta le quotazioni di mercato dell'usato;
-- > **'Franchigia':** la somma, stabilita nel contratto, che rimane a carico dell'assicurato per ogni sinistro;
-- > **'Fornitore Qualificato Velaria':** la società che fornisce le Velaria Box. L'elenco dei Fornitori Qualificati Velaria è disponibile sul sito internet www.velaria.example;
-- > **'Furto':** l'appropriazione di beni altrui per trarne un ingiusto profitto anche tramite violenza o minaccia (rapina);
-- > **'Velaria':** Velaria S.p.A., con sede legale in Italia;
-- > **'Velaria Box':** il dispositivo elettronico che registra e raccoglie i dati telematici relativi all'attività del veicolo e che permette di ricostruire la dinamica del sinistro. Per il corretto funzionamento il dispositivo deve venire attivato dopo l'installazione;
-- > **'Guasto':** il danno che il veicolo subisce per usura, difetto, rottura, mancato funzionamento di sue parti, e che rende impossibile per l'assicurato l'utilizzo del veicolo in condizioni normali. Sono considerati guasto anche la foratura dello pneumatico e l'errato rifornimento di carburante;
-- > **'Immobilizzazione del veicolo':** il fermo del veicolo presso una carrozzeria/officina incaricata della riparazione che ne rende impossibile l'utilizzo (veicolo non marciante);
-- > **'Incendio':** la combustione dell'autovettura o di sue parti con sviluppo di fiamma;
-- > **'Incidente':** il sinistro, subito dal veicolo, non voluto, dovuto a imperizia, negligenza, inosservanza di norme e regolamenti, connesso alla circolazione stradale. Solo per le garanzie Assistenza Stradale Estesa e Top sono compresi i sinistri derivati da caso fortuito;
-- > **'Indennizzo/Risarcimento':** la somma dovuta da Velaria o da Orsa Assistance se avviene un sinistro liquidabile a termini di polizza;
-- > **'Infortunio':** ogni evento dovuto a causa fortuita, violenta ed esterna che produce lesioni corporali obiettivamente constatabili;
-- > **'Ingessatura':** il mezzo di contenzione, fisso e rigido, costituito da fasce gessate o altro apparecchio di contenimento comunque immobilizzante, prescritto da personale medico e che non può essere rimosso autonomamente;
-
-<!-- pagina 7 -->
-
-- > **"Invalidità permanente"**: la perdita o riduzione definitiva e irrimediabile della capacità a qualsiasi lavoro proficuo, indipendentemente dalla professione svolta;
-- > **"Istituto di cura"**: gli istituti di cura sono gli ospedali pubblici, le cliniche o le case di cura (convenzionate o private). Si possono trovare in Italia o all'estero. Devono essere regolarmente autorizzati in base ai requisiti di legge e dalle competenti Autorità al ricovero, ed eventualmente all'assistenza sanitaria ambulatoriale e in regime di degenza diurna. Sono comunque esclusi gli stabilimenti termali, le case di convalescenza e soggiorno;
-- > **"Legittimo conducente"**: il proprietario del veicolo e le persone da lui autorizzate alla guida del veicolo;
-- > **"Localizzatore satellitare"**: dispositivo in grado di inviare su richiesta, non automaticamente, le coordinate per la localizzazione del veicolo in caso di furto. Vengono equiparati al localizzatore satellitare anche i localizzatori a radiofrequenza;
-- > **"Massimale"**: la somma fino a concorrenza della quale Velaria presta l'assicurazione;
-- > **"Operatore Qualificato Velaria"**: la società che fornisce le prestazioni previste dalla garanzia Assistenza Velaria Drive, quando è presente in contratto, e i servizi di ricostruzione della dinamica del sinistro sulla base dei dati registrati dai dispositivi Velaria Box e Velaria Drive Box. L'elenco degli Operatori Qualificati Velaria è disponibile sul sito www.velaria.example;
-- > **"Perdita totale"**: il veicolo è considerato totalmente perso se viene rubato e non viene ritrovato entro due mesi, oppure se è tanto danneggiato da avere un valore residuo inferiore al 20% del valore commerciale prima del sinistro;
-- > **"Polizza"**: il documento che prova la stipula del contratto di assicurazione;
-- > **"Premio"**: la somma dovuta dal contraente a Velaria a fronte delle garanzie prestate, comprensivo di imposte ed eventuali oneri di legge;
-- > **"Proprietario"**: l'intestatario al P.R.A. del veicolo o colui che può dimostrare la titolarità del diritto di proprietà;
-- > **"Velaria Drive Box"**: la Velaria Box collegabile alla piattaforma di servizio Velaria Drive. Con la Velaria Drive Box, tramite la rilevazione dello stile di guida, è possibile accedere al Velaria Drive Program. L'elenco delle Velaria Drive Box è consultabile sul sito internet www.velaria.example;
-- > **"QUATTRORUOTE"**: la rivista dell'editoriale Domus che pubblica mensilmente le quotazioni dei veicoli usati;
-- > **"Responsabilità principale"**: si ha quando la responsabilità del sinistro è da attribuire in misura prevalente ad uno dei conducenti dei veicoli coinvolti;
-- > **"Responsabilità paritaria"**: si ha quando la responsabilità del sinistro è da attribuire in pari misura a carico dei conducenti dei veicoli coinvolti;
-- > **"Rischio"**: la probabilità che si verifichi il sinistro;
-- > **"Risoluzione"**: lo scioglimento anticipato di un contratto per volontà delle parti o per legge;
-- > **"Rivalsa"**: il diritto di Velaria a recuperare dal contraente e dall'assicurato l'importo pagato ai terzi danneggiati nei casi in cui avrebbe avuto diritto di rifiutare o di ridurre la propria prestazione;
-- > **"Scoperto"**: la percentuale del danno - con eventuale limite minimo espresso in valore assoluto - che rimane a carico dell'assicurato per ogni sinistro, se previsto in contratto;
-- > **"Sinistro"**: l'evento dannoso per il quale è prestata l'assicurazione;
-- > **"Spese borsuali"**: le spese sostenute dal legale necessarie o funzionali a svolgere la sua attività;
-- > **"Surroga"**: l'azione dell'assicuratore che agisce nei confronti del responsabile di un sinistro o di un furto per recuperare le somme pagate al danneggiato;
-- > **"Tempario"**: manuale o tabella con l'indicazione dei tempi medi di esecuzione di lavori artigianali o industriali;
-- > **"Trasportati"**: le persone regolarmente trasportate sul veicolo indicato in polizza.
 
 <!-- pagina 8 -->
 

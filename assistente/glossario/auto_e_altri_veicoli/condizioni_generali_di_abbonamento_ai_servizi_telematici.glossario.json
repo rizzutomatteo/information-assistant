@@ -1,0 +1,87 @@
+{
+  "documento": "auto_e_altri_veicoli/condizioni_generali_di_abbonamento_ai_servizi_telematici.md",
+  "sezione": "DEFINIZIONI",
+  "pagine": {
+    "da": 3,
+    "a": 3
+  },
+  "introduzione": "I termini e le espressioni utilizzate nel presente Contratto di Abbonamento ai Servizi Telematici, ed evidenziate in neretto nel proseguo, avranno il seguente significato se non diversamente specificato. Per tutte le altre definizioni si rimanda a quanto contenuto nella Polizza Assicurativa.",
+  "voci": [
+    {
+      "termine": "Accelerometro",
+      "definizione": "dispositivo elettronico integrato o collegato al Dispositivo, che misura le accelerazioni e decelerazioni del Veicolo su cui è installato."
+    },
+    {
+      "termine": "Centrale di Assistenza",
+      "definizione": "la società incaricata dalla Compagnia Assicurativa di gestire il servizio di soccorso stradale in favore del Contraente e, più in generale, i servizi di assistenza previsti dalla Polizza Assicurativa."
+    },
+    {
+      "termine": "Cliente",
+      "definizione": "il Contraente e chiunque fruisca del Servizio e ne risulti regolarmente autorizzato dal Contraente stesso, comunque provvisto di valida patente di guida per il Veicolo."
+    },
+    {
+      "termine": "Contraente",
+      "definizione": "l'intestatario della Polizza Assicurativa stipulata con la Compagnia Assicurativa."
+    },
+    {
+      "termine": "Contratto di Abbonamento ai Servizi Telematici",
+      "definizione": "(per brevità il \"Contratto di Servizio\"): è il presente documento, approvato dal Contraente tramite la sottoscrizione contestuale della Polizza Assicurativa, che disciplina il servizio erogato dalla Società."
+    },
+    {
+      "termine": "Comodato",
+      "definizione": "contratto disciplinato dagli articoli 1803 e seguenti del codice civile."
+    },
+    {
+      "termine": "Compagnia Assicurativa",
+      "definizione": "Velaria S.p.A., con cui è stata stipulata la Polizza Assicurativa a cui è collegato il Servizio."
+    },
+    {
+      "termine": "Costellazione GPS",
+      "definizione": "l'insieme dei satelliti di proprietà degli Stati Uniti d'America in orbita intorno alla terra, che consentono i servizi di localizzazione."
+    },
+    {
+      "termine": "Dispositivo",
+      "definizione": "apparato messo a disposizione dalla Società, dotato di GPS, Accelerometro e modulo di connettività che permettono la rilevazione delle accelerazioni e decelerazioni del Veicolo su cui è installato e la trasmissione dei dati acquisiti."
+    },
+    {
+      "termine": "Furto",
+      "definizione": "reato previsto dall'art. 624 del Codice Penale, commesso da chiunque si impossessi della cosa altrui, sottraendola a chi la detiene, al fine di trarne profitto per sé o per altri."
+    },
+    {
+      "termine": "Installatore",
+      "definizione": "tecnico incaricato dalla Società delle operazioni di installazione, sostituzione, verifica e collaudo del Dispositivo."
+    },
+    {
+      "termine": "Piattaforma Telematica",
+      "definizione": "centro di rilevazione e gestione delle comunicazioni del Dispositivo attraverso Centrale di Telesorveglianza e di Teleassistenza attive 24 ore su 24, 365 giorni l'anno."
+    },
+    {
+      "termine": "Polizza Assicurativa",
+      "definizione": "contratto di assicurazione RCA stipulato dal Contraente con la Compagnia Assicurativa. Con il pagamento del premio della Polizza Assicurativa, il Contraente sottoscrive il Contratto di Servizio."
+    },
+    {
+      "termine": "Rapina",
+      "definizione": "reato previsto dall'Art. 628 Codice Penale perpetrato da chiunque mediante violenza o minaccia si impossessi della cosa altrui sottraendola a colui che la detiene, per procurare a sé o ad altri un ingiusto profitto."
+    },
+    {
+      "termine": "Reclamo",
+      "definizione": "qualsiasi dichiarazione di insoddisfazione formulata per iscritto nei confronti della Società relativamente al Servizio dalla medesima prestato; non sono considerati reclami le mere richieste di informazioni o di chiarimenti."
+    },
+    {
+      "termine": "Servizio",
+      "definizione": "l'insieme dei servizi info-telematici erogati dalla Società a favore del Cliente, diversi da quelli erogati dalla Centrale di Assistenza e i cui contenuti sono dettagliatamente indicati nel presente Contratto di Servizio."
+    },
+    {
+      "termine": "Servizio Clienti",
+      "definizione": "centro di assistenza al Cliente per la gestione del presente contratto"
+    },
+    {
+      "termine": "Società",
+      "definizione": "Altaire Connect S.p.A. con Sede legale in [INDIRIZZO] – 20145 Milano (MI)."
+    },
+    {
+      "termine": "Veicolo",
+      "definizione": "autovettura indicata nei dati contrattuali della Polizza Assicurativa collegata ovvero quella successivamente indicata dal Cliente in caso di Sostituzione del Veicolo su cui è installato il Dispositivo o Trasferimento del Dispositivo."
+    }
+  ]
+}

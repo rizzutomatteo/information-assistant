@@ -11,20 +11,6 @@ Attuazione del Regolamento (UE) 2019/2088 Art. 4
 
 velaria.example
 
-<!-- pagina 2 -->
-
-# INDICE
-
-1 Introduzione...3
-2 Dichiarazione dei principali effetti negativi delle decisioni di investimento sui fattori di sostenibilità ...4
-2.1 Sintesi ...4
-2.2 Descrizione dei principali impatti negativi sui fattori di sostenibilità ...6
-2.3 Descrizione delle politiche relative all'individuazione e alla prioritizzazione dei principali effetti negativi derivanti delle
-decisioni di investimento sui fattori di sostenibilità ...14
-2.4 politiche di impegno ...19
-2.5 Riferimenti a standard internazionali ...21
-2.6 Raffronto storico ...23
-
 <!-- pagina 3 -->
 
 # 1 Introduzione

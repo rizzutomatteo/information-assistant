@@ -4,52 +4,6 @@
 
 # Regolamento
 
-# Indice
-
-# Parte I - Identificazione e scopo del PIP
-
-Art. 1 - Denominazione
-Art. 2 - Istituzione del PIP, esercizio dell'attività, sede e recapiti
-Art. 3 - Scopo
-
-# Parte II - Caratteristiche del PIP e modalità di investimento
-
-Art. 4 - Regime del PIP
-Art. 5 - Destinatari
-Art. 6 - Scelte di investimento
-Art. 7 - Spese
-
-# Parte III - Contribuzione e prestazioni
-
-Art. 8 - Contribuzione
-Art. 9 - Determinazione della posizione individuale
-Art. 10 - Prestazioni pensionistiche e RITA
-Art. 11 - Erogazione delle prestazioni pensionistiche
-Art. 12 - Trasferimento e riscatto della posizione individuale
-Art. 13 - Anticipazioni
-Art. 13 bis - Prestazioni accessorie
-
-# Parte IV - Profili organizzativi
-
-Art. 14 - Separatezza patrimoniale e contabile
-Art. 15 - Responsabile
-Art. 16 - Conflitti di interesse
-
-# Parte V - Rapporti con gli aderenti
-
-Art. 17 - Modalità di adesione e clausole risolutive espresse
-Art. 18 - Trasparenza nei confronti degli aderenti e dei beneficiari
-Art. 19 - Comunicazioni e reclami
-
-# Parte VI - Norme finali
-
-Art. 20 - Modifiche del Regolamento
-Art. 21 - Trasferimento in caso di modifiche peggiorative delle condizioni economiche e di modifiche delle caratteristiche del PIP
-Art. 22 - Operazioni di fusione
-Art. 23 - Rinvio
-
-# Allegato - Disposizioni in materia di Responsabile
-
 <!-- pagina 2 -->
 
 PARTE I

@@ -1,0 +1,75 @@
+{
+  "documento": "previdenza/condizioni_generali_di_contratto.md",
+  "sezione": "Definizioni",
+  "pagine": {
+    "da": 3,
+    "a": 4
+  },
+  "introduzione": "Definiamo i principali termini tecnici utilizzati:",
+  "voci": [
+    {
+      "termine": "Aderente",
+      "definizione": "La persona fisica che aderisce a una forma pensionistica complementare."
+    },
+    {
+      "termine": "Appendice",
+      "definizione": "Documento che forma parte integrante del contratto e che è emesso insieme alla Polizza o in seguito."
+    },
+    {
+      "termine": "Beneficiario",
+      "definizione": "Persona fisica che percepisce la prestazione pensionistica."
+    },
+    {
+      "termine": "Benchmark",
+      "definizione": "Parametro oggettivo di mercato comparabile, in termini di composizione e di rischiosità, agli obiettivi di investimento attribuiti alla gestione di un Fondo ed a cui si può fare riferimento per confrontarne il risultato di gestione."
+    },
+    {
+      "termine": "COVIP",
+      "definizione": "Commissione di Vigilanza sui Fondi Pensione."
+    },
+    {
+      "termine": "Data di decorrenza",
+      "definizione": "Data indicata in Polizza come data di inizio per il calcolo delle prestazioni previste dal contratto di assicurazione."
+    },
+    {
+      "termine": "Fondo interno",
+      "definizione": "Fondo di investimento appositamente creato da Velaria S.p.A. le cui prestazioni variano a seconda dell'andamento degli strumenti finanziari compresi nel fondo."
+    },
+    {
+      "termine": "Gestione separata",
+      "definizione": "Portafoglio di investimenti gestito separatamente dagli altri attivi detenuti da Velaria S.p.A., in funzione del cui rendimento si rivalutano le prestazioni del contratto."
+    },
+    {
+      "termine": "IVASS",
+      "definizione": "Istituto per la Vigilanza sulle assicurazioni."
+    },
+    {
+      "termine": "Life cycle",
+      "definizione": "È un programma di investimento che prevede una graduale riduzione del rischio finanziario dell'investimento previdenziale, sulla base dell'anagrafica dell'aderente."
+    },
+    {
+      "termine": "Polizza",
+      "definizione": "Documento che prova il contratto."
+    },
+    {
+      "termine": "Quota",
+      "definizione": "Unità di misura utilizzata per esprimere la parte delle prestazioni del contratto collegata ai fondi interni."
+    },
+    {
+      "termine": "Rendite con rate posticipate",
+      "definizione": "Tipologie di rendita che prevedono il pagamento delle rate alla fine del periodo di rateazione scelto (mensile, trimestrale, semestrale, annuale)."
+    },
+    {
+      "termine": "Ricorrenza annuale del contratto",
+      "definizione": "Anniversario della Data di decorrenza."
+    },
+    {
+      "termine": "Tasso di interesse tecnico",
+      "definizione": "Il rendimento finanziario annuo impiegato nel calcolo iniziale delle prestazioni e nei coefficienti di conversione in rendita a fronte del versamento di ogni contributo."
+    },
+    {
+      "termine": "Valore unitario della Quota",
+      "definizione": "Valore ottenuto dividendo il valore complessivo netto del fondo, nel giorno di valorizzazione, per il numero di quote in circolazione alla stessa data.\nPARTE I\nPRESTAZIONI\nPREVIDENZIALI"
+    }
+  ]
+}

@@ -38,28 +38,6 @@ Cordiali saluti.
 
 **Velaria S.p.A.**
 
-<!-- pagina 3 -->
-
-# Indice
-
-## A. Elenco delle Garanzie
-
-## B. Definizioni
-
-Definizioni ... Pag. 1 di 16
-
-## C. Condizioni di Assicurazione Natanti
-
-Norme Comuni ... Pag. 2 di 16
-
-**SEZIONE 1** Responsabilità Civile ... Pag. 9 di 16
-
-**SEZIONE 2** Assistenza Legale ... Pag. 10 di 16
-
-**SEZIONE 3** Procedura per il risarcimento dei Danni R.C. ... Pag. 14 di 16
-
-**SEZIONE 4** Procedura per l'indennizzo dei Danni di Assistenza Legale ... Pag. 16 di 16
-
 <!-- pagina 4 -->
 
 # A. Elenco delle Garanzie
@@ -105,30 +83,6 @@ e in contratto
 La tua assicurazione sempre a portata di mano!
 
 Scopri la **nuova app Velaria**: completamente rinnovata nella grafica e nelle funzionalità per gestire in modo ancora più semplice tutte le tue assicurazioni!
-
-<!-- pagina 5 -->
-
-## B. Definizioni
-
-- > **"Acque interne"**: fiumi, laghi e la porzione di mare interna alla linea di bassa marea della costa;
-- > **"Assicurato"**: soggetto destinatario delle prestazioni assicurative;
-- > **"Codice delle Assicurazioni"**: il Decreto Legislativo n. 209/2005 e sue successive modificazioni e integrazioni;
-- > **"Codice della Nautica"**: il Decreto Legislativo 18 luglio 2005, n. 171 e sue successive modificazioni e integrazioni;
-- > **"CONSAP"**: Concessionaria Servizi Assicurativi Pubblici S.p.A. con sede in Roma, Via Yser, 14 – 00198, www.consap.it;
-- > **"Contraente"**: la persona fisica, Imprese o altri Enti che stipulano il contratto di assicurazione;
-- > **"Velaria"**: Velaria S.p.A., con sede legale in Italia;
-- > **"Indennizzo/Risarcimento"**: la somma dovuta da Velaria se avviene un sinistro liquidabile a termini di polizza;
-- > **"Legittimo conducente"**: il proprietario del natante e le persone da lui autorizzate alla guida del natante;
-- > **"Massimale"**: la somma fino a concorrenza della quale Velaria presta l'assicurazione;
-- > **"Natante"**: unità da diporto a remi e quelle il cui scafo abbia una lunghezza pari o inferiore a 10 m, indipendentemente dalla loro propulsione, come definita dal Codice della Navigazione;
-- > **"Polizza"**: il documento che prova la stipula del contratto di assicurazione;
-- > **"Premio"**: la somma dovuta dal contraente a Velaria a fronte delle garanzie prestate, comprensivo di imposte ed eventuali oneri di legge;
-- > **"Rischio"**: la probabilità che si verifichi il sinistro;
-- > **"Rivalsa"**: il diritto di Velaria a recuperare dal contraente e dall'assicurato l'importo pagato ai terzi danneggiati nei casi in cui avrebbe avuto diritto di rifiutare o di ridurre la propria prestazione;
-- > **"Sinistro"**: l'evento dannoso per il quale è prestata l'assicurazione;
-- > **"Spese borsuali"**: le spese sostenute dal legale necessarie o funzionali a svolgere la sua attività;
-- > **"Trasportati"**: le persone regolarmente trasportate sul natante indicato in polizza;
-- > **"Unità da diporto"**: ogni costruzione di qualunque tipo e con qualunque mezzo di propulsione destinata alla navigazione da diporto, come definita dal Codice della Navigazione.
 
 <!-- pagina 6 -->
 
@@ -820,8 +774,6 @@ La denuncia può essere presentata via email all'indirizzo [EMAIL] o al telefono
 <!-- pagina 22 -->
 
 # Note
-
-<!-- pagina 23 -->
 
 <!-- pagina 24 -->
 

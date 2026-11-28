@@ -1,0 +1,99 @@
+{
+  "documento": "auto_e_altri_veicoli/contratto_di_comodato_velaria_drive.md",
+  "sezione": "DEFINIZIONI",
+  "pagine": {
+    "da": 1,
+    "a": 1
+  },
+  "introduzione": "",
+  "voci": [
+    {
+      "termine": "Centro Servizi",
+      "definizione": "l'insieme delle infrastrutture tecnologiche di proprietà della Società e dotate di specifici software, che ricevono ed elaborano i dati rilevati dall'accelerometro e dalla Velaria Drive Box installati sul Veicolo;"
+    },
+    {
+      "termine": "Cliente",
+      "definizione": "persona fisica indicata nel Contratto, Contraente del Contratto di assicurazione e/o chiunque fruisca dei Servizi e ne risulti autorizzato dal Contraente stesso;"
+    },
+    {
+      "termine": "Comodato",
+      "definizione": "contratto disciplinato dagli articoli 1803 e seguenti del codice civile;"
+    },
+    {
+      "termine": "Contraente",
+      "definizione": "l'intestatario del Contratto di assicurazione con Velaria;"
+    },
+    {
+      "termine": "Contratto",
+      "definizione": "il presente contratto di comodato d'uso e di erogazione dei Servizi, collegato al Contratto di assicurazione stipulato dal Contraente con Velaria, regolato dalle presenti condizioni generali;"
+    },
+    {
+      "termine": "Contratto di assicurazione",
+      "definizione": "il contratto di assicurazione stipulato dal Contraente con Velaria e relativo al Veicolo;"
+    },
+    {
+      "termine": "Costellazione GPS",
+      "definizione": "l'insieme dei satelliti di proprietà degli Stati Uniti d'America in orbita intorno alla terra;"
+    },
+    {
+      "termine": "Crash",
+      "definizione": "Incidente con impatto che abbia provocato, per un intervallo pari a 12.5 millisecondi, decelerazioni/accelerazioni pari o superiori alla soglia di 2 (due) g (1 g corrisponde a 9,8 m/s2) per le autovetture. I predetti valori sono da intendersi indicativi e potranno essere modificati dalla Società per una migliore erogazione dei Servizi;"
+    },
+    {
+      "termine": "Furto",
+      "definizione": "è il reato previsto dall'Art. 624 Codice Penale commesso da chiunque si impossessi della cosa mobile altrui sottraendola a chi la detiene al fine di trarne profitto per sé o per altri;"
+    },
+    {
+      "termine": "Velaria",
+      "definizione": "Velaria S.p.A. con sede legale in [INDIRIZZO] – 60121 Ancona;"
+    },
+    {
+      "termine": "Incidente",
+      "definizione": "evento connesso con la circolazione stradale del Veicolo, dovuto a caso fortuito, imperizia, negligenza, inosservanza di norme o regolamenti;"
+    },
+    {
+      "termine": "Installatore convenzionato",
+      "definizione": "installatore facente parte del network di assistenza selezionato dalla Società, in grado di effettuare l'installazione dalla Velaria Drive Box e fornire la necessaria assistenza;"
+    },
+    {
+      "termine": "Portale",
+      "definizione": "piattaforma web a disposizione del Cliente, accessibile tramite le credenziali trasmesse a seguito dell'installazione e attivazione della Velaria Drive Box;"
+    },
+    {
+      "termine": "Velaria Drive Box",
+      "definizione": "apparecchiatura comprensiva del dispositivo elettronico, omologato secondo le Direttive Europee CE 95/54 AUTOMOTIVE tipo ISO 7637 e prodotto con sistemi di qualità ISO 9001 e TS 16494 e del dispositivo elettronico denominato \"Accelerometro\" che misura le accelerazioni e decelerazioni del Veicolo su cui è installato;"
+    },
+    {
+      "termine": "Rapina",
+      "definizione": "è il reato previsto dall'Art. 628 del Codice Penale commesso da chiunque si impossessi, mediante violenza o minaccia alla persona, della cosa mobile altrui sottraendola a chi la detiene per procurare a sé o ad altri un ingiusto profitto;"
+    },
+    {
+      "termine": "Sala Operativa di Sicurezza",
+      "definizione": "la centrale operativa dalla Società, attraverso la quale viene erogato il servizio di localizzazione del Veicolo (con l'eventuale coordinamento con le Forze dell'Ordine) dopo il furto o la rapina del Veicolo;"
+    },
+    {
+      "termine": "Servizi",
+      "definizione": "sono i seguenti servizi info-telematici, erogati dalla Società attraverso il Centro Servizi e la Sala Operativa di Sicurezza, a favore del Cliente e/o di Velaria:\nServizio di raccolta ed elaborazione dei dati inviati dalla Velaria Drive Box;\nServizio di Allarme verso la Società di Assistenza in caso di Crash;\nServizio di localizzazione del Veicolo dopo il Furto totale o la Rapina."
+    },
+    {
+      "termine": "SIM Card GSM o GSM-GPRS",
+      "definizione": "scheda di abbonamento al servizio telefonico, inserita all'interno della Velaria Drive Box, intestata alla Società, di proprietà di quest'ultima ed utilizzata dalla stessa per il trasferimento dei dati dalla Velaria Drive Box al Centro Servizi;"
+    },
+    {
+      "termine": "Sinistro",
+      "definizione": "evento causa del danno (incidente stradale, Furto/Rapina del Veicolo);"
+    },
+    {
+      "termine": "Società",
+      "definizione": "Telematica Delta Italia SpA con sede in Busto Arsizio (VA), SS Sempione n. 212;"
+    },
+    {
+      "termine": "Società di assistenza",
+      "definizione": "Orsa Assistance Italia S.p.A. incaricata da Velaria di gestire il servizio di Soccorso Stradale in favore del Cliente;"
+    },
+    {
+      "termine": "Veicolo",
+      "definizione": "il mezzo di trasporto, di proprietà o in uso del Cliente, i cui dati di riferimento sono riportati sul Contratto di assicurazione, sul quale è installata la Velaria Drive Box e per il quale vengono erogati i Servizi."
+    }
+  ]
+}

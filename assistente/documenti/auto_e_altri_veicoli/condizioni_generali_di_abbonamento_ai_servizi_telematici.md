@@ -97,50 +97,6 @@ In caso di mancata restituzione del Dispositivo, Altaire Connect S.p.A. svolger�
 
 # CONDIZIONI GENERALI DI ABBONAMENTO AI SERVIZI TELEMATICI
 
-## DEFINIZIONI
-
-I termini e le espressioni utilizzate nel presente Contratto di Abbonamento ai Servizi Telematici, ed evidenziate in neretto nel proseguo, avranno il seguente significato se non diversamente specificato.
-
-Per tutte le altre definizioni si rimanda a quanto contenuto nella Polizza Assicurativa.
-
-**Accelerometro:** dispositivo elettronico integrato o collegato al Dispositivo, che misura le accelerazioni e decelerazioni del Veicolo su cui è installato.
-
-**Centrale di Assistenza:** la società incaricata dalla Compagnia Assicurativa di gestire il servizio di soccorso stradale in favore del Contraente e, più in generale, i servizi di assistenza previsti dalla Polizza Assicurativa.
-
-**Cliente:** il Contraente e chiunque fruisca del Servizio e ne risulti regolarmente autorizzato dal Contraente stesso, comunque provvisto di valida patente di guida per il Veicolo.
-
-**Contraente:** l'intestatario della Polizza Assicurativa stipulata con la Compagnia Assicurativa.
-
-**Contratto di Abbonamento ai Servizi Telematici** (per brevità il "Contratto di Servizio"): è il presente documento, approvato dal Contraente tramite la sottoscrizione contestuale della Polizza Assicurativa, che disciplina il servizio erogato dalla Società.
-
-**Comodato:** contratto disciplinato dagli articoli 1803 e seguenti del codice civile.
-
-**Compagnia Assicurativa:** Velaria S.p.A., con cui è stata stipulata la Polizza Assicurativa a cui è collegato il Servizio.
-
-**Costellazione GPS:** l'insieme dei satelliti di proprietà degli Stati Uniti d'America in orbita intorno alla terra, che consentono i servizi di localizzazione.
-
-**Dispositivo:** apparato messo a disposizione dalla Società, dotato di GPS, Accelerometro e modulo di connettività che permettono la rilevazione delle accelerazioni e decelerazioni del Veicolo su cui è installato e la trasmissione dei dati acquisiti.
-
-**Furto:** reato previsto dall'art. 624 del Codice Penale, commesso da chiunque si impossessi della cosa altrui, sottraendola a chi la detiene, al fine di trarne profitto per sé o per altri.
-
-**Installatore:** tecnico incaricato dalla Società delle operazioni di installazione, sostituzione, verifica e collaudo del Dispositivo.
-
-**Piattaforma Telematica:** centro di rilevazione e gestione delle comunicazioni del Dispositivo attraverso Centrale di Telesorveglianza e di Teleassistenza attive 24 ore su 24, 365 giorni l'anno.
-
-**Polizza Assicurativa:** contratto di assicurazione RCA stipulato dal Contraente con la Compagnia Assicurativa. Con il pagamento del premio della Polizza Assicurativa, il Contraente sottoscrive il Contratto di Servizio.
-
-**Rapina:** reato previsto dall'Art. 628 Codice Penale perpetrato da chiunque mediante violenza o minaccia si impossessi della cosa altrui sottraendola a colui che la detiene, per procurare a sé o ad altri un ingiusto profitto.
-
-**Reclamo:** qualsiasi dichiarazione di insoddisfazione formulata per iscritto nei confronti della Società relativamente al Servizio dalla medesima prestato; non sono considerati reclami le mere richieste di informazioni o di chiarimenti.
-
-**Servizio:** l'insieme dei servizi info-telematici erogati dalla Società a favore del Cliente, diversi da quelli erogati dalla Centrale di Assistenza e i cui contenuti sono dettagliatamente indicati nel presente Contratto di Servizio.
-
-**Servizio Clienti:** centro di assistenza al Cliente per la gestione del presente contratto
-
-**Società:** Altaire Connect S.p.A. con Sede legale in [INDIRIZZO] – 20145 Milano (MI).
-
-**Veicolo:** autovettura indicata nei dati contrattuali della Polizza Assicurativa collegata ovvero quella successivamente indicata dal Cliente in caso di Sostituzione del Veicolo su cui è installato il Dispositivo o Trasferimento del Dispositivo.
-
 ## Art. 1 – OGGETTO DEL CONTRATTO
 
 Il presente Contratto di Servizio, regolato dalle presenti Condizioni Generali di Abbonamento ai Servizi Telematici, ha per oggetto **la messa a disposizione, l'installazione del Dispositivo concesso in comodato d'uso gratuito e l'erogazione del Servizio** come disciplinato negli articoli seguenti.

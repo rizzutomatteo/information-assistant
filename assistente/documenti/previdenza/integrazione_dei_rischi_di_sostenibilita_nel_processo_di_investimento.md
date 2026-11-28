@@ -8,14 +8,6 @@ DI INVESTIMENTO
 
 velaria.example
 
-<!-- pagina 2 -->
-
-# INDICE
-
-Introduzione ... 3
-1 Come Velaria ha integrato il rischio di sostenibilità nel suo processo di investimento ... 4
-1.1 RISCHIO LEGATO AL CAMBIAMENTO CLIMATICO ... 5
-
 <!-- pagina 3 -->
 
 ## Introduzione

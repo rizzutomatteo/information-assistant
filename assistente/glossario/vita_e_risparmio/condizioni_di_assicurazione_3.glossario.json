@@ -1,0 +1,107 @@
+{
+  "documento": "vita_e_risparmio/condizioni_di_assicurazione_3.md",
+  "sezione": "Definizioni",
+  "pagine": {
+    "da": 5,
+    "a": 7
+  },
+  "introduzione": "I termini di seguito indicati hanno il significato qui precisato e sono sempre riportati nel testo delle Condizioni in corsivo e con lettera iniziale maiuscola.",
+  "voci": [
+    {
+      "termine": "Annualità assicurativa",
+      "definizione": "La prima Annualità assicurativa è il periodo che intercorre tra la Data di decorrenza e la prima Ricorrenza annuale. Per le Annualità assicurative successive è il periodo che intercorre tra due consecutive Ricorrenze annuali del contratto."
+    },
+    {
+      "termine": "Appendice",
+      "definizione": "Documento che forma parte integrante del contratto e che viene emesso insieme alla Polizza o in seguito."
+    },
+    {
+      "termine": "Assicurato",
+      "definizione": "Persona fisica sulla cui vita è stipulata l'assicurazione: i suoi dati anagrafici e gli eventi che si verificano durante la sua vita determinano il calcolo delle prestazioni previste dal contratto di assicurazione."
+    },
+    {
+      "termine": "Beneficiario",
+      "definizione": "Persona fisica o giuridica a cui sono pagate le prestazioni previste dal contratto di assicurazione."
+    },
+    {
+      "termine": "Contraente",
+      "definizione": "Persona fisica o giuridica che stipula il contratto di assicurazione e si impegna a versare i relativi Premi."
+    },
+    {
+      "termine": "Controvalore del numero di Quote di un Fondo interno",
+      "definizione": "Importo in euro calcolato moltiplicando il numero delle Quote di un Fondo interno per il Valore unitario della Quota del Fondo stesso nel giorno di valorizzazione."
+    },
+    {
+      "termine": "Data di decorrenza",
+      "definizione": "Data indicata in Polizza come data di inizio per il calcolo delle prestazioni previste dal contratto di assicurazione."
+    },
+    {
+      "termine": "Diritto di recesso",
+      "definizione": "Diritto del Contraente di far cessare gli effetti del contratto."
+    },
+    {
+      "termine": "Fondo interno",
+      "definizione": "Fondo di investimento appositamente creato da Velaria in funzione di prodotti di investimento assicurativi le cui prestazioni variano a seconda dell'andamento degli strumenti finanziari compresi nel Fondo."
+    },
+    {
+      "termine": "Fondo utili",
+      "definizione": "Fondo costituito mediante accantonamento delle plusvalenze nette realizzate a seguito della vendita di attività facenti parte della Gestione separata."
+    },
+    {
+      "termine": "Gestione separata",
+      "definizione": "Portafoglio di investimenti gestito separatamente dagli altri attivi detenuti da Velaria, in funzione del cui rendimento si rivalutano le prestazioni del contratto."
+    },
+    {
+      "termine": "Infortunio",
+      "definizione": "Evento, dovuto a causa fortuita, improvvisa, violenta ed esterna (indipendente dalla volontà dell'Assicurato), il quale produce lesioni corporali oggettivamente constatabili. Al concetto di Infortunio non sono riconducibili ictus e infarto."
+    },
+    {
+      "termine": "IVASS (ex ISVAP)",
+      "definizione": "Istituto per la Vigilanza sulle Assicurazioni Private."
+    },
+    {
+      "termine": "Multiramo",
+      "definizione": "Prodotto assicurativo d'investimento che combina una componente assicurativa di ramo I, le cui prestazioni sono collegate al rendimento di una Gestione separata, e una componente di ramo III, le cui prestazioni sono direttamente collegate al valore di Quote di Fondi interni o OICR."
+    },
+    {
+      "termine": "Polizza",
+      "definizione": "Documento che prova il contratto di assicurazione."
+    },
+    {
+      "termine": "Premio",
+      "definizione": "Importo che il Contraente versa a Velaria."
+    },
+    {
+      "termine": "Proposta di assicurazione",
+      "definizione": "Modulo con il quale il Contraente manifesta a Velaria la volontà di concludere il contratto di assicurazione in base alle caratteristiche e alle condizioni in esso indicate."
+    },
+    {
+      "termine": "Quota",
+      "definizione": "Unità di misura utilizzata per esprimere la parte delle prestazioni del contratto collegata al Fondo interno."
+    },
+    {
+      "termine": "Ricorrenza annuale del contratto",
+      "definizione": "Anniversario della Data di decorrenza."
+    },
+    {
+      "termine": "Riscatto",
+      "definizione": "Facoltà del Contraente di ottenere in anticipo un importo, prelevato dal contratto e determinato secondo le regole definite dal contratto stesso."
+    },
+    {
+      "termine": "Switch",
+      "definizione": "Operazione con la quale Velaria, su richiesta del Contraente, trasferisce una parte dell'investimento tra sottostanti finanziari (ad esempio Fondi interni, Gestione separata)."
+    },
+    {
+      "termine": "Valore complessivo netto del Fondo interno",
+      "definizione": "Valore ottenuto sommando le attività presenti nel Fondo interno (titoli, dividendi, interessi, ecc.) e sottraendo le passività (spese, imposte, ecc.)."
+    },
+    {
+      "termine": "Valore unitario della Quota",
+      "definizione": "Valore ottenuto dividendo il Valore complessivo netto del Fondo interno, nel giorno di Valorizzazione, per il numero delle Quote in circolazione alla stessa data."
+    },
+    {
+      "termine": "Valorizzazione",
+      "definizione": "Determinazione del valore della Quota del Fondo interno.\nQUALI SONO LE PRESTAZIONI ASSICURATIVE? QUALI SONO I RISCHI E QUAL È IL POTENZIALE RENDIMENTO?"
+    }
+  ]
+}

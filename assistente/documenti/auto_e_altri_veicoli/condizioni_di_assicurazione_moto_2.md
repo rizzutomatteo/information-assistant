@@ -16,68 +16,6 @@ PRODOTTO REDATTO AI SENSI DEL DECRETO
 MINISTERIALE NR. 54 DEL 2020 EMANATO
 DAL MINISTERO DELLO SVILUPPO ECONOMICO
 
-<!-- pagina 2 -->
-
-# Indice
-
-SEZIONE 1 > DEFINIZIONI ... 1
-SEZIONE 2 > CONDIZIONI DEL CONTRATTO BASE R.C. MOTOVEICOLI ... 2
-Art. 1 - Oggetto del contratto base R.C. ... 2
-Art. 2 - Esclusioni e rivalse ... 2
-Art. 3 - Dichiarazioni inesatte e reticenze ... 2
-Art. 4 - Aggravamento di rischio ... 2
-Art. 5 - Estensione territoriale ... 3
-Art. 6 - Decorrenza e durata ... 3
-Art. 7 - Pagamento del premio ... 3
-Art. 8 - Trasferimento di proprietà del veicolo e cessazione del rischio ... 3
-Art. 9 - Attestazione dello stato di rischio ... 4
-Art. 10 - Denuncia di sinistro ... 4
-Art. 11 - Gestione delle vertenze ... 4
-Art. 12 - Oneri a carico del contraente ... 4
-Art. 13 - Rinvio alle norme di legge ... 4
-Art. 14 - Bonus Malus ... 5
-Art. 15 - Clausola di inoperatività della copertura
-per sanzioni internazionali ... 7
-Art. 16 – Area Riservata ... 7
-SEZIONE 3 > CONDIZIONI AGGIUNTIVE AL CONTRATTO BASE ... 7
-Art. 17 - Guida esperta ... 7
-
-<!-- pagina 3 -->
-
-## SEZIONE 1 > DEFINIZIONI
-
-- > **"Aree aeroportuali":** le aree di rullaggio (spostamento e movimento di un aeromobile a terra, cioè con le ruote a contatto con il terreno) e le altre aree interne a un aeroporto, così come determinate dalla normativa di settore;
-- > **"Assicurato":** il soggetto il cui interesse è tutelato dall'assicurazione;
-- > **"Avente diritto":** soggetto diverso dal contraente a cui deve essere messa a disposizione l'attestazione dello stato del rischio, ovvero: proprietario, usufruttuario, acquirente con patto di riservato dominio o locatario in caso di locazione finanziaria;
-- > **"Banca dati":** la banca dati elettronica che le imprese hanno l'obbligo di alimentare con le informazioni e i dati necessari ad attestare lo stato del rischio;
-- > **"Carta verde":** il documento che attesta che il veicolo è assicurato per la responsabilità civile obbligatoria anche all'estero, nei paesi di cui riporta la sigla non barrata;
-- > **"Ciclomotori":** veicoli a due ruote (categoria L1e) o a tre ruote (categoria L2e) che hanno una velocità massima per costruzione non superiore a 45 km/h e una cilindrata fino a 50 cc;
-- > **"Classe di merito Velaria":** la classe di merito assegnata al contratto in base alle condizioni generali di assicurazione previste da Velaria;
-- > **"Classe di merito di conversione universale (CU)":** la classe di merito assegnata obbligatoriamente al contratto in base alle regole previste dal Regolamento Ivass 58/2026 e successive modifiche ed integrazioni. La classe CU risulta dall'attestazione dello stato del rischio messa a disposizione da Velaria in occasione di ogni scadenza annuale;
-- > **"Codice (Codice delle Assicurazioni private - CAP)":** il Decreto Legislativo n. 209/2005 e sue successive modificazioni e integrazioni;
-- > **"Codice della Strada":** il Decreto Legislativo n. 285/1992 e sue successive modificazioni e integrazioni;
-- > **"CONSAP":** Concessionaria Servizi Assicurativi Pubblici S.p.A. con sede in Roma, Via Yser, 14 - 00198, www.consap.it;
-- > **"Contraente":** la persona fisica che stipula il contratto di assicurazione;
-- > **"Furto":** l'appropriazione di beni altrui per trarne un ingiusto profitto anche tramite violenza o minaccia (rapina);
-- > **"Velaria":** Velaria S.p.A., con sede legale in Italia;
-- > **"Incidente":** il sinistro, subito dal veicolo, non voluto, dovuto a imperizia, negligenza, inosservanza di norme e regolamenti, connesso alla circolazione stradale. Solo per le garanzie Assistenza Stradale Estesa e Top sono compresi i sinistri derivati da caso fortuito;
-- > **"Indennizzo/Risarcimento":** la somma dovuta da Velaria o da Lumen se avviene un sinistro liquidabile a termini di polizza;
-- > **"Legittimo conducente":** il proprietario del veicolo e le persone da lui autorizzate alla guida del veicolo;
-- > **"Massimale":** la somma fino a concorrenza della quale Velaria presta l'assicurazione;
-- > **"Motocicli":** i veicoli a due ruote con o senza carrozzetta (rispettivamente categoria L4e e L3e), muniti di un motore con cilindrata superiore a 50 cm3 se a combustione interna e/o aventi una velocità massima per costruzione superiore a 45 km/h. Sono equiparati ai motocicli anche i tricicli;
-- > **"Motoveicoli":** i motocicli e i ciclomotori;
-- > **"Perdita totale":** il veicolo è considerato totalmente perso se viene rubato e non viene ritrovato entro due mesi, oppure se è tanto danneggiato da avere un valore residuo inferiore al 20% del valore commerciale prima del sinistro;
-- > **"Polizza":** il documento che prova la stipula del contratto di assicurazione;
-- > **"Premio":** la somma dovuta dal contraente a Velaria a fronte delle garanzie prestate, comprensivo di imposte ed eventuali oneri di legge;
-- > **"Proprietario":** l'intestatario al P.R.A. del veicolo o colui che può dimostrare la titolarità del diritto di proprietà;
-- > **"Responsabilità principale":** si ha quando la responsabilità del sinistro è da attribuire in misura prevalente ad uno dei conducenti dei veicoli coinvolti;
-- > **"Responsabilità paritaria":** si ha quando la responsabilità del sinistro è da attribuire in pari misura a carico dei conducenti dei veicoli coinvolti;
-- > **"Rischio":** la probabilità che si verifichi il sinistro;
-- > **"Risoluzione":** lo scioglimento anticipato di un contratto per volontà delle parti o per legge;
-- > **"Rivalsa":** il diritto di Velaria a recuperare dal contraente e dall'assicurato l'importo pagato ai terzi danneggiati nei casi in cui avrebbe avuto diritto di rifiutare o di ridurre la propria prestazione;
-- > **"Sinistro":** l'evento dannoso per il quale è prestata l'assicurazione;
-- > **"Trasportati":** le persone regolarmente trasportate sul veicolo indicato in polizza..
-
 <!-- pagina 4 -->
 
 # SEZIONE 2 > CONDIZIONI DEL CONTRATTO BASE R.C. MOTOVEICOLI

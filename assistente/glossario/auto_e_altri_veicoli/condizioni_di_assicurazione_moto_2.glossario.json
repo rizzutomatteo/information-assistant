@@ -1,0 +1,135 @@
+{
+  "documento": "auto_e_altri_veicoli/condizioni_di_assicurazione_moto_2.md",
+  "sezione": "SEZIONE 1 > DEFINIZIONI",
+  "pagine": {
+    "da": 3,
+    "a": 3
+  },
+  "introduzione": "",
+  "voci": [
+    {
+      "termine": "Aree aeroportuali",
+      "definizione": "le aree di rullaggio (spostamento e movimento di un aeromobile a terra, cioè con le ruote a contatto con il terreno) e le altre aree interne a un aeroporto, così come determinate dalla normativa di settore;"
+    },
+    {
+      "termine": "Assicurato",
+      "definizione": "il soggetto il cui interesse è tutelato dall'assicurazione;"
+    },
+    {
+      "termine": "Avente diritto",
+      "definizione": "soggetto diverso dal contraente a cui deve essere messa a disposizione l'attestazione dello stato del rischio, ovvero: proprietario, usufruttuario, acquirente con patto di riservato dominio o locatario in caso di locazione finanziaria;"
+    },
+    {
+      "termine": "Banca dati",
+      "definizione": "la banca dati elettronica che le imprese hanno l'obbligo di alimentare con le informazioni e i dati necessari ad attestare lo stato del rischio;"
+    },
+    {
+      "termine": "Carta verde",
+      "definizione": "il documento che attesta che il veicolo è assicurato per la responsabilità civile obbligatoria anche all'estero, nei paesi di cui riporta la sigla non barrata;"
+    },
+    {
+      "termine": "Ciclomotori",
+      "definizione": "veicoli a due ruote (categoria L1e) o a tre ruote (categoria L2e) che hanno una velocità massima per costruzione non superiore a 45 km/h e una cilindrata fino a 50 cc;"
+    },
+    {
+      "termine": "Classe di merito Velaria",
+      "definizione": "la classe di merito assegnata al contratto in base alle condizioni generali di assicurazione previste da Velaria;"
+    },
+    {
+      "termine": "Classe di merito di conversione universale (CU)",
+      "definizione": "la classe di merito assegnata obbligatoriamente al contratto in base alle regole previste dal Regolamento Ivass 58/2026 e successive modifiche ed integrazioni. La classe CU risulta dall'attestazione dello stato del rischio messa a disposizione da Velaria in occasione di ogni scadenza annuale;"
+    },
+    {
+      "termine": "Codice (Codice delle Assicurazioni private - CAP)",
+      "definizione": "il Decreto Legislativo n. 209/2005 e sue successive modificazioni e integrazioni;"
+    },
+    {
+      "termine": "Codice della Strada",
+      "definizione": "il Decreto Legislativo n. 285/1992 e sue successive modificazioni e integrazioni;"
+    },
+    {
+      "termine": "CONSAP",
+      "definizione": "Concessionaria Servizi Assicurativi Pubblici S.p.A. con sede in Roma, Via Yser, 14 - 00198, www.consap.it;"
+    },
+    {
+      "termine": "Contraente",
+      "definizione": "la persona fisica che stipula il contratto di assicurazione;"
+    },
+    {
+      "termine": "Furto",
+      "definizione": "l'appropriazione di beni altrui per trarne un ingiusto profitto anche tramite violenza o minaccia (rapina);"
+    },
+    {
+      "termine": "Velaria",
+      "definizione": "Velaria S.p.A., con sede legale in Italia;"
+    },
+    {
+      "termine": "Incidente",
+      "definizione": "il sinistro, subito dal veicolo, non voluto, dovuto a imperizia, negligenza, inosservanza di norme e regolamenti, connesso alla circolazione stradale. Solo per le garanzie Assistenza Stradale Estesa e Top sono compresi i sinistri derivati da caso fortuito;"
+    },
+    {
+      "termine": "Indennizzo/Risarcimento",
+      "definizione": "la somma dovuta da Velaria o da Lumen se avviene un sinistro liquidabile a termini di polizza;"
+    },
+    {
+      "termine": "Legittimo conducente",
+      "definizione": "il proprietario del veicolo e le persone da lui autorizzate alla guida del veicolo;"
+    },
+    {
+      "termine": "Massimale",
+      "definizione": "la somma fino a concorrenza della quale Velaria presta l'assicurazione;"
+    },
+    {
+      "termine": "Motocicli",
+      "definizione": "i veicoli a due ruote con o senza carrozzetta (rispettivamente categoria L4e e L3e), muniti di un motore con cilindrata superiore a 50 cm3 se a combustione interna e/o aventi una velocità massima per costruzione superiore a 45 km/h. Sono equiparati ai motocicli anche i tricicli;"
+    },
+    {
+      "termine": "Motoveicoli",
+      "definizione": "i motocicli e i ciclomotori;"
+    },
+    {
+      "termine": "Perdita totale",
+      "definizione": "il veicolo è considerato totalmente perso se viene rubato e non viene ritrovato entro due mesi, oppure se è tanto danneggiato da avere un valore residuo inferiore al 20% del valore commerciale prima del sinistro;"
+    },
+    {
+      "termine": "Polizza",
+      "definizione": "il documento che prova la stipula del contratto di assicurazione;"
+    },
+    {
+      "termine": "Premio",
+      "definizione": "la somma dovuta dal contraente a Velaria a fronte delle garanzie prestate, comprensivo di imposte ed eventuali oneri di legge;"
+    },
+    {
+      "termine": "Proprietario",
+      "definizione": "l'intestatario al P.R.A. del veicolo o colui che può dimostrare la titolarità del diritto di proprietà;"
+    },
+    {
+      "termine": "Responsabilità principale",
+      "definizione": "si ha quando la responsabilità del sinistro è da attribuire in misura prevalente ad uno dei conducenti dei veicoli coinvolti;"
+    },
+    {
+      "termine": "Responsabilità paritaria",
+      "definizione": "si ha quando la responsabilità del sinistro è da attribuire in pari misura a carico dei conducenti dei veicoli coinvolti;"
+    },
+    {
+      "termine": "Rischio",
+      "definizione": "la probabilità che si verifichi il sinistro;"
+    },
+    {
+      "termine": "Risoluzione",
+      "definizione": "lo scioglimento anticipato di un contratto per volontà delle parti o per legge;"
+    },
+    {
+      "termine": "Rivalsa",
+      "definizione": "il diritto di Velaria a recuperare dal contraente e dall'assicurato l'importo pagato ai terzi danneggiati nei casi in cui avrebbe avuto diritto di rifiutare o di ridurre la propria prestazione;"
+    },
+    {
+      "termine": "Sinistro",
+      "definizione": "l'evento dannoso per il quale è prestata l'assicurazione;"
+    },
+    {
+      "termine": "Trasportati",
+      "definizione": "le persone regolarmente trasportate sul veicolo indicato in polizza.."
+    }
+  ]
+}

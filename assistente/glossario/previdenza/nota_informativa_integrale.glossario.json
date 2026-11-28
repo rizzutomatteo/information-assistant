@@ -1,0 +1,75 @@
+{
+  "documento": "previdenza/nota_informativa_integrale.md",
+  "sezione": "Glossario dei termini tecnici o stranieri utilizzati",
+  "pagine": {
+    "da": 9,
+    "a": 10
+  },
+  "introduzione": "Di seguito ti viene fornito un breve glossario dei termini tecnici o stranieri utilizzati per consentirti di comprendere meglio a cosa fanno riferimento.",
+  "voci": [
+    {
+      "termine": "Benchmark",
+      "definizione": "Parametro oggettivo di mercato comparabile, in termini di composizione e di rischiosità, agli obiettivi di investimento attribuiti alla gestione di un Fondo ed a cui si può fare riferimento per confrontarne il risultato di gestione."
+    },
+    {
+      "termine": "Duration",
+      "definizione": "La duration è un indice sintetico che riunisce in un unico valore la durata di un titolo obbligazionario e la ripartizione dei pagamenti derivanti dall'obbligazione. Indica, infatti, la scadenza media dei pagamenti di un titolo obbligazionario. Per sua natura, la duration è anche una misura approssimativa della volatilità di un titolo: quanto più è alta, tanto maggiori sono le escursioni di prezzo che subirà il titolo in seguito a una variazione dei tassi di interesse. La duration è definita in anni."
+    },
+    {
+      "termine": "ESG",
+      "definizione": "L'acronimo ESG significa Environmental, Social e Governance (ambiente, sociale e governance) ed è utilizzato in ambito finanziario per indicare tutte quelle attività legate all'investimento responsabile per cui si prendono in considerazione, oltre ai risultati puramente economici, la sostenibilità degli investimenti stessi."
+    },
+    {
+      "termine": "Fondi interni",
+      "definizione": "Fondi di investimento appositamente creati da Velaria le cui prestazioni variano a seconda dell'andamento degli strumenti finanziari compresi nei fondi."
+    },
+    {
+      "termine": "Gestione interna separata",
+      "definizione": "Portafoglio di investimenti gestito separatamente dagli altri attivi detenuti da Velaria, in funzione del cui rendimento si rivalutano le prestazioni del contratto."
+    },
+    {
+      "termine": "Life-Cycle",
+      "definizione": "È un programma di investimento che prevede una graduale riduzione del rischio finanziario dell'investimento previdenziale, sulla base dell'anagrafica dell'Aderente."
+    },
+    {
+      "termine": "Mercati regolamentati",
+      "definizione": "Per mercati regolamentati si intendono quelli iscritti dalla Consob nell'elenco previsto dall'art. 63, comma 2, ovvero nell'apposita Sezione prevista dall'art. 67, comma 1, del D. Lgs. n. 58/98. Oltre a questi sono da considerarsi mercati regolamentati anche quelli indicati nella lista approvata dal consiglio direttivo della Assogestioni pubblicata sul sito internet www.assogestioni.it."
+    },
+    {
+      "termine": "OICR",
+      "definizione": "Organismi di Investimento Collettivo del Risparmio, in cui sono comprese le Società di gestione dei Fondi Comuni di Investimento e le SICAV. A seconda della natura dei titoli in cui il fondo viene investito e delle modalità di accesso o di uscita si possono individuare alcune macro-categorie di OICR, quali ad esempio i Fondi Comuni di Investimento (o fondi aperti mobiliari) e i Fondi di Fondi."
+    },
+    {
+      "termine": "Quota",
+      "definizione": "Ciascuna delle parti (unit) di uguale valore in cui il fondo interno è virtualmente suddiviso, e nell'acquisto delle quali vengono impiegati i premi, al netto dei costi e della parte di premio per le garanzie accessorie, e delle eventuali garanzie finanziarie contenute nel contratto."
+    },
+    {
+      "termine": "Rating",
+      "definizione": "È un indicatore sintetico del grado di solvibilità di un soggetto (stato o impresa) che emette strumenti finanziari di natura obbligazionaria ed esprime una valutazione circa le prospettive di rimborso del capitale e del pagamento degli interessi dovuti secondo le modalità e i tempi previsti. Le due principali Agenzie internazionali indipendenti che assegnano il rating sono Moody's e Standard & Poor's. Entrambe prevedono diversi livelli di rischio a seconda dell'emittente considerato: il rating più elevato (Aaa, AAA rispettivamente per le due agenzie) viene assegnato agli emittenti che offrono altissime garanzie di solvibilità, mentre il rating più basso (C per entrambe le agenzie) è attribuito agli emittenti scarsamente affidabili. Il livello base di rating affinché l'emittente sia caratterizzato di adeguate capacità di assolvere ai propri impegni finanziari (cosiddetto \"investment grade\") è pari a Baa3 (Moody's) o BBB- (Standard & Poor's)."
+    },
+    {
+      "termine": "Strumenti finanziari",
+      "definizione": "Sono costituiti da: titoli di debito, titoli di capitale, contratti derivati, quote di organismi di investimento collettivo del risparmio (O.I.C.R.)."
+    },
+    {
+      "termine": "Tasso di interesse tecnico",
+      "definizione": "Il rendimento finanziario annuo impiegato nel calcolo iniziale delle prestazioni e nei coefficienti di conversione in rendita a fronte del versamento di ogni contributo."
+    },
+    {
+      "termine": "Tasso minimo garantito",
+      "definizione": "Il rendimento finanziario annuo minimo riconosciuto sulle prestazioni espresse in Euro che Velaria S.p.A. garantisce al Beneficiario nei casi previsti dal contratto."
+    },
+    {
+      "termine": "Turnover",
+      "definizione": "Indicatore del tasso annuo di movimentazione del portafoglio dei fondi, dato dal rapporto percentuale fra la somma degli acquisti e delle vendite di strumenti finanziari, al netto dell'investimento e disinvestimento delle quote del fondo, e il patrimonio netto medio calcolato in coerenza con la frequenza di valorizzazione della quota. A titolo esemplificativo si precisa che un livello di turnover di 0,1 significa che il 10% del portafoglio è stato, durante l'anno, sostituito con nuovi investimenti e che un livello pari ad 1 significa che tutto il patrimonio è stato, durante l'anno, oggetto di disinvestimento e reinvestimento. A parità di altre condizioni elevati livelli di turnover possono implicare più elevati costi di transazione con conseguente riduzione dei rendimenti netti."
+    },
+    {
+      "termine": "Valore unitario della Quota",
+      "definizione": "Valore ottenuto dividendo il valore complessivo netto del fondo, nel giorno di valorizzazione, per il numero delle Quote partecipanti al fondo alla stessa data, pubblicato giornalmente sui principali quotidiani economici nazionali, ove normativamente previsto."
+    },
+    {
+      "termine": "Volatilità",
+      "definizione": "È l'indicatore della rischiosità di mercato di un dato investimento. Quanto più uno strumento è volatile, tanto maggiore è l'aspettativa dei guadagni elevati, ma anche il rischio di perdite."
+    }
+  ]
+}

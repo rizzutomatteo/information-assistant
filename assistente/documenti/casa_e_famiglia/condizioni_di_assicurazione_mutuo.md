@@ -46,69 +46,6 @@ Cordiali saluti.
 
 **Velaria S.p.A.**
 
-<!-- pagina 3 -->
-
-# Indice
-
-|  A. Presentazione del prodotto | 3  |
-| --- | --- |
-|  B. Definizioni | 5  |
-|  C. Condizioni di Assicurazione | 6  |
-|  NORME COMUNI | 6  |
-|  > QUANDO E COME DEVO PAGARE? | 6  |
-|  Art. 1 - Come stipulare il contratto e pagare il Premio (Mezzi di pagamento del Premio) | 6  |
-|  > QUANDO COMINCIA LA COPERTURA E QUANDO FINISCE? | 7  |
-|  Art. 2 - Durata dell'assicurazione | 7  |
-|  > DOVE VALE LA COPERTURA? | 7  |
-|  Art. 3 - Estensione territoriale | 7  |
-|  > CON QUALI CONDIZIONI OPERATIVE MI ASSICURO? | 7  |
-|  Art. 4 - Diritto del Contraente al ripensamento | 7  |
-|  Art. 5 - Estinzione anticipata del mutuo | 7  |
-|  Art. 6 - Massimali e somme assicurate | 7  |
-|  Art. 7 - Sospensione temporanea del contratto e sua riattivazione | 8  |
-|  Art. 8 - Dichiarazioni del Contraente/Assicurato - Variazioni del rischio | 8  |
-|  Art. 9 - Modifiche dell'assicurazione | 8  |
-|  Art. 10 - Altre assicurazioni | 8  |
-|  Art. 11 - Esagerazione dolosa del danno | 8  |
-|  Art. 12 - Prescrizione dei diritti derivanti dal contratto | 8  |
-|  Art. 12 - Prescrizione dei diritti derivanti dal contratto | 8  |
-|  Art. 13 - Legge applicabile, oneri fiscali, foro competente e lingua utilizzata | 8  |
-|  Art. 14 - Adempimento delle obbligazioni economiche da parte di Velaria | 9  |
-|  Art. 15 - Ispezione delle cose assicurate | 9  |
-|  Art. 16 - Clausola di inoperatività della copertura per sanzioni internazionali | 9  |
-|  > COME POSSO PRESENTARE I RECLAMI E RISOLVERE LE CONTROVERSIE? | 9  |
-|  Art. 17 - Modalità di reclamo | 9  |
-|  Art. 18 - Sistemi alternativi di risoluzione delle controversie | 9  |
-|  Art. 19 - Informativa sul trattamento dei dati personali ai sensi degli articoli 13 e 14 del Regolamento UE n. 679/2016 del 27 aprile 2016 | 10  |
-|  SEZIONE 1 > PREMESSA | 13  |
-|  > CHE COSA È ASSICURATO? | 13  |
-|  Art. 1.1 - Fabbricati assicurabili | 13  |
-|  SEZIONE 2 > INCENDIO E SCOPPIO | 13  |
-|  > CHE COSA È ASSICURATO? | 13  |
-|  Art. 2.1 - Cose assicurate | 13  |
-|  Art. 2.2 - Persone assicurate | 13  |
-|  Art. 2.3 - Oggetto dell'assicurazione - Incendio Esplosione e Scoppio del Fabbricato | 13  |
-|  Art. 2.4 - Spese aggiuntive | 13  |
-
-<!-- pagina 4 -->
-
-Art. 2.5 - Colpa grave - Rinuncia alla Rivalsa 14
-Art. 2.6 - Forma dell'assicurazione e somma assicurata 14
-> CHE COSA NON È ASSICURATO? 14
-Art. 2.7 - Cose non assicurate 14
-Art. 2.8 - Eventi non assicurati 14
-> CI SONO LIMITI DI COPERTURA? 14
-Art. 2.9 - Esclusioni 14
-Art. 2.10 - Franchigia 15
-SEZIONE 3 > PROCEDURA PER IL RISARCIMENTO DEI DANNI 15
-> COSA FARE IN CASO DI SINISTRO? 15
-Art. 3.1 - Modalità per la denuncia del Sinistro 15
-Art. 3.2 - Come si calcola l'ammontare del danno 16
-Art. 3.3 - Anticipo indennizzi 16
-Art. 3.4 - Liquidazione dell'indennizzo 16
-TERMINI DI LIQUIDAZIONE 17
-Art. 3.5 - Termini di liquidazione 17
-
 <!-- pagina 5 -->
 
 # A. Presentazione del prodotto
@@ -211,36 +148,6 @@ Il Contraente può usare l'Area Riservata - Home Insurance per:
 # Diritto del Contraente al ripensamento
 
 Il Contraente può recedere entro 14 giorni dalla data in cui ha ricevuto i documenti assicurativi.
-
-<!-- pagina 7 -->
-
-## B. Definizioni
-
-- > **Alluvioni e inondazioni:** allagamento di un territorio causato da straripamento, esondazione, tracimazione o fuoriuscita di acqua dagli argini di corsi naturali e artificiali, da laghi, bacini e dighe, anche se derivanti da eventi atmosferici;
-- > **Appartamento:** *Fabbricato* con accesso solo dai vani interni di un immobile occupato da più famiglie e con accesso comune dall'esterno;
-- > **Assicurato:** il soggetto il cui interesse è tutelato dalla *Polizza*;
-- > **Contraente:** la persona con la quale è stipulato il contratto;
-- > **Dimora abituale:** l'unico luogo dove, di fatto, hanno la loro dimora abituale l'assicurato o i suoi familiari conviventi;
-- > **Esplosione:** sviluppo di gas o vapori ad alta temperatura e pressione, dovuto a reazione chimica che si autopropaga con elevata velocità;
-- > **Fabbricato:** la costruzione edile indicata in contratto. Se è assicurata una porzione di *Fabbricato* (ad esempio un *Appartamento* posto all'interno di un condominio), la definizione di applica a questa porzione;
-- > **Fissi e infissi:** manufatti per la chiusura dei vani e, in genere, quanto è ancorato in modo stabile alle strutture murarie, rispetto alle quali ha funzione secondaria e di finimento o protezione;
-- > **Franchigia:** l'importo espresso in valore assoluto, dedotto dall'importo indennizzabile, che resta a carico dell'assicurato;
-- > **Implosione:** repentino cedimento di contenitori per carenza di pressione interna di fluidi;
-- > **Incendio:** combustione, con fiamma, di beni materiali al di fuori di appropriato focolare, che può autoestendersi e propagarsi;
-- > **Indennizzo:** importo liquidabile da Velaria in base alle condizioni di assicurazione;
-- > **Materiali incombustibili:** si considerano incombustibili sostanze e prodotti che alla temperatura di 750C° non danno luogo a manifestazioni di fiamma né a reazione esotermica. Il metodo di prova è quello adottato dal Centro Studi Esperienze del Ministero dell'Interno;
-- > **Polizza:** il documento che prova il contratto di assicurazione;
-- > **Premio:** il costo della *Polizza* assicurativa ovvero l'ammontare dovuto dal *Contraente* a Velaria;
-- > **Primo Rischio Assoluto:** forma di assicurazione per la quale Velaria si impegna a indennizzare il danno che si verifica fino a concorrenza del valore *Assicurato*, anche se risulta inferiore al valore globale dei beni assicurati (valore assicurabile). Non si applica dunque, con questa forma di assicurazione, la cosiddetta regola proporzionale;
-- > **Residui del sinistro:** le tracce o i residui del bene che ha subito un *Sinistro*;
-- > **Rivalsa:** l'azione esercitata da Velaria per il recupero di somme pagate a titolo di risarcimento;
-- > **Scoperto:** la parte di danno, indennizzabile a termini di *Polizza*, espressa in percentuale sull'ammontare del danno stesso, che resta a carico dell'assicurato;
-- > **Scoppio:** improvviso dirompersi di contenitori per eccesso di pressione interna di fluidi, non dovuto a *Esplosione*. Gli effetti del gelo o del "colpo di ariete" non sono considerati *Scoppio*;
-- > **Sinistro:** il verificarsi del fatto dannoso per il quale è prestata l'assicurazione;
-- > **Stillicidio:** lento e costante sgocciolamento dell'acqua per effetto della forza di gravità;
-- > **Terremoto:** sommovimento brusco e repentino della crosta terrestre dovuto a cause endogene;
-- > **Tetto:** insieme delle strutture, portanti e non portanti, destinate a coprire e proteggere il *Fabbricato* dagli agenti atmosferici;
-- > **Valore a nuovo per il *Fabbricato*:** la spesa necessaria per la ricostruzione a nuovo del *Fabbricato Assicurato* secondo il preesistente tipo e genere, escludendo il valore dell'area.
 
 <!-- pagina 8 -->
 

@@ -1,0 +1,231 @@
+{
+  "documento": "auto_e_altri_veicoli/condizioni_di_assicurazione_auto_2.md",
+  "sezione": "B. Definizioni",
+  "pagine": {
+    "da": 6,
+    "a": 7
+  },
+  "introduzione": "",
+  "voci": [
+    {
+      "termine": "Accessori",
+      "definizione": "le parti complementari stabilmente fissate sul veicolo che possono essere:\ndi serie, se costituiscono normale dotazione del veicolo, essendo inclusi senza maggiorazione nel prezzo di listino del veicolo stesso;\noptional, ogni installazione o apparecchiatura stabilmente fissata a bordo del veicolo fornita dalla casa costruttrice con supplemento al prezzo di listino del veicolo stesso;"
+    },
+    {
+      "termine": "Animale da compagnia",
+      "definizione": "per la garanzia 4 zampe a bordo si intendono cani e gatti;"
+    },
+    {
+      "termine": "Animali selvatici",
+      "definizione": "animali che appartengono alla fauna che vive libera sul territorio (ad esempio daini, cinghiali, lupi, volpi ecc.), esclusi gatti e cani randagi;"
+    },
+    {
+      "termine": "Antifurto satellitare",
+      "definizione": "dispositivo che invia automaticamente, in caso di furto, le coordinate per la localizzazione del veicolo a una centrale operativa;"
+    },
+    {
+      "termine": "Apparecchi multimediali non di serie",
+      "definizione": "radio, telefoni, lettori CD e DVD, televisori, componenti audio, navigatori satellitari e simili se sono stabilmente fissati e non sono presenti sul listino degli accessori della casa costruttrice del veicolo;"
+    },
+    {
+      "termine": "Aree aeroportuali",
+      "definizione": "le aree di rullaggio (spostamento e movimento di un aeromobile a terra, cioè con le ruote a contatto con il terreno) e le altre aree interne a un aeroporto, così come determinate dalla normativa di settore;"
+    },
+    {
+      "termine": "Assicurato",
+      "definizione": "soggetto destinatario delle prestazioni assicurative;"
+    },
+    {
+      "termine": "Autovettura",
+      "definizione": "il veicolo destinato al trasporto di persone, che ha al massimo nove posti, compreso quello del conducente;"
+    },
+    {
+      "termine": "Avente diritto",
+      "definizione": "soggetto diverso dal contraente a cui deve essere messa a disposizione l'attestazione dello stato del rischio, ovvero: proprietario, usufruttuario, acquirente con patto di riservato dominio o locatario in caso di locazione finanziaria;"
+    },
+    {
+      "termine": "Banca dati",
+      "definizione": "la banca dati elettronica che le imprese hanno l'obbligo di alimentare con le informazioni e i dati necessari ad attestare lo stato del rischio;"
+    },
+    {
+      "termine": "Certificato internazionale di assicurazione - ex Carta Verde",
+      "definizione": "il documento che attesta che il veicolo è assicurato per la responsabilità civile obbligatoria anche all'estero, nei paesi di cui riporta la sigla non barrata;"
+    },
+    {
+      "termine": "Classe di merito Velaria",
+      "definizione": "la classe di merito assegnata al contratto in base alle condizioni generali di assicurazione previste da Velaria;"
+    },
+    {
+      "termine": "Classe di merito di conversione universale (CU)",
+      "definizione": "la classe di merito assegnata obbligatoriamente al contratto in base alle regole previste dal Provvedimento IVASS n. 72 del 16 aprile 2018 e successive modifiche e integrazioni. La classe CU risulta dall'attestazione dello stato del rischio messa a disposizione da Velaria in occasione di ogni scadenza annuale;"
+    },
+    {
+      "termine": "Codice delle Assicurazioni",
+      "definizione": "il Decreto Legislativo n. 209/2005 e sue successive modificazioni e integrazioni;"
+    },
+    {
+      "termine": "Codice della Strada",
+      "definizione": "il Decreto Legislativo n. 285/1992 e sue successive modificazioni e integrazioni;"
+    },
+    {
+      "termine": "CONSAP",
+      "definizione": "Concessionaria Servizi Assicurativi Pubblici S.p.A. con sede in Roma, Via Yser, 14 - 00198, www.consap.it;"
+    },
+    {
+      "termine": "Contraente",
+      "definizione": "la persona fisica, Imprese o altri Enti che stipulano il contratto di assicurazione;"
+    },
+    {
+      "termine": "Degrado",
+      "definizione": "la riduzione del valore dei pezzi di ricambio da sostituire sull'autovettura danneggiata;"
+    },
+    {
+      "termine": "Orsa Assistance Italia S.p.A.",
+      "definizione": "la compagnia che attraverso la sua struttura organizzativa gestisce i sinistri per le garanzie Assistenza Stradale Estesa e Top per conto di Velaria;"
+    },
+    {
+      "termine": "EUROTAX",
+      "definizione": "la rivista specializzata della Sanguinetti Editore, che riporta le quotazioni di mercato dell'usato;"
+    },
+    {
+      "termine": "Franchigia",
+      "definizione": "la somma, stabilita nel contratto, che rimane a carico dell'assicurato per ogni sinistro;"
+    },
+    {
+      "termine": "Fornitore Qualificato Velaria",
+      "definizione": "la società che fornisce le Velaria Box. L'elenco dei Fornitori Qualificati Velaria è disponibile sul sito internet www.velaria.example;"
+    },
+    {
+      "termine": "Furto",
+      "definizione": "l'appropriazione di beni altrui per trarne un ingiusto profitto anche tramite violenza o minaccia (rapina);"
+    },
+    {
+      "termine": "Velaria",
+      "definizione": "Velaria S.p.A., con sede legale in Italia;"
+    },
+    {
+      "termine": "Velaria Box",
+      "definizione": "il dispositivo elettronico che registra e raccoglie i dati telematici relativi all'attività del veicolo e che permette di ricostruire la dinamica del sinistro. Per il corretto funzionamento il dispositivo deve venire attivato dopo l'installazione;"
+    },
+    {
+      "termine": "Guasto",
+      "definizione": "il danno che il veicolo subisce per usura, difetto, rottura, mancato funzionamento di sue parti, e che rende impossibile per l'assicurato l'utilizzo del veicolo in condizioni normali. Sono considerati guasto anche la foratura dello pneumatico e l'errato rifornimento di carburante;"
+    },
+    {
+      "termine": "Immobilizzazione del veicolo",
+      "definizione": "il fermo del veicolo presso una carrozzeria/officina incaricata della riparazione che ne rende impossibile l'utilizzo (veicolo non marciante);"
+    },
+    {
+      "termine": "Incendio",
+      "definizione": "la combustione dell'autovettura o di sue parti con sviluppo di fiamma;"
+    },
+    {
+      "termine": "Incidente",
+      "definizione": "il sinistro, subito dal veicolo, non voluto, dovuto a imperizia, negligenza, inosservanza di norme e regolamenti, connesso alla circolazione stradale. Solo per le garanzie Assistenza Stradale Estesa e Top sono compresi i sinistri derivati da caso fortuito;"
+    },
+    {
+      "termine": "Indennizzo/Risarcimento",
+      "definizione": "la somma dovuta da Velaria o da Orsa Assistance se avviene un sinistro liquidabile a termini di polizza;"
+    },
+    {
+      "termine": "Infortunio",
+      "definizione": "ogni evento dovuto a causa fortuita, violenta ed esterna che produce lesioni corporali obiettivamente constatabili;"
+    },
+    {
+      "termine": "Ingessatura",
+      "definizione": "il mezzo di contenzione, fisso e rigido, costituito da fasce gessate o altro apparecchio di contenimento comunque immobilizzante, prescritto da personale medico e che non può essere rimosso autonomamente;"
+    },
+    {
+      "termine": "Invalidità permanente",
+      "definizione": "la perdita o riduzione definitiva e irrimediabile della capacità a qualsiasi lavoro proficuo, indipendentemente dalla professione svolta;"
+    },
+    {
+      "termine": "Istituto di cura",
+      "definizione": "gli istituti di cura sono gli ospedali pubblici, le cliniche o le case di cura (convenzionate o private). Si possono trovare in Italia o all'estero. Devono essere regolarmente autorizzati in base ai requisiti di legge e dalle competenti Autorità al ricovero, ed eventualmente all'assistenza sanitaria ambulatoriale e in regime di degenza diurna. Sono comunque esclusi gli stabilimenti termali, le case di convalescenza e soggiorno;"
+    },
+    {
+      "termine": "Legittimo conducente",
+      "definizione": "il proprietario del veicolo e le persone da lui autorizzate alla guida del veicolo;"
+    },
+    {
+      "termine": "Localizzatore satellitare",
+      "definizione": "dispositivo in grado di inviare su richiesta, non automaticamente, le coordinate per la localizzazione del veicolo in caso di furto. Vengono equiparati al localizzatore satellitare anche i localizzatori a radiofrequenza;"
+    },
+    {
+      "termine": "Massimale",
+      "definizione": "la somma fino a concorrenza della quale Velaria presta l'assicurazione;"
+    },
+    {
+      "termine": "Operatore Qualificato Velaria",
+      "definizione": "la società che fornisce le prestazioni previste dalla garanzia Assistenza Velaria Drive, quando è presente in contratto, e i servizi di ricostruzione della dinamica del sinistro sulla base dei dati registrati dai dispositivi Velaria Box e Velaria Drive Box. L'elenco degli Operatori Qualificati Velaria è disponibile sul sito www.velaria.example;"
+    },
+    {
+      "termine": "Perdita totale",
+      "definizione": "il veicolo è considerato totalmente perso se viene rubato e non viene ritrovato entro due mesi, oppure se è tanto danneggiato da avere un valore residuo inferiore al 20% del valore commerciale prima del sinistro;"
+    },
+    {
+      "termine": "Polizza",
+      "definizione": "il documento che prova la stipula del contratto di assicurazione;"
+    },
+    {
+      "termine": "Premio",
+      "definizione": "la somma dovuta dal contraente a Velaria a fronte delle garanzie prestate, comprensivo di imposte ed eventuali oneri di legge;"
+    },
+    {
+      "termine": "Proprietario",
+      "definizione": "l'intestatario al P.R.A. del veicolo o colui che può dimostrare la titolarità del diritto di proprietà;"
+    },
+    {
+      "termine": "Velaria Drive Box",
+      "definizione": "la Velaria Box collegabile alla piattaforma di servizio Velaria Drive. Con la Velaria Drive Box, tramite la rilevazione dello stile di guida, è possibile accedere al Velaria Drive Program. L'elenco delle Velaria Drive Box è consultabile sul sito internet www.velaria.example;"
+    },
+    {
+      "termine": "QUATTRORUOTE",
+      "definizione": "la rivista dell'editoriale Domus che pubblica mensilmente le quotazioni dei veicoli usati;"
+    },
+    {
+      "termine": "Responsabilità principale",
+      "definizione": "si ha quando la responsabilità del sinistro è da attribuire in misura prevalente ad uno dei conducenti dei veicoli coinvolti;"
+    },
+    {
+      "termine": "Responsabilità paritaria",
+      "definizione": "si ha quando la responsabilità del sinistro è da attribuire in pari misura a carico dei conducenti dei veicoli coinvolti;"
+    },
+    {
+      "termine": "Rischio",
+      "definizione": "la probabilità che si verifichi il sinistro;"
+    },
+    {
+      "termine": "Risoluzione",
+      "definizione": "lo scioglimento anticipato di un contratto per volontà delle parti o per legge;"
+    },
+    {
+      "termine": "Rivalsa",
+      "definizione": "il diritto di Velaria a recuperare dal contraente e dall'assicurato l'importo pagato ai terzi danneggiati nei casi in cui avrebbe avuto diritto di rifiutare o di ridurre la propria prestazione;"
+    },
+    {
+      "termine": "Scoperto",
+      "definizione": "la percentuale del danno - con eventuale limite minimo espresso in valore assoluto - che rimane a carico dell'assicurato per ogni sinistro, se previsto in contratto;"
+    },
+    {
+      "termine": "Sinistro",
+      "definizione": "l'evento dannoso per il quale è prestata l'assicurazione;"
+    },
+    {
+      "termine": "Spese borsuali",
+      "definizione": "le spese sostenute dal legale necessarie o funzionali a svolgere la sua attività;"
+    },
+    {
+      "termine": "Surroga",
+      "definizione": "l'azione dell'assicuratore che agisce nei confronti del responsabile di un sinistro o di un furto per recuperare le somme pagate al danneggiato;"
+    },
+    {
+      "termine": "Tempario",
+      "definizione": "manuale o tabella con l'indicazione dei tempi medi di esecuzione di lavori artigianali o industriali;"
+    },
+    {
+      "termine": "Trasportati",
+      "definizione": "le persone regolarmente trasportate sul veicolo indicato in polizza."
+    }
+  ]
+}
