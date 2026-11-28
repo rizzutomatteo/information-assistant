@@ -1,0 +1,623 @@
+{
+  "nota": "Clienti fittizi per i test. Dati sintetici generati con strumenti di AI: nessuna persona reale. Nomi, indirizzi e contatti sono segnaposto; targhe e numeri sono inventati. Contiene i dati completi come li avrebbe il sistema gestionale: il policy server deve mascherare targa e dati di pagamento prima di passarli all'assistente.",
+  "data_riferimento": "2026-11-24",
+  "clienti": [
+    {
+      "id": "cli-01",
+      "persona": "Pendolare con l'auto assicurata sulla vecchia edizione",
+      "nome": "[NOME]",
+      "cognome": "[COGNOME]",
+      "email": "[EMAIL]",
+      "telefono": "[TELEFONO]",
+      "cosa_mette_alla_prova": [
+        "risposte sull'edizione 07/2025, diversa da quella attuale",
+        "stato di un sinistro aperto e suo referente",
+        "richiesta della polizza di un altro cliente (deve risultare non trovata)"
+      ],
+      "polizze": [
+        {
+          "numero": "VA-2025-001101",
+          "prodotto": "Velaria Auto",
+          "edizione": "07/2025",
+          "area": "auto_e_altri_veicoli",
+          "stato": "attiva",
+          "decorrenza": "2025-12-01",
+          "scadenza": "2026-12-01",
+          "oggetto": {
+            "tipo": "autovettura",
+            "targa": "XA001AA",
+            "descrizione": "utilitaria a benzina, 2019"
+          },
+          "tipo_guida": "esperto",
+          "garanzie": [
+            {
+              "nome": "R.C.A.",
+              "massimale_persone_euro": 6450000,
+              "massimale_cose_euro": 1300000
+            },
+            {
+              "nome": "Furto e Incendio",
+              "somma_assicurata_euro": 9000,
+              "scoperto_percento": 10,
+              "minimo_euro": 250
+            },
+            {
+              "nome": "Eventi atmosferici",
+              "scoperto_percento": 10,
+              "minimo_euro": 300
+            },
+            {
+              "nome": "Cristalli",
+              "massimale_euro": 600,
+              "franchigia_euro": 75
+            }
+          ],
+          "premio_annuo_euro": 633.8,
+          "frazionamento": "semestrale",
+          "rate": [
+            {
+              "scadenza": "2025-12-01",
+              "importo_euro": 316.9,
+              "stato": "pagata"
+            },
+            {
+              "scadenza": "2026-06-01",
+              "importo_euro": 316.9,
+              "stato": "pagata"
+            }
+          ],
+          "pagamento": {
+            "metodo": "carta di credito",
+            "numero_carta": "4000 0000 0000 4821"
+          },
+          "sinistri": [
+            {
+              "numero": "SIN-2026-004512",
+              "data_evento": "2026-10-28",
+              "garanzia": "Eventi atmosferici",
+              "descrizione": "grandine, ammaccature su tetto e cofano",
+              "stato": "in perizia",
+              "aperto_il": "2026-10-29",
+              "referente": "[NOME] [COGNOME], perito",
+              "telefono_referente": "[TELEFONO]"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cli-02",
+      "persona": "Famiglia con auto, moto e casa",
+      "nome": "[NOME]",
+      "cognome": "[COGNOME]",
+      "email": "[EMAIL]",
+      "telefono": "[TELEFONO]",
+      "cosa_mette_alla_prova": [
+        "scelta tra più polizze: per targa, per prodotto, o domanda di chiarimento",
+        "garanzia non acquistata (terremoto)",
+        "sinistro chiuso e liquidato",
+        "rate mensili"
+      ],
+      "polizze": [
+        {
+          "numero": "VA-2026-002201",
+          "prodotto": "Velaria Auto",
+          "edizione": "07/2026",
+          "area": "auto_e_altri_veicoli",
+          "stato": "attiva",
+          "decorrenza": "2026-08-20",
+          "scadenza": "2027-08-20",
+          "oggetto": {
+            "tipo": "autovettura",
+            "targa": "XB002BB",
+            "descrizione": "monovolume diesel, 2022"
+          },
+          "tipo_guida": "non solo esperti",
+          "garanzie": [
+            {
+              "nome": "R.C.A.",
+              "massimale_persone_euro": 10000000,
+              "massimale_cose_euro": 2000000
+            },
+            {
+              "nome": "Furto e Incendio",
+              "somma_assicurata_euro": 21000,
+              "scoperto_percento": 10,
+              "minimo_euro": 300
+            },
+            {
+              "nome": "Cristalli",
+              "massimale_euro": 800,
+              "franchigia_euro": 100
+            },
+            {
+              "nome": "4 zampe a bordo",
+              "somma_assicurata_euro": 1500
+            }
+          ],
+          "premio_annuo_euro": 784.2,
+          "frazionamento": "annuale",
+          "rate": [
+            {
+              "scadenza": "2026-08-20",
+              "importo_euro": 784.2,
+              "stato": "pagata"
+            }
+          ],
+          "pagamento": {
+            "metodo": "carta di credito",
+            "numero_carta": "4000 0000 0000 1937"
+          },
+          "sinistri": []
+        },
+        {
+          "numero": "VM-2026-002202",
+          "prodotto": "Velaria Moto",
+          "edizione": "10/2026",
+          "area": "auto_e_altri_veicoli",
+          "stato": "attiva",
+          "decorrenza": "2026-10-05",
+          "scadenza": "2027-10-05",
+          "oggetto": {
+            "tipo": "motociclo",
+            "targa": "XC12345",
+            "descrizione": "moto 650 cc, 2020"
+          },
+          "tipo_guida": "esperto",
+          "garanzie": [
+            {
+              "nome": "R.C.A.",
+              "massimale_persone_euro": 6450000,
+              "massimale_cose_euro": 1300000
+            },
+            {
+              "nome": "Minikasko Abbigliamento",
+              "somma_assicurata_euro": 1000
+            }
+          ],
+          "premio_annuo_euro": 298.0,
+          "frazionamento": "annuale",
+          "rate": [
+            {
+              "scadenza": "2026-10-05",
+              "importo_euro": 298.0,
+              "stato": "pagata"
+            }
+          ],
+          "pagamento": {
+            "metodo": "carta di credito",
+            "numero_carta": "4000 0000 0000 1937"
+          },
+          "sinistri": []
+        },
+        {
+          "numero": "VC-2026-002203",
+          "prodotto": "Casa Velaria",
+          "edizione": "10/2026",
+          "area": "casa_e_famiglia",
+          "stato": "attiva",
+          "decorrenza": "2026-01-10",
+          "scadenza": "2027-01-10",
+          "oggetto": {
+            "tipo": "abitazione",
+            "indirizzo": "[INDIRIZZO]",
+            "descrizione": "appartamento di 95 m², terzo piano"
+          },
+          "garanzie": [
+            {
+              "nome": "Incendio e scoppio",
+              "somma_assicurata_euro": 250000
+            },
+            {
+              "nome": "Ricerca e riparazione danni da acqua",
+              "massimale_euro": 5000,
+              "franchigia_euro": 150
+            },
+            {
+              "nome": "Fenomeni elettrici e altri danni alla casa",
+              "massimale_euro": 3000,
+              "franchigia_euro": 150
+            },
+            {
+              "nome": "Danni al contenuto",
+              "somma_assicurata_euro": 30000
+            },
+            {
+              "nome": "Responsabilità civile casa",
+              "massimale_euro": 500000
+            },
+            {
+              "nome": "Responsabilità civile cane e gatto",
+              "massimale_euro": 500000,
+              "animali": [
+                "cane"
+              ]
+            }
+          ],
+          "premio_annuo_euro": 412.8,
+          "frazionamento": "mensile",
+          "rate": [
+            {
+              "scadenza": "2026-01-10",
+              "importo_euro": 34.4,
+              "stato": "pagata"
+            },
+            {
+              "scadenza": "2026-02-10",
+              "importo_euro": 34.4,
+              "stato": "pagata"
+            },
+            {
+              "scadenza": "2026-03-10",
+              "importo_euro": 34.4,
+              "stato": "pagata"
+            },
+            {
+              "scadenza": "2026-04-10",
+              "importo_euro": 34.4,
+              "stato": "pagata"
+            },
+            {
+              "scadenza": "2026-05-10",
+              "importo_euro": 34.4,
+              "stato": "pagata"
+            },
+            {
+              "scadenza": "2026-06-10",
+              "importo_euro": 34.4,
+              "stato": "pagata"
+            },
+            {
+              "scadenza": "2026-07-10",
+              "importo_euro": 34.4,
+              "stato": "pagata"
+            },
+            {
+              "scadenza": "2026-08-10",
+              "importo_euro": 34.4,
+              "stato": "pagata"
+            },
+            {
+              "scadenza": "2026-09-10",
+              "importo_euro": 34.4,
+              "stato": "pagata"
+            },
+            {
+              "scadenza": "2026-10-10",
+              "importo_euro": 34.4,
+              "stato": "pagata"
+            },
+            {
+              "scadenza": "2026-11-10",
+              "importo_euro": 34.4,
+              "stato": "pagata"
+            },
+            {
+              "scadenza": "2026-12-10",
+              "importo_euro": 34.4,
+              "stato": "da pagare"
+            }
+          ],
+          "pagamento": {
+            "metodo": "carta di credito",
+            "numero_carta": "4000 0000 0000 1937"
+          },
+          "sinistri": [
+            {
+              "numero": "SIN-2026-001877",
+              "data_evento": "2026-04-02",
+              "garanzia": "Ricerca e riparazione danni da acqua",
+              "descrizione": "rottura di un tubo nel bagno, infiltrazione al piano di sotto",
+              "stato": "liquidato",
+              "aperto_il": "2026-04-03",
+              "importo_liquidato_euro": 1240.0,
+              "liquidato_il": "2026-05-20",
+              "referente": "[NOME] [COGNOME], ufficio sinistri",
+              "telefono_referente": "[TELEFONO]"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cli-03",
+      "persona": "Cliente con una rata non pagata",
+      "nome": "[NOME]",
+      "cognome": "[COGNOME]",
+      "email": "[EMAIL]",
+      "telefono": "[TELEFONO]",
+      "cosa_mette_alla_prova": [
+        "polizza sospesa per mancato pagamento",
+        "dati di pagamento mascherati (solo le ultime 4 cifre)"
+      ],
+      "polizze": [
+        {
+          "numero": "VA-2026-003301",
+          "prodotto": "Velaria Auto",
+          "edizione": "07/2026",
+          "area": "auto_e_altri_veicoli",
+          "stato": "sospesa per mancato pagamento",
+          "sospesa_dal": "2026-10-30 ore 24",
+          "decorrenza": "2026-04-15",
+          "scadenza": "2027-04-15",
+          "oggetto": {
+            "tipo": "autovettura",
+            "targa": "XD003DD",
+            "descrizione": "city car elettrica, 2024"
+          },
+          "tipo_guida": "inesperto",
+          "garanzie": [
+            {
+              "nome": "R.C.A.",
+              "massimale_persone_euro": 6450000,
+              "massimale_cose_euro": 1300000
+            },
+            {
+              "nome": "Assistenza Stradale Auto Elettriche"
+            }
+          ],
+          "premio_annuo_euro": 758.0,
+          "frazionamento": "trimestrale",
+          "rate": [
+            {
+              "scadenza": "2026-04-15",
+              "importo_euro": 189.5,
+              "stato": "pagata"
+            },
+            {
+              "scadenza": "2026-07-15",
+              "importo_euro": 189.5,
+              "stato": "pagata"
+            },
+            {
+              "scadenza": "2026-10-15",
+              "importo_euro": 189.5,
+              "stato": "non pagata"
+            },
+            {
+              "scadenza": "2027-01-15",
+              "importo_euro": 189.5,
+              "stato": "da pagare"
+            }
+          ],
+          "tentativi_addebito_falliti": [
+            "2026-10-15",
+            "2026-10-20",
+            "2026-10-28"
+          ],
+          "pagamento": {
+            "metodo": "carta di debito",
+            "numero_carta": "5000 0000 0000 7310"
+          },
+          "sinistri": []
+        }
+      ]
+    },
+    {
+      "id": "cli-04",
+      "persona": "Nuovo cliente casa con un sinistro respinto",
+      "nome": "[NOME]",
+      "cognome": "[COGNOME]",
+      "email": "[EMAIL]",
+      "telefono": "[TELEFONO]",
+      "cosa_mette_alla_prova": [
+        "spiegare il motivo registrato di un rifiuto senza giudicarlo",
+        "carenza di 30 giorni del furto"
+      ],
+      "polizze": [
+        {
+          "numero": "VC-2026-004401",
+          "prodotto": "Casa Velaria",
+          "edizione": "10/2026",
+          "area": "casa_e_famiglia",
+          "stato": "attiva",
+          "decorrenza": "2026-10-01",
+          "scadenza": "2027-10-01",
+          "oggetto": {
+            "tipo": "abitazione",
+            "indirizzo": "[INDIRIZZO]",
+            "descrizione": "villetta a schiera"
+          },
+          "garanzie": [
+            {
+              "nome": "Incendio e scoppio",
+              "somma_assicurata_euro": 320000
+            },
+            {
+              "nome": "Danni al contenuto",
+              "somma_assicurata_euro": 40000
+            },
+            {
+              "nome": "Furto e rapina contenuto",
+              "somma_assicurata_euro": 8000
+            },
+            {
+              "nome": "Danni da effrazione",
+              "massimale_euro": 2000
+            }
+          ],
+          "polizza_precedente_stesso_bene": false,
+          "premio_annuo_euro": 365.0,
+          "frazionamento": "annuale",
+          "rate": [
+            {
+              "scadenza": "2026-10-01",
+              "importo_euro": 365.0,
+              "stato": "pagata"
+            }
+          ],
+          "pagamento": {
+            "metodo": "carta di credito",
+            "numero_carta": "4000 0000 0000 5566"
+          },
+          "sinistri": [
+            {
+              "numero": "SIN-2026-006230",
+              "data_evento": "2026-10-12",
+              "garanzia": "Furto e rapina contenuto",
+              "descrizione": "furto di gioielli e di un computer portatile",
+              "stato": "respinto",
+              "aperto_il": "2026-10-13",
+              "motivo": "evento avvenuto prima delle ore 24 del 30° giorno dalla decorrenza, senza polizza precedente sullo stesso bene",
+              "referente": "[NOME] [COGNOME], ufficio sinistri",
+              "telefono_referente": "[TELEFONO]"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cli-05",
+      "persona": "Cliente con una polizza vita temporanea caso morte",
+      "nome": "[NOME]",
+      "cognome": "[COGNOME]",
+      "email": "[EMAIL]",
+      "telefono": "[TELEFONO]",
+      "cosa_mette_alla_prova": [
+        "capitale decrescente: il valore di oggi non è quello iniziale",
+        "termine di recesso già passato",
+        "premio annuale già addebitato"
+      ],
+      "polizze": [
+        {
+          "numero": "PV-2025-005501",
+          "prodotto": "Previdente formula su misura",
+          "edizione": null,
+          "area": "vita_e_risparmio",
+          "stato": "attiva",
+          "conclusa_il": "2025-03-01",
+          "decorrenza": "2025-03-01",
+          "scadenza": "2045-03-01",
+          "oggetto": {
+            "tipo": "vita dell'assicurato",
+            "assicurato": "il contraente"
+          },
+          "garanzie": [
+            {
+              "nome": "Capitale caso morte decrescente",
+              "capitale_iniziale_euro": 200000,
+              "capitale_attuale_euro": 190000,
+              "capitale_attuale_dal": "2026-03-01"
+            }
+          ],
+          "beneficiari": [
+            "[NOME] [COGNOME] (coniuge)"
+          ],
+          "premio_annuo_euro": 310.0,
+          "frazionamento": "annuale",
+          "rate": [
+            {
+              "scadenza": "2025-03-01",
+              "importo_euro": 310.0,
+              "stato": "pagata"
+            },
+            {
+              "scadenza": "2026-03-01",
+              "importo_euro": 310.0,
+              "stato": "pagata"
+            },
+            {
+              "scadenza": "2027-03-01",
+              "importo_euro": 310.0,
+              "stato": "da pagare"
+            }
+          ],
+          "pagamento": {
+            "metodo": "addebito diretto SEPA",
+            "iban": "IT00X0000000000000000009012"
+          },
+          "sinistri": []
+        }
+      ]
+    },
+    {
+      "id": "cli-06",
+      "persona": "Cliente con polizza viaggi scaduta e polizza mutuo",
+      "nome": "[NOME]",
+      "cognome": "[COGNOME]",
+      "email": "[EMAIL]",
+      "telefono": "[TELEFONO]",
+      "cosa_mette_alla_prova": [
+        "polizza scaduta: non va trattata come attiva",
+        "polizza vincolata a una banca",
+        "il cliente chiama 'polizza casa' la sua polizza mutuo"
+      ],
+      "polizze": [
+        {
+          "numero": "VV-2026-006601",
+          "prodotto": "Velaria Viaggi",
+          "edizione": "07/2025",
+          "area": "casa_e_famiglia",
+          "stato": "scaduta",
+          "decorrenza": "2026-07-27",
+          "scadenza": "2026-08-10",
+          "oggetto": {
+            "tipo": "viaggio",
+            "descrizione": "viaggio in Portogallo, 2 persone"
+          },
+          "garanzie": [
+            {
+              "nome": "Spese mediche",
+              "massimale_euro": 30000
+            },
+            {
+              "nome": "Assistenza in viaggio"
+            }
+          ],
+          "premio_annuo_euro": 64.0,
+          "frazionamento": "unico",
+          "rate": [
+            {
+              "scadenza": "2026-07-20",
+              "importo_euro": 64.0,
+              "stato": "pagata"
+            }
+          ],
+          "pagamento": {
+            "metodo": "carta di credito",
+            "numero_carta": "4000 0000 0000 2048"
+          },
+          "sinistri": []
+        },
+        {
+          "numero": "MV-2026-006602",
+          "prodotto": "Mutuo Velaria",
+          "edizione": "10/2026",
+          "area": "casa_e_famiglia",
+          "stato": "attiva",
+          "decorrenza": "2026-02-01",
+          "scadenza": "2046-02-01",
+          "oggetto": {
+            "tipo": "abitazione",
+            "indirizzo": "[INDIRIZZO]",
+            "descrizione": "appartamento acquistato con mutuo"
+          },
+          "vincolo": {
+            "a_favore_di": "[ISTITUTO DI CREDITO]",
+            "fino_al": "2046-02-01"
+          },
+          "garanzie": [
+            {
+              "nome": "Incendio, esplosione e scoppio",
+              "somma_assicurata_euro": 180000
+            }
+          ],
+          "premio_annuo_euro": 96.0,
+          "frazionamento": "annuale",
+          "rate": [
+            {
+              "scadenza": "2026-02-01",
+              "importo_euro": 96.0,
+              "stato": "pagata"
+            }
+          ],
+          "pagamento": {
+            "metodo": "addebito diretto SEPA",
+            "iban": "IT00X0000000000000000003344"
+          },
+          "sinistri": []
+        }
+      ]
+    }
+  ]
+}
