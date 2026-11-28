@@ -1,0 +1,12 @@
+# File con i nomi reali: restano solo sul Drive del gruppo
+/sostituzioni.tsv
+/anonimizzazione.tsv
+/anonimizzazione_faq.tsv
+/faq.json
+
+# Cartelle di lavoro degli script (i risultati vanno in assistente/)
+/documenti_corretti/
+/documenti_anonimi/
+/documenti_senza_indice/
+/documenti_senza_glossario/
+/faq_anonime.json
